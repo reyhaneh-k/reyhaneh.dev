@@ -19,6 +19,7 @@ export default function RootLayout({
         <VerticalIndicator />
         <MenuBar />
         {children}
+        <div className="h-[1000px]" id="about"></div>
       </body>
     </html>
   );
