@@ -59,8 +59,8 @@ export const Electron = ({
         height={50}
         className={`hover:animate-pulse`}
       ></Image>
-      <span className="text-text opacity-30 text-sm">
-        {alt[0].toUpperCase()}
+      <span className="text-text opacity-30 text-sm font-code">
+        {alt.charAt(0).toUpperCase()}
         {alt.slice(1)}
       </span>
     </div>
