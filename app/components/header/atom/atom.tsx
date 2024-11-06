@@ -19,7 +19,7 @@ import tanstackIcon from "@/public/tech-stack/tanstack.png";
 
 export const Atom = () => {
   return (
-    <div className="relative md:w-[500px] md:h-[500px] w-[300px] h-[300px]">
+    <div className="relative md:w-[500px] md:h-[500px] w-[300px] h-[300px] m-8">
       <div className="absolute w-full h-full bg-gradient-to-b from-transparent from-0% to-background z-10"></div>
       <Orbit size={1} />
       <Orbit size={2} />

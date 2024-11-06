@@ -84,8 +84,9 @@ export const Electron = ({
         src={icon}
         width={50}
         height={50}
+        sizes="(min-width: 768px) 50px,30px"
         priority={priority}
-        className={`hover:animate-pulse max-w-[50%] max-h-[50%]`}
+        className={`hover:animate-pulse h-[50%] w-[50%]`}
       ></Image>
       <span className="text-text opacity-30 text-sm font-code">
         {alt.charAt(0).toUpperCase()}
