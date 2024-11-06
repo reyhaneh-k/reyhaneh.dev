@@ -19,7 +19,7 @@ import tanstackIcon from "@/public/tech-stack/tanstack.png";
 
 export const Atom = () => {
   return (
-    <div className="relative w-[400px] h-[400px]  ">
+    <div className="relative md:w-[500px] md:h-[500px] w-[300px] h-[300px]">
       <div className="absolute w-full h-full bg-gradient-to-b from-transparent from-0% to-background z-10"></div>
       <Orbit size={1} />
       <Orbit size={2} />
@@ -29,7 +29,12 @@ export const Atom = () => {
       <Orbit size={6} />
       <Orbit size={7} />
       <Orbit size={8} />
-      <Electron icon={tsIcon.src} alt="typescript" position={18} />
+      <Electron
+        icon={tsIcon.src}
+        alt="typescript"
+        position={18}
+        priority={true}
+      />
       <Electron icon={jsIcon.src} alt="javascript" position={19} />
       <Electron icon={reactIcon.src} alt="react" position={20} />
       <Electron icon={nextIcon.src} alt="next.js" position={11} />

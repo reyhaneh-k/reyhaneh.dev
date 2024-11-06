@@ -24,32 +24,59 @@ export const Electron = ({
   icon,
   alt,
   position,
+  priority = false,
 }: {
   icon: string;
   alt: string;
   position: Position;
+  priority?: boolean;
 }) => {
   const electronRef = useRef<HTMLImageElement | null>(null);
   const angle = useRef((position * Math.PI * 5) / 20);
-  const radius = position * 10;
-  const speed = radius / 50000;
+  const animationID = useRef<number>(0);
+  const radius = useRef<number>(position * 7);
+
+  useEffect(() => {
+    if (window.matchMedia("(max-width:768px)").matches) {
+      radius.current = position * 7;
+    } else {
+      radius.current = position * 11;
+    }
+  }, [position]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.matchMedia("(max-width:768px)").matches) {
+        radius.current = position * 7;
+      } else {
+        radius.current = position * 11;
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [position, radius]);
 
   useEffect(() => {
     const animate = () => {
-      const x = radius * Math.cos(angle.current);
-      const y = radius * Math.sin(angle.current);
+      const x = radius.current * Math.cos(angle.current);
+      const y = radius.current * Math.sin(angle.current);
       if (electronRef.current) {
         electronRef.current.style.transform = `translate(${x}px, ${y}px)`;
       }
-      angle.current += speed;
-      requestAnimationFrame(animate);
+      angle.current += radius.current / 50000;
+      animationID.current = requestAnimationFrame(animate);
     };
-    requestAnimationFrame(animate);
-  }, [radius, speed]);
+    animationID.current = requestAnimationFrame(animate);
+    return () => {
+      cancelAnimationFrame(animationID.current);
+    };
+  }, []);
 
   return (
     <div
-      className="flex flex-col z-20 absolute right-[177px] top-[177px] items-center"
+      className="flex flex-col z-20 absolute h-[20%] w-[20%] mx-auto inset-0 my-auto items-center"
       ref={electronRef}
     >
       <Image
@@ -57,7 +84,8 @@ export const Electron = ({
         src={icon}
         width={50}
         height={50}
-        className={`hover:animate-pulse`}
+        priority={priority}
+        className={`hover:animate-pulse max-w-[50%] max-h-[50%]`}
       ></Image>
       <span className="text-text opacity-30 text-sm font-code">
         {alt.charAt(0).toUpperCase()}
