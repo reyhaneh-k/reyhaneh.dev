@@ -19,6 +19,8 @@ const config: Config = {
         code: ['"M PLUS Code Latin"', "sans-serif"],
         sans: ["Roboto", "sans-serif"],
       },
+      animation: {},
+      keyframes: {},
     },
   },
   plugins: [],
