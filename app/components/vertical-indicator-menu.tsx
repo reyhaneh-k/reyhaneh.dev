@@ -61,7 +61,6 @@ const useInView = () => {
         if (entry.isIntersecting) {
           ratios.current[entry.target.id as SectionId] =
             entry.intersectionRatio;
-          console.log(ratios.current);
 
           setInViewSection(
             Object.entries(ratios.current).reduce(
