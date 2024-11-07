@@ -1,4 +1,3 @@
-import { Atom } from "./atom/atom";
 import { Frame } from "./frame";
 
 export const Header = () => {
@@ -7,9 +6,7 @@ export const Header = () => {
       className="h-[800px] w-full bg-background flex md:flex-row flex-col items-center justify-center"
       id="header"
     >
-      <Frame>
-        <Atom />
-      </Frame>
+      <Frame></Frame>
     </div>
   );
 };
