@@ -24,7 +24,7 @@ export const MenuBar = () => {
 
   return (
     <div
-      className={`fixed top-0 z-20 h-40 transition-all duration-700 w-full bg-background border-b-2 text-text md:text-3xl text-lg border-b-primary py-10 px-16 flex md:flex-row gap-5 flex-col justify-between items-center
+      className={`fixed top-0 z-20  transition-all duration-700 w-full bg-background  text-text md:text-3xl text-lg pt-10 px-16 flex md:flex-row gap-5 flex-col justify-between items-center
        ${visibility ? "translate-y-0" : "-translate-y-44"}`}
     >
       <MyName />
