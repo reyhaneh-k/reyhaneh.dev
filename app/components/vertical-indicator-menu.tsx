@@ -8,7 +8,6 @@ import {
   faProjectDiagram,
   faCode,
   IconDefinition,
-  faTextSlash,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,15 +23,19 @@ type SectionId =
   | "projects"
   | "recommendations";
 
-const sectionsInfo: Array<{ icon: IconDefinition; id: SectionId }> = [
-  { icon: faCode, id: "header" },
-  { icon: faUser, id: "about" },
-  { icon: faLaptopCode, id: "skills" },
-  { icon: faBriefcase, id: "experience" },
-  { icon: faCertificate, id: "certifications" },
-  { icon: faLanguage, id: "languages" },
-  { icon: faProjectDiagram, id: "projects" },
-  { icon: faEnvelope, id: "recommendations" },
+const sectionsInfo: Array<{
+  icon: IconDefinition;
+  id: SectionId;
+  title: string;
+}> = [
+  { icon: faCode, id: "header", title: "Introduction" },
+  { icon: faUser, id: "about", title: "About Me" },
+  { icon: faLaptopCode, id: "skills", title: "Skills" },
+  { icon: faBriefcase, id: "experience", title: "Experience" },
+  { icon: faCertificate, id: "certifications", title: "Certificates" },
+  { icon: faLanguage, id: "languages", title: "Languages" },
+  { icon: faProjectDiagram, id: "projects", title: "Projects" },
+  { icon: faEnvelope, id: "recommendations", title: "Recommendations" },
 ];
 
 const useInView = () => {
@@ -112,21 +115,31 @@ const useInView = () => {
 export const VerticalIndicator = () => {
   const { inViewSection, sections } = useInView();
   return (
-    <div className="fixed p-9 left-0 h-96 w-1/12  text-text top-1/2 border border-secondary rounded-full shadow-xl shadow-primary bg-background z-30 flex flex-col gap-7  items-center">
-      {sectionsInfo.map(({ icon, id }) => {
+    <div className="fixed p-9 left-0 h-fit w-1/12 text-text top-1/2  rounded-full shadow-lg shadow-secondary bg-background z-30 flex flex-col gap-7 items-center">
+      <div className="bg-background h-full w-full rounded-full z-0 absolute inset-0"></div>
+
+      {sectionsInfo.map(({ icon, id, title }) => {
         return (
-          <FontAwesomeIcon
-            icon={icon}
-            key={id}
-            className={
-              inViewSection === id
-                ? "scale-[270%] transition-all"
-                : "transition-all"
-            }
-            onClick={() => {
-              sections.current?.[id]?.scrollIntoView({ behavior: "smooth" });
-            }}
-          />
+          <div key={id} className="relative items-center flex">
+            <FontAwesomeIcon
+              icon={icon}
+              className={
+                inViewSection === id
+                  ? `scale-[270%] transition-all z-10`
+                  : "transition-all z-10"
+              }
+              onClick={() => {
+                sections.current?.[id]?.scrollIntoView({ behavior: "smooth" });
+              }}
+            />
+            <span
+              className={`absolute text-2xl transition-all pl-5 pr-8 py-4 rounded-r-3xl w-48 -z-10 cursor-default ${
+                inViewSection === id ? `animate-slide-right-left` : "opacity-0"
+              }`}
+            >
+              {title}
+            </span>
+          </div>
         );
       })}
     </div>

@@ -19,8 +19,22 @@ const config: Config = {
         code: ['"M PLUS Code Latin"', "sans-serif"],
         sans: ["Roboto", "sans-serif"],
       },
-      animation: {},
-      keyframes: {},
+      animation: {
+        "slide-right-left": "slide-right-left 1.4s ease-in-out forwards",
+      },
+      keyframes: {
+        "slide-right-left": {
+          "0%": {
+            transform: "translateX(-120%)",
+            opacity: "0",
+          },
+          "50%": { transform: "translateX(50%)", opacity: "1" },
+          "100%": {
+            transform: "translateX(-120%)",
+            opacity: "0",
+          },
+        },
+      },
     },
   },
   plugins: [],
