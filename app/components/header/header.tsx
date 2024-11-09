@@ -8,7 +8,7 @@ export const Header = () => {
       id="header"
     >
       <Frame>
-        <div className="w-2/3"></div>
+        <div className="md:w-3/5 md:h-full w-full h-2/5"></div>
         <Summary />
       </Frame>
     </div>

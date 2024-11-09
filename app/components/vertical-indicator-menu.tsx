@@ -115,7 +115,7 @@ const useInView = () => {
 export const VerticalIndicator = () => {
   const { inViewSection, sections } = useInView();
   return (
-    <div className="fixed p-9 left-0 h-fit w-1/12 text-text top-1/2  rounded-full shadow-lg shadow-secondary bg-background z-30 flex flex-col gap-7 items-center">
+    <div className="fixed py-9 px-2 left-0 w-1/12 max-w-32 min-w-20 h-fit text-text top-1/2  rounded-full shadow-lg shadow-secondary bg-background z-30 flex flex-col gap-7 items-center">
       <div className="bg-background h-full w-full rounded-full z-0 absolute inset-0"></div>
 
       {sectionsInfo.map(({ icon, id, title }) => {

@@ -21,12 +21,14 @@ const useTypeWriter = (str: string) => {
   return text;
 };
 
-export const AboutMe = () => {
+export const AboutMe = ({ className }: { className?: string }) => {
   const aboutMeText: string =
     "Passionate Front-End Developer with a strong foundation in modern web technologies, specializing in creating intuitive, responsive user interfaces.";
   const text = useTypeWriter(aboutMeText);
   return (
-    <span className="text-lg font-extralight text-text tracking-wide">
+    <span
+      className={`text-lg font-extralight text-text tracking-wide ${className}`}
+    >
       {text.current}
     </span>
   );
