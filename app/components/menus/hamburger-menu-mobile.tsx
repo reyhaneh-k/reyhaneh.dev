@@ -2,8 +2,13 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { sectionsInfo, useInView } from "./menu-utilities";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faDownload,
+  faMinus,
+} from "@fortawesome/free-solid-svg-icons";
 import { useCallback, useEffect, useState } from "react";
+import line from "@/public/horizontal-line-svgrepo-com.svg";
 
 export const MenuMobile = () => {
   const { inViewSection, sections } = useInView();
@@ -24,9 +29,8 @@ export const MenuMobile = () => {
   }, [isRendered]);
 
   return (
-    <div className="fixed right-6 top-3 z-20 text-right ">
-      <button
-        className="text-6xl text-white"
+    <div className="fixed right-6 top-3 z-20 text-right pt-20">
+      <div
         onClick={() => {
           if (!isMenuOpen) {
             render(true);
@@ -35,8 +39,21 @@ export const MenuMobile = () => {
           }
         }}
       >
-        X
-      </button>
+        <FontAwesomeIcon
+          size={"4x"}
+          className={`absolute z-20 top-0 right-8 text-6xl text-text cursor-pointer p-0 transition-all ${
+            isMenuOpen ? "rotate-45 translate-x-0.5 translate-y-2" : ""
+          }`}
+          icon={faMinus}
+        />
+        <FontAwesomeIcon
+          size={"4x"}
+          icon={faMinus}
+          className={`absolute z-20 top-3 text-highlight right-8 text-6xl  cursor-pointer p-0 transition-all ${
+            isMenuOpen ? "-rotate-45  -translate-y-1 " : ""
+          }`}
+        />{" "}
+      </div>
       {isRendered && (
         <div
           className={`right-6 top-3 p-5 shadow-lg shadow-black rounded-lg h-fit w-fit text-text bg-background flex flex-col gap-7 items-start transition-all ${
