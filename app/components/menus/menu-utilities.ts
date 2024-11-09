@@ -10,10 +10,9 @@ import {
   IconDefinition,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 
-type SectionId =
+export type SectionId =
   | "header"
   | "about"
   | "skills"
@@ -23,7 +22,7 @@ type SectionId =
   | "projects"
   | "recommendations";
 
-const sectionsInfo: Array<{
+export const sectionsInfo: Array<{
   icon: IconDefinition;
   id: SectionId;
   title: string;
@@ -38,7 +37,7 @@ const sectionsInfo: Array<{
   { icon: faEnvelope, id: "recommendations", title: "Recommendations" },
 ];
 
-const useInView = () => {
+export const useInView = () => {
   const [inViewSection, setInViewSection] = useState<SectionId>("header");
   const ratios = useRef<Record<SectionId, number>>({
     header: 1,
@@ -111,37 +110,4 @@ const useInView = () => {
   }, [observerCallBack, sections]);
 
   return { inViewSection, sections };
-};
-export const VerticalIndicator = () => {
-  const { inViewSection, sections } = useInView();
-  return (
-    <div className="fixed py-9 px-2 left-0 w-1/12 max-w-32 min-w-20 h-fit text-text top-1/2  rounded-full shadow-lg shadow-secondary bg-background z-30 flex flex-col gap-7 items-center">
-      <div className="bg-background h-full w-full rounded-full z-0 absolute inset-0"></div>
-
-      {sectionsInfo.map(({ icon, id, title }) => {
-        return (
-          <div key={id} className="relative items-center flex">
-            <FontAwesomeIcon
-              icon={icon}
-              className={
-                inViewSection === id
-                  ? `scale-[270%] transition-all z-10`
-                  : "transition-all z-10"
-              }
-              onClick={() => {
-                sections.current?.[id]?.scrollIntoView({ behavior: "smooth" });
-              }}
-            />
-            <span
-              className={`absolute text-2xl transition-all pl-5 pr-8 py-4 rounded-r-3xl w-48 -z-10 cursor-default ${
-                inViewSection === id ? `animate-slide-right-left` : "opacity-0"
-              }`}
-            >
-              {title}
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  );
 };
