@@ -8,6 +8,8 @@ import {
   faProjectDiagram,
   faCode,
   IconDefinition,
+  faTextSlash,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
@@ -19,7 +21,8 @@ type SectionId =
   | "experience"
   | "certifications"
   | "languages"
-  | "projects";
+  | "projects"
+  | "recommendations";
 
 const sectionsInfo: Array<{ icon: IconDefinition; id: SectionId }> = [
   { icon: faCode, id: "header" },
@@ -29,6 +32,7 @@ const sectionsInfo: Array<{ icon: IconDefinition; id: SectionId }> = [
   { icon: faCertificate, id: "certifications" },
   { icon: faLanguage, id: "languages" },
   { icon: faProjectDiagram, id: "projects" },
+  { icon: faEnvelope, id: "recommendations" },
 ];
 
 const useInView = () => {
@@ -41,6 +45,7 @@ const useInView = () => {
     certifications: 0,
     languages: 0,
     projects: 0,
+    recommendations: 0,
   });
   const sections = useRef<Record<string, Element | null>>();
   useEffect(() => {

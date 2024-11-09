@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { MenuBar } from "./components/menu-bar/menu-bar";
 import { VerticalIndicator } from "./components/vertical-indicator-menu";
+import { CursorLight } from "./components/cursorLight";
 
 export const metadata: Metadata = {
   title: "Reyhaneh.dev",
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body className="w-screen h-screen bg-background font-code pt-32">
         <VerticalIndicator />
         <MenuBar />
+        <CursorLight />
         {children}
         <div className="h-[1000px]" id="about"></div>
       </body>
