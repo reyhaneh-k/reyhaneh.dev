@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { MenuMobile } from "./hamburger-menu-mobile";
 import { VerticalIndicator } from "./vertical-indicator-menu";
-import { MenuBar } from "./menu-bar/menu-bar";
+import { MenuBar } from "./menu-bar";
 
 const useIsMobile = (breakpoint = 768) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoint);

@@ -4,14 +4,14 @@ import { MyName } from "./my-name";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useCallback, useEffect, useState } from "react";
 
-export const MenuBar = () => {
-  const [visibility, setVisibility] = useState(true);
+export const useScroll = () => {
+  const [isScrollingUp, setIsScrollingUp] = useState(true);
   const [lastScrollPos, setLastScrollPos] = useState(0);
   const handleScroll = useCallback(() => {
     if (window.scrollY <= lastScrollPos) {
-      setVisibility(true);
+      setIsScrollingUp(true);
     } else {
-      setVisibility(false);
+      setIsScrollingUp(false);
     }
     setLastScrollPos(window.scrollY);
   }, [lastScrollPos]);
@@ -21,11 +21,15 @@ export const MenuBar = () => {
     });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
+  return isScrollingUp;
+};
+export const MenuBar = () => {
+  const isScrollingUp = useScroll();
 
   return (
     <div
       className={`fixed top-0 z-20  transition-all duration-700 w-full bg-background  text-text md:text-3xl text-lg pt-10 px-16 flex md:flex-row gap-5 flex-col justify-between items-center
-       ${visibility ? "translate-y-0" : "-translate-y-44"}`}
+       ${isScrollingUp ? "translate-y-0" : "-translate-y-44"}`}
     >
       <MyName />
       <section className="flex gap-5 justify-between w-full md:w-fit">
