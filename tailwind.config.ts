@@ -15,12 +15,12 @@ const config: Config = {
         text: "#EAEAEA", // Light Gray
         highlight: "#F05454", // Coral Pink
       },
-      fontFamily: {
-        code: ['"M PLUS Code Latin"', "sans-serif"],
-        sans: ["Roboto", "sans-serif"],
-      },
       animation: {
         "slide-right-left": "slide-right-left 1.4s ease-in-out forwards",
+      },
+      fontFamily: {
+        code: ["var(--font-code)"],
+        roboto: ["var(--font-roboto)"],
       },
       keyframes: {
         "slide-right-left": {

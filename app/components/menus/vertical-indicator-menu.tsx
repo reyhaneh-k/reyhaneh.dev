@@ -12,11 +12,11 @@ export const VerticalIndicator = () => {
           <div key={id} className="relative items-center flex">
             <FontAwesomeIcon
               icon={icon}
-              className={
+              className={`cursor-pointer ${
                 inViewSection === id
                   ? `scale-[270%] transition-all z-10`
                   : "transition-all z-10"
-              }
+              }`}
               onClick={() => {
                 sections.current?.[id]?.scrollIntoView({ behavior: "smooth" });
               }}

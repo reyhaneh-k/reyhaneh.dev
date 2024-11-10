@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { text } from "stream/consumers";
 
 const useTypeWriter = (str: string) => {
   const text = useRef("");
@@ -27,7 +26,7 @@ export const AboutMe = ({ className }: { className?: string }) => {
   const text = useTypeWriter(aboutMeText);
   return (
     <span
-      className={`text-lg font-extralight text-text tracking-wide ${className}`}
+      className={`md:text-lg lg:text-xl lg:tracking-wide tracking-normal text-base font-extralight text-text ${className}`}
     >
       {text.current}
     </span>

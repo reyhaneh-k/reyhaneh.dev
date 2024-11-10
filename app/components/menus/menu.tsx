@@ -1,13 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import { MenuMobile } from "./hamburger-menu-mobile";
+import { MenuMobile } from "./menu-bar-mobile";
 import { VerticalIndicator } from "./vertical-indicator-menu";
-import { MenuBar } from "./menu-bar";
+import { MenuBar } from "./menu-bar-web";
 
 const useIsMobile = (breakpoint = 768) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoint);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < breakpoint);
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < breakpoint);
     };
