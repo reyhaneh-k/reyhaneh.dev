@@ -30,7 +30,7 @@ export default function RootLayout({
         className={` h-screen overflow-x-hidden relative bg-background pt-32  ${code.variable} font-code`}
       >
         <Menu />
-        <CursorLight />
+        {/* <CursorLight /> */}
         {children}
       </body>
     </html>

@@ -11,11 +11,11 @@ export const Portrait = ({ className }: { className?: string }) => {
     >
       <div className="right-0 bottom-0 absolute">
         <div className="flex flex-col gap-[0.3vw]">
-          {Array(20)
+          {Array(10)
             .fill(0)
             .map((_, row) => (
               <div className="flex gap-[0.3vw] h-[0.7vw]" key={useId()}>
-                {Array(20)
+                {Array(10)
                   .fill(0)
                   .map((_, col) => (
                     <FontAwesomeIcon
@@ -31,11 +31,11 @@ export const Portrait = ({ className }: { className?: string }) => {
       </div>
       <div className="top-0 left-0  absolute">
         <div className="flex flex-col gap-[0.3vw]">
-          {Array(15)
+          {Array(10)
             .fill(0)
             .map((_, row) => (
               <div className="flex gap-[0.3vw] h-[0.6vw]" key={useId()}>
-                {Array(15)
+                {Array(10)
                   .fill(0)
                   .map((_, col) => (
                     <FontAwesomeIcon
