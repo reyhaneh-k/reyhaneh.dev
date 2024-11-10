@@ -98,7 +98,7 @@ export const Contours = ({ className }: { className?: string }) => {
   const twist = useTwistFactor();
   return (
     <div className={`${className} flex items-center justify-center`}>
-      {<ContourLines width={1000} height={1000} layers={20} twist={twist} />}
+      {<ContourLines width={1000} height={800} layers={20} twist={twist} />}
     </div>
   );
 };

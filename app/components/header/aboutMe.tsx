@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 
-const useTypeWriter = (str: string) => {
+export const useTypeWriter = (str: string) => {
   const text = useRef("");
   const [index, setIndex] = useState(0);
   useEffect(() => {
