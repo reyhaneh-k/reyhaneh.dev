@@ -15,9 +15,25 @@ const config: Config = {
         text: "#EAEAEA", // Light Gray
         highlight: "#F05454", // Coral Pink
       },
+      animation: {
+        "slide-right-left": "slide-right-left 1.4s ease-in-out forwards",
+      },
       fontFamily: {
-        code: ['"M PLUS Code Latin"', "sans-serif"],
-        sans: ["Roboto", "sans-serif"],
+        code: ["var(--font-code)"],
+        roboto: ["var(--font-roboto)"],
+      },
+      keyframes: {
+        "slide-right-left": {
+          "0%": {
+            transform: "translateX(-120%)",
+            opacity: "0",
+          },
+          "50%": { transform: "translateX(50%)", opacity: "1" },
+          "100%": {
+            transform: "translateX(-120%)",
+            opacity: "0",
+          },
+        },
       },
     },
   },
