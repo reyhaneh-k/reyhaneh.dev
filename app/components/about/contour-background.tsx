@@ -1,5 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
+import { useIsMobile } from "../menus/menu";
 
 type ContourProps = {
   width: number;
@@ -96,9 +97,13 @@ const useTwistFactor = () => {
 };
 export const Contours = ({ className }: { className?: string }) => {
   const twist = useTwistFactor();
+  const isMobile = useIsMobile();
+
   return (
     <div className={`${className} flex items-center justify-center`}>
-      {<ContourLines width={1000} height={800} layers={20} twist={twist} />}
+      {!isMobile && (
+        <ContourLines width={1000} height={800} layers={20} twist={twist} />
+      )}
     </div>
   );
 };

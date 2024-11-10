@@ -14,7 +14,7 @@ export const Tag = ({
   selfClosing?: boolean;
 }) => {
   return (
-    <span>
+    <span className="">
       {!selfClosing && (
         <>
           <small className="text-base font-light text-secondary">

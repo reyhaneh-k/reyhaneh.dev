@@ -17,9 +17,11 @@ import pythonIcon from "@/public/tech-stack/python.png";
 import nextIcon from "@/public/tech-stack/nextjs.svg";
 import tanstackIcon from "@/public/tech-stack/tanstack.png";
 
-export const Atom = () => {
+export const Atom = ({ className }: { className?: string }) => {
   return (
-    <div className="relative md:w-[500px] md:h-[500px] w-[300px] h-[300px] m-8">
+    <div
+      className={`relative md:w-[500px] md:h-[500px] w-[300px] h-[300px] ${className}`}
+    >
       <div className="absolute w-full h-full bg-gradient-to-b from-transparent from-0% to-background z-10"></div>
       <Orbit size={1} />
       <Orbit size={2} />

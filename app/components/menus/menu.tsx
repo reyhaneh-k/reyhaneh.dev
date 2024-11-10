@@ -4,7 +4,7 @@ import { MenuMobile } from "./menu-bar-mobile";
 import { VerticalIndicator } from "./vertical-indicator-menu";
 import { MenuBar } from "./menu-bar-web";
 
-const useIsMobile = (breakpoint = 768) => {
+export const useIsMobile = (breakpoint = 768) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {

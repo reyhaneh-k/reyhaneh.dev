@@ -13,17 +13,22 @@ const aboutSections = [
 ];
 export const About = () => {
   return (
-    <div id="about" className="md:p-10 md:m-20 p-5 m-2 relative h-[850px]">
+    <div id="about" className="md:p-10 p-5 m-2 relative h-[40rem] md:h-[50rem]">
       <div className="flex justify-between w-full">
-        <Tag tag="h2" lines={1} className="text-4xl basis-1/2 text-text">
+        <Tag
+          tag="h2"
+          lines={1}
+          className="md:text-4xl text-2xl basis-full text-text"
+        >
           About Me
         </Tag>
-        <Portrait className="basis-1/3  h-full invisible md:visible" />
+        <Portrait className="basis-1/3 h-fit invisible md:visible" />
       </div>
-      <div className="flex items-center justify-center h-full">
-        <Contours className=" h-[1000px] absolute inset-0" />
+      <div className="flex items-center justify-center md:h-full">
+        <Contours className=" h-full my-20 absolute inset-0 md:visible invisible" />
+
         <section className="flex flex-col gap-6 w-fit h-ful items-center justify-around ">
-          <FloatingText className="text-2xl text-text tracking-normal leading-normal md:tracking-wider md:leading-loose max-w-[800px]">
+          <FloatingText className="md:text-2xl text-xl text-text tracking-normal leading-normal md:tracking-wider md:leading-loose max-w-[800px]">
             <h1 className="text-secondary text-3xl tracking-wider m-5">
               Hello!
             </h1>
