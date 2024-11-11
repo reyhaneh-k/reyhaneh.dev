@@ -17,7 +17,7 @@ const config: Config = {
       },
       animation: {
         "slide-right-left": "slide-right-left 1.4s ease-in-out forwards",
-        float: "float 1.4s ease-in-out infinite",
+        draw: "draw 5s ease forwards",
       },
       fontFamily: {
         code: ["var(--font-code)"],
@@ -35,12 +35,9 @@ const config: Config = {
             opacity: "0",
           },
         },
-        float: {
-          "0%": { transform: "translate(0px,0px)" },
-          "30%": { transform: "translate(3px,3px)" },
-          "60%": { transform: "translate(0px,0px)" },
-          "90%": { transform: "translate(-3px,-3px)" },
-          "100%": { transform: "translate(0px,0px)" },
+        draw: {
+          "0%": { strokeDashoffset: "100" },
+          "100%": { strokeDashoffset: "0" },
         },
       },
     },

@@ -1,3 +1,4 @@
+import { Checkmark } from "../checkmark";
 import { Tag } from "../tag";
 import { Atom } from "./atom/atom";
 
@@ -7,7 +8,8 @@ export const Skills = () => {
       {/* <Tag tag="h2" lines={1} className="text-4xl basis-1/2 text-text">
         Skills
       </Tag> */}
-      <Atom className="self-end" />
+      {/* <Atom className="self-end" /> */}
+      <Checkmark />
     </div>
   );
 };
