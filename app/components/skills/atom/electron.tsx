@@ -34,38 +34,16 @@ export const Electron = ({
   const electronRef = useRef<HTMLImageElement | null>(null);
   const angle = useRef((position * Math.PI * 5) / 20);
   const animationID = useRef<number>(0);
-  const radius = useRef<number>(position * 7);
-
-  useEffect(() => {
-    if (window.matchMedia("(max-width:768px)").matches) {
-      radius.current = position * 7;
-    } else {
-      radius.current = position * 11;
-    }
-  }, [position]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.matchMedia("(max-width:768px)").matches) {
-        radius.current = position * 7;
-      } else {
-        radius.current = position * 11;
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [position, radius]);
+  const radius = position * 7.5;
 
   useEffect(() => {
     const animate = () => {
-      const x = radius.current * Math.cos(angle.current);
-      const y = radius.current * Math.sin(angle.current);
+      const x = radius * Math.cos(angle.current);
+      const y = radius * Math.sin(angle.current);
       if (electronRef.current) {
         electronRef.current.style.transform = `translate(${x}px, ${y}px)`;
       }
-      angle.current += radius.current / 50000;
+      angle.current += radius / 50000;
       animationID.current = requestAnimationFrame(animate);
     };
     animationID.current = requestAnimationFrame(animate);

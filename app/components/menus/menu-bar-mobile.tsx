@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { NameLogoShort } from "./name-logo";
-import { useScroll } from "./menu-bar-web";
+import { useScroll } from "@/app/hooks/useScroll";
 import { HamburgerMenu } from "./hamburger-menu";
 
 export const MenuMobile = () => {
@@ -11,7 +11,7 @@ export const MenuMobile = () => {
 
   return (
     <div
-      className={`flex h-fit fixed  justify-between w-screen z-20 py-10 top-0 ps-5 transition-all duration-700 ${
+      className={`flex h-fit fixed  justify-between w-full z-20 py-10 top-0 ps-5 transition-all duration-700 ${
         isScrollingUp || isRendered ? "translate-y-0" : "-translate-y-44"
       }`}
     >

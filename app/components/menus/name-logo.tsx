@@ -1,6 +1,8 @@
-export const NameLogo = () => {
+export const NameLogo = ({ className }: { className?: string }) => {
   return (
-    <div className="text-text font-code font-bold tracking-wider md:text-3xl text-lg cursor-default">
+    <div
+      className={`text-text font-code font-bold tracking-wider cursor-default ${className}`}
+    >
       <span className="text-secondary">&lt;&gt;</span> Reyhaneh Khoshghadam{" "}
       <span className="text-secondary">&lt;/&gt;</span>
     </div>

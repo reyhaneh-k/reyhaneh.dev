@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { useIsMobile } from "../menus/menu";
+import { useIsMobile } from "@/app/hooks/useIsMobile";
 
 type ContourProps = {
   width: number;
@@ -22,7 +22,7 @@ const ContourLines = ({ width, height, layers, twist }: ContourProps) => {
     let contours = [];
 
     for (let i = 3; i < layers; i++) {
-      const radius = step * i + 20 + twist * 8;
+      const radius = step * i + 20 + twist * 20;
       const path = generateWavePath(centerX, centerY, radius, points, i);
       contours.push(path);
     }
@@ -41,7 +41,7 @@ const ContourLines = ({ width, height, layers, twist }: ContourProps) => {
 
     for (let j = 0; j < points; j++) {
       const angle = (j / points) * 2 * Math.PI;
-      const offset = Math.sin(angle * 6 + i + (twist / layers) * 2 * i) * 8;
+      const offset = Math.sin(angle * 6 + i + (twist / layers) * 3 * i) * 8;
       const x = centerX + (radius + offset) * Math.cos(angle);
       const y = centerY + (radius + offset) * Math.sin(angle);
 
@@ -95,6 +95,7 @@ const useTwistFactor = () => {
   });
   return twist;
 };
+
 export const Contours = ({ className }: { className?: string }) => {
   const twist = useTwistFactor();
   const isMobile = useIsMobile();
@@ -102,7 +103,10 @@ export const Contours = ({ className }: { className?: string }) => {
   return (
     <div className={`${className} flex items-center justify-center`}>
       {!isMobile && (
-        <ContourLines width={1000} height={800} layers={20} twist={twist} />
+        <ContourLines width={800} height={800} layers={20} twist={twist} />
+      )}
+      {isMobile && (
+        <ContourLines width={500} height={500} layers={15} twist={0} />
       )}
     </div>
   );

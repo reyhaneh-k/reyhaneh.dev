@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` h-screen overflow-x-hidden relative bg-background pt-32  ${code.variable} font-code`}
+        className={`h-screen overflow-x-hidden relative bg-background pt-32  ${code.variable} font-code`}
       >
         <Menu />
         {/* <CursorLight /> */}

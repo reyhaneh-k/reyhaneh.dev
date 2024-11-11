@@ -1,44 +1,25 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NameLogo } from "./name-logo";
-import {
-  faCloudDownloadAlt,
-  faDownload,
-  faFileDownload,
-} from "@fortawesome/free-solid-svg-icons";
-import { useCallback, useEffect, useState } from "react";
+import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "../button";
+import { useScroll } from "@/app/hooks/useScroll";
 
-export const useScroll = () => {
-  const [isScrollingUp, setIsScrollingUp] = useState(true);
-  const [lastScrollPos, setLastScrollPos] = useState(0);
-  const handleScroll = useCallback(() => {
-    if (window.scrollY <= lastScrollPos) {
-      setIsScrollingUp(true);
-    } else {
-      setIsScrollingUp(false);
-    }
-    setLastScrollPos(window.scrollY);
-  }, [lastScrollPos]);
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      handleScroll();
-    });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-  return isScrollingUp;
-};
 export const MenuBar = () => {
   const isScrollingUp = useScroll();
 
   return (
     <div
-      className={`fixed top-0 z-10  bg-gradient-to-b from-background to-transparent transition-all duration-700 w-full text-text md:text-3xl text-lg pt-10 px-16 flex md:flex-row gap-5 flex-col justify-between items-center
-       ${isScrollingUp ? "translate-y-0" : "-translate-y-44"}`}
+      className={`fixed w-full top-0 z-10 justify-around items-center bg-gradient-to-b from-background to-transparent transition-all duration-700 pt-10 flex flex-row gap-5 
+       ${isScrollingUp ? "translate-y-0" : "-translate-y-full"}`}
     >
-      <NameLogo />
-      <section className="flex gap-5 justify-between w-full md:w-fit">
-        <FontAwesomeIcon size="2x" icon={faFileDownload} className="p-2" />
+      <NameLogo className="lg:text-3xl text-lg" />
+      <section className="flex gap-5 justify-between">
+        <FontAwesomeIcon
+          size="4x"
+          icon={faFileDownload}
+          className="p-2 text-text text-3xl"
+        />
         <Button style="outline" className="lg:text-3xl text-nowrap text-lg">
           let&apos;s talk
         </Button>

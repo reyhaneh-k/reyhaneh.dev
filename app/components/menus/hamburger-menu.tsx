@@ -1,13 +1,14 @@
 import { faMinus, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SectionId, sectionsInfo, useInView } from "./menu-utilities";
+import { useInViewSection } from "@/app/hooks/useInViewSection";
+import { sectionsInfo } from "./menu-utilities";
 import { useCallback, useEffect, useState } from "react";
 type HamburgerMenuProps = {
   isRendered: boolean;
   render: (isRendered: boolean) => void;
 };
 export const HamburgerMenu = ({ render, isRendered }: HamburgerMenuProps) => {
-  const { inViewSection, sections } = useInView();
+  const { inViewSection, sections } = useInViewSection();
   const [isMenuOpen, toggleMenu] = useState(false);
 
   const closeMenu = useCallback(() => {
@@ -62,7 +63,7 @@ export const HamburgerMenu = ({ render, isRendered }: HamburgerMenuProps) => {
             return (
               <div
                 key={id}
-                className={`flex items-center gap-6 cursor-pointer w-full  ${
+                className={`flex items-center gap-6 cursor-pointer ${
                   inViewSection === id
                     ? `border border-gray-500 shadow-inner shadow-primary rounded-xl p-4 transition-all`
                     : "transition-all"
@@ -80,7 +81,7 @@ export const HamburgerMenu = ({ render, isRendered }: HamburgerMenuProps) => {
             );
           })}
           <div className="flex">
-            <section className="flex gap-5 justify-between w-full md:w-fit">
+            <section className="flex gap-5 justify-between md:w-fit">
               <span className="tracking-widest gap-3 bg-secondary px-7 py-4 rounded-lg shadow shadow-blue-900 flex hover:shadow-inner hover:shadow-black cursor-pointer">
                 <FontAwesomeIcon icon={faDownload} />
                 CV

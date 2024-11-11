@@ -1,14 +1,9 @@
-import Image from "next/image";
-import HeaderSvg from "@/public/header.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCircleDot } from "@fortawesome/free-solid-svg-icons";
 import { useId } from "react";
-import { faStairs } from "@fortawesome/free-solid-svg-icons/faStairs";
 export const Portrait = ({ className }: { className?: string }) => {
   return (
-    <div
-      className={`relative p-8 m-8 md:w-3/5 md:h-full w-full h-2/5 ${className}`}
-    >
+    <div className={`relative p-8 m-8 md:w-3/5 md:h-full h-2/5 ${className}`}>
       <div className="right-0 bottom-0 absolute">
         <div className="flex flex-col gap-[0.3vw]">
           {Array(20)

@@ -3,7 +3,7 @@ import { AboutMe } from "./aboutMe";
 
 export const Summary = () => {
   return (
-    <div className="flex flex-col gap-10 md:w-2/5 w-full m-2">
+    <div className="flex flex-col gap-10 md:w-2/5 m-2">
       <Tag
         lines={2}
         tag="h1"
