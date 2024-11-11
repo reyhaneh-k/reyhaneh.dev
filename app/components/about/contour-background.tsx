@@ -102,12 +102,12 @@ export const Contours = ({ className }: { className?: string }) => {
 
   return (
     <div className={`${className} flex items-center justify-center`}>
-      {!isMobile && (
-        <ContourLines width={800} height={800} layers={20} twist={twist} />
-      )}
-      {isMobile && (
-        <ContourLines width={500} height={500} layers={15} twist={0} />
-      )}
+      <ContourLines
+        width={isMobile ? 500 : 800}
+        height={isMobile ? 500 : 800}
+        layers={isMobile ? 15 : 20}
+        twist={isMobile ? 0 : twist}
+      />
     </div>
   );
 };

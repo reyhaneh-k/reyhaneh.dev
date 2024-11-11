@@ -25,20 +25,20 @@ export const About = () => {
           <Tag selfClosing={true} tag="" className="text-secondary ">
             self-driven
           </Tag>{" "}
-          frontend developer who began through self-directed learning. I have a
-          strong foundation in{" "}
+          frontend developer who began through self-directed learning.
+          Leveraging technical expertise gained through{" "}
+          <Tag selfClosing={true} tag="" className="text-secondary">
+            intensive training
+          </Tag>{" "}
+          at Rahnema College, I have a strong foundation in{" "}
           <Tag selfClosing={true} tag="" className="text-secondary ">
             modern web technologies
           </Tag>{" "}
-          & I'm passionate about creating{" "}
+          & I thrive in Agile environments. I'm passionate about creating{" "}
           <Tag selfClosing={true} tag="" className="text-secondary">
             intuitive, responsive
           </Tag>{" "}
-          user interfaces. My background in Engineering, brings a unique{" "}
-          <Tag selfClosing={true} tag="" className="text-secondary">
-            problem solving
-          </Tag>{" "}
-          perspective to my skills stack.
+          user interfaces.
         </FloatingText>
       </div>
     </div>

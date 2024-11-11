@@ -10,7 +10,7 @@ export const AboutMe = ({ className }: { className?: string }) => {
     <span
       className={`md:text-lg lg:text-xl lg:tracking-wide tracking-normal text-base font-extralight text-text ${className}`}
     >
-      {text.current}
+      {text}
     </span>
   );
 };

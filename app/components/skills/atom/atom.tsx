@@ -20,7 +20,7 @@ import tanstackIcon from "@/public/tech-stack/tanstack.png";
 export const Atom = ({ className }: { className?: string }) => {
   return (
     <div className={`relative w-[20rem] h-[20rem] ${className}`}>
-      <div className="absolute w-full h-full bg-gradient-to-b from-transparent from-0% to-background z-10"></div>
+      <div className="absolute w-full h-full bg-gradient-to-b from-transparent to-background z-10"></div>
       <Orbit size={1} />
       <Orbit size={2} />
       <Orbit size={3} />

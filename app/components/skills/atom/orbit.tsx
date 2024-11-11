@@ -1,5 +1,5 @@
 export const Orbit = ({ size }: { size: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 }) => {
-  const margin = {
+  const sizes = {
     1: "w-full",
     2: "w-[90%] h-[90%]",
     3: "w-[80%] h-[80%]",
@@ -11,7 +11,11 @@ export const Orbit = ({ size }: { size: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 }) => {
   };
   return (
     <div
-      className={`border border-solid border-text rounded-full absolute inset-0  mx-auto my-auto border-opacity-35 ${margin[size]}`}
+      className={`border border-solid border-background  rounded-full absolute inset-0  mx-auto my-auto border-opacity-35 ${
+        sizes[size]
+      }
+      ${size % 2 === 0 ? "bg-background" : "bg-primary"}
+      `}
     />
   );
 };
