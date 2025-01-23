@@ -30,11 +30,6 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.js": "eslint --fix",
-    "*.jsx": "eslint --fix",
-    "*.ts": "eslint --fix",
-    "*.tsx": "eslint --fix",
-    "*.css": "prettier --write",
-    "*.md": "prettier --write"
+    "**/*.{js,jsx,ts,tsx}": "eslint --fix"
   }
 }
