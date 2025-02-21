@@ -4,15 +4,15 @@ export interface ExperienceProps {
   className?: string;
 }
 
-const Experience: FC<ExperienceProps> = () => {
+const Certifications: FC<ExperienceProps> = () => {
   return (
     <Section
-      id="Experience"
+      id="Certifications"
       className="bg-secondary-container text-on-secondary-container"
     >
-      Experince
+      Certifications
     </Section>
   );
 };
 
-export default Experience;
+export default Certifications;

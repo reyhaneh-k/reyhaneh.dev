@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { roboto, code } from '@/public/font';
+import Navigation from '@/components/layout/Navigation';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -12,10 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${roboto.variable} ${code.variable} antialiased`}>
+    <html lang="en" className="">
+      <body
+        className={`${roboto.variable} ${code.variable} antialiased font-code relative`}
+      >
+        <Navigation />
         {children}
-        {'testing husky'}
       </body>
     </html>
   );
