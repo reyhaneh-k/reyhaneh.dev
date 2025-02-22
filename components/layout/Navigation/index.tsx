@@ -1,5 +1,6 @@
 'use client';
 import { SectionIds } from '@/components/common/Section/types';
+import { useInViewSection } from '@/hooks/useInViewSection';
 import {
   BriefcaseBusiness,
   Clock,
@@ -11,31 +12,41 @@ import {
   Terminal,
   User,
 } from 'lucide-react';
-import { FC, ReactNode } from 'react';
+import { FC, useEffect } from 'react';
 
 const sectionsInfo: Array<{
-  icon: ReactNode;
+  icon: FC<{ size: number }>;
   id: SectionIds;
 }> = [
-  { icon: <Terminal />, id: 'Hero' },
-  { icon: <User />, id: 'Introduction' },
-  { icon: <Laptop />, id: 'TechStack' },
-  { icon: <FolderGit2 />, id: 'Projects' },
-  { icon: <BriefcaseBusiness />, id: 'Experience' },
   {
-    icon: <Mail />,
+    icon: ({ size }) => <Terminal size={size} />,
+    id: 'Hero',
+  },
+  { icon: ({ size }) => <User size={size} />, id: 'Introduction' },
+  { icon: ({ size }) => <Laptop size={size} />, id: 'TechStack' },
+  { icon: ({ size }) => <FolderGit2 size={size} />, id: 'Projects' },
+  { icon: ({ size }) => <BriefcaseBusiness size={size} />, id: 'Experience' },
+  {
+    icon: ({ size }) => <Mail size={size} />,
     id: 'Testimonials',
   },
   {
-    icon: <Clock />,
+    icon: ({ size }) => <Clock size={size} />,
     id: 'Future',
   },
-  { icon: <ShieldCheck />, id: 'Certifications' },
-  { icon: <Signature />, id: 'Footer' },
+  { icon: ({ size }) => <ShieldCheck size={size} />, id: 'Certifications' },
+  { icon: ({ size }) => <Signature size={size} />, id: 'Footer' },
 ];
 const Navigation: FC = () => {
+  const inViewSection = useInViewSection();
+  useEffect(() => {
+    console.log('inViewSection :>> ', inViewSection);
+
+    return () => {};
+  }, [inViewSection]);
+
   return (
-    <div className="fixed flex flex-col left-0 top-1/2 -translate-y-1/2 justify-center bg-surface-variant  py-2 rounded-2xl shadow-2xl shadow-shadow ">
+    <div className="fixed flex flex-col left-0 top-1/2 -translate-y-1/2 justify-center bg-surface-variant  py-2 rounded-2xl shadow-lg shadow-shadow ">
       {sectionsInfo.map((section, index) => (
         <span
           className="flex w-full items-center cursor-pointer"
@@ -47,9 +58,10 @@ const Navigation: FC = () => {
           }}
         >
           <span
-            className={`peer bg-surface-variant w-full  px-4 py-2  text-on-surface-variant ${index === 0 ? 'rounded-t-2xl' : index === sectionsInfo.length - 1 ? 'rounded-b-2xl' : ''}`}
+            className={`peer *:transition-all bg-surface-variant w-14 px-4 py-2  text-on-surface-variant ${index === 0 ? 'rounded-t-2xl' : index === sectionsInfo.length - 1 ? 'rounded-b-2xl' : ''}
+             `}
           >
-            {section.icon}
+            <section.icon size={inViewSection === section.id ? 30 : 20} />
           </span>
           <span className="-translate-x-full -z-20 peer-hover:translate-x-8 transition-transform absolute left-10 text-nowrap">
             {section.id}

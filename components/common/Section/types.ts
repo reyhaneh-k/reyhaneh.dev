@@ -16,3 +16,15 @@ export type SectionIds =
   | 'Testimonials'
   | 'Future'
   | 'Footer';
+
+export enum SectionsEnum {
+  Hero,
+  Introduction,
+  TechStack,
+  Projects,
+  Certifications,
+  Experience,
+  Testimonials,
+  Future,
+  Footer,
+}
