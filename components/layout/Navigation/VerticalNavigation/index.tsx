@@ -61,12 +61,12 @@ const VerticalNavigation: FC<HTMLAttributes<HTMLDivElement>> = ({
           }}
         >
           <span
-            className={`peer *:transition-all bg-surface-variant w-14 px-4 py-2  text-on-surface-variant ${index === 0 ? 'rounded-t-2xl' : index === sectionsInfo.length - 1 ? 'rounded-b-2xl' : ''}
+            className={`peer *:transition-all bg-surface-variant w-14 px-4 py-2  text-on-surface-variant ${index === 0 ? 'rounded-t-2xl pt-5' : index === sectionsInfo.length - 1 ? 'rounded-b-2xl pb-5' : ''}
              `}
           >
-            <section.icon size={inViewSection === section.id ? 30 : 20} />
+            <section.icon size={inViewSection === section.id ? 35 : 25} />
           </span>
-          <span className="-translate-x-full -z-20 peer-hover:translate-x-8 transition-transform absolute left-10 text-nowrap">
+          <span className="-translate-x-7/8 -z-20 peer-hover:translate-x-8 transition-transform absolute left-10 text-nowrap bg-inverse-on-surface p-1 rounded-sm">
             {section.id}
           </span>
         </span>

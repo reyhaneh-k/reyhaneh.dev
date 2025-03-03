@@ -15,7 +15,7 @@ export default function Home() {
     initializeTheme();
   }, []);
   return (
-    <div className="snap-mandatory snap-y scroll-smooth h-screen overflow-y-scroll">
+    <div className="snap-mandatory snap-y scroll-smooth h-screen overflow-y-scroll ">
       <HeroSection />
       <Introduction />
       <TechStack />

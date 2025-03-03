@@ -1,13 +1,12 @@
 'use client';
-import { getTheme, ThemeEnum, toggleTheme } from '@/utils/theme';
+import { toggleTheme } from '@/utils/theme';
 import clsx from 'clsx';
 import { Moon, SunMedium } from 'lucide-react';
-import { FC, HTMLAttributes, useState } from 'react';
+import { FC, HTMLAttributes } from 'react';
 
 type Props = HTMLAttributes<HTMLDivElement>;
 
 const Toggle: FC<Props> = ({ className }) => {
-  const [isLight, setIsLight] = useState(getTheme() === ThemeEnum.light);
   return (
     <div
       className={clsx(
@@ -15,21 +14,18 @@ const Toggle: FC<Props> = ({ className }) => {
         className
       )}
       onClick={() => {
-        setIsLight((isLight) => !isLight);
         toggleTheme();
       }}
     >
       <SunMedium
-        className={clsx('inset-y-0 absolute bg-white rounded-full my-1 ml-1', {
-          'opacity-100 translate-x-0': isLight,
-          'opacity-0 translate-x-10': !isLight,
-        })}
+        className={clsx(
+          'inset-y-0 absolute bg-white rounded-full my-1 ml-1 dark:opacity-0 dark:translate-x-10 light:opacity-100 light:translate-x-0'
+        )}
       />
       <Moon
-        className={clsx('inset-y-0 absolute bg-white rounded-full my-1 mr-1', {
-          'opacity-100 translate-x-10': !isLight,
-          'opacity-0 translate-x-0': isLight,
-        })}
+        className={clsx(
+          'inset-y-0 absolute bg-white rounded-full my-1 mr-1 light:opacity-0 light:translate-x-0 dark:opacity-100 dark:translate-x-10'
+        )}
       />
     </div>
   );

@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body
-        className={`${roboto.variable} ${code.variable} antialiased font-code `}
+        className={`${roboto.variable} ${code.variable} antialiased font-code`}
       >
         <Navigation />
         {children}
