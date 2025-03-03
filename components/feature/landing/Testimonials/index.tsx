@@ -4,9 +4,9 @@ export interface TestimonialsProps {
   className?: string;
 }
 
-const Testimonials: FC<TestimonialsProps> = () => {
+const Testimonials: FC<TestimonialsProps> = ({ className }) => {
   return (
-    <Section id="Testimonials" className="bg-surface">
+    <Section id="Testimonials" className={className}>
       Testimonials
     </Section>
   );

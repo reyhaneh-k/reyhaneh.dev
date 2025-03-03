@@ -4,12 +4,9 @@ export interface ExperienceProps {
   className?: string;
 }
 
-const Experience: FC<ExperienceProps> = () => {
+const Experience: FC<ExperienceProps> = ({ className }) => {
   return (
-    <Section
-      id="Experience"
-      className="bg-secondary-container text-on-secondary-container"
-    >
+    <Section id="Experience" className={className}>
       Experince
     </Section>
   );

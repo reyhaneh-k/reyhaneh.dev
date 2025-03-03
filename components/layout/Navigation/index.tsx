@@ -8,7 +8,12 @@ const Navigation: FC = () => {
     <>
       <HamburgerMenu className=" sm:hidden" />
       <VerticalNavigation className="sm:block hidden" />
-      <Toggle className="sm:block hidden absolute right-5 top-3" />
+      <div className="fixed top-3 px-20 justify-between w-full sm:flex hidden items-center">
+        <h1 className="text-4xl drop-shadow-[-0.5px_-0.5px_0_black,0.5px_-0.5px_0_black,-0.5px_0.5px_0_black,0.5px_0.5px_0_black] tracking-widest font-bold text-inverse-primary">
+          {'<R/>'}
+        </h1>
+        <Toggle />
+      </div>
     </>
   );
 };

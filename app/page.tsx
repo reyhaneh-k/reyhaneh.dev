@@ -16,15 +16,15 @@ export default function Home() {
   }, []);
   return (
     <div className="snap-mandatory snap-y scroll-smooth h-screen overflow-y-scroll ">
-      <HeroSection />
-      <Introduction />
-      <TechStack />
-      <Projects />
-      <Experience />
-      <Testimonials />
-      <Future />
-      <Certifications />
-      <Footer />
+      <HeroSection className="bg-primary text-on-primary" />
+      <Introduction className="bg-surface-container text-on-surface-container" />
+      <TechStack className="bg-secondary text-on-secondary" />
+      <Projects className="bg-surface-container-high text-on-surface" />
+      <Experience className="bg-tertiary text-on-tertiary" />
+      <Testimonials className="bg-surface-variant text-on-surface-variant" />
+      <Future className="bg-secondary-container text-on-secondary-container" />
+      <Certifications className="bg-surface-container text-on-surface" />
+      <Footer className="bg-background text-on-background" />
     </div>
   );
 }

@@ -4,9 +4,9 @@ export interface FutureProps {
   className?: string;
 }
 
-const Future: FC<FutureProps> = () => {
+const Future: FC<FutureProps> = ({ className }) => {
   return (
-    <Section id="Future" className="bg-surface">
+    <Section id="Future" className={className}>
       Future
     </Section>
   );

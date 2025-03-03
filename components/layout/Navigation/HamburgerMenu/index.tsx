@@ -53,25 +53,25 @@ const HamburgerMenu: FC<HTMLAttributes<HTMLDivElement>> = ({
       {...props}
     >
       <div
-        className="cursor-pointer z-20 absolute right-8 top-2"
+        className="cursor-pointer z-20 absolute right-9 top-2"
         onClick={() => {
           openMenu((isMenuOpen) => !isMenuOpen);
         }}
       >
         <Minus
-          className={`absolute top-0 text-tertiary  transition-all ${
+          className={`absolute top-0 text-inverse-primary  transition-all ${
             isMenuOpen ? 'rotate-45 translate-y-2' : ''
           }`}
         />
         <Minus
-          className={`absolute top-3 text-tertiary  transition-all ${
+          className={`absolute top-3 text-inverse-primary  transition-all ${
             isMenuOpen ? '-rotate-45  -translate-y-1 ' : ''
           }`}
         />
       </div>
       <Toggle
         className={clsx(
-          'top-2 left-2 transition-all duration-700 ',
+          'top-2 left-5 transition-all duration-700 ',
           isMenuOpen && 'opacity-0 -translate-x-full',
           !isMenuOpen && 'translate-x-0  opacity-100'
         )}
@@ -79,12 +79,12 @@ const HamburgerMenu: FC<HTMLAttributes<HTMLDivElement>> = ({
 
       <div
         className={`absolute top-0 items-center flex flex-wrap  p-2 gap-2 rounded-br-xl max-w-6/7 justify-start
-          bg-surface-variant shadow-shadow shadow transition-all duration-700
+          bg-inverse-primary shadow-shadow shadow transition-all duration-700
           ${isMenuOpen ? 'translate-x-0' : '-translate-x-[110%]'}`}
       >
         {sectionsInfo.map((section) => (
           <span
-            className={`*:transition-all text-on-surface-variant cursor-pointer
+            className={`*:transition-all text-primary cursor-pointer
              `}
             key={section.id}
             onClick={() => {

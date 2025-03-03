@@ -18,13 +18,13 @@ export type SectionIds =
   | 'Footer';
 
 export enum SectionsEnum {
-  Hero,
-  Introduction,
-  TechStack,
-  Projects,
-  Certifications,
-  Experience,
-  Testimonials,
-  Future,
-  Footer,
+  Hero = 'Hero',
+  Introduction = 'Introduction',
+  TechStack = 'TechStack',
+  Projects = 'Projects',
+  Certifications = 'Certifications',
+  Experience = 'Experience',
+  Testimonials = 'Testimonials',
+  Future = 'Future',
+  Footer = 'Footer',
 }

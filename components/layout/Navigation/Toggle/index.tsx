@@ -10,7 +10,7 @@ const Toggle: FC<Props> = ({ className }) => {
   return (
     <div
       className={clsx(
-        '*:transition-all *:duration-700 absolute shadow-shadow shadow-xs transition-all duration-700 rounded-full bg-inverse-primary w-17 h-8 flex items-center',
+        '*:transition-all *:duration-700 relative shadow-shadow shadow-xs transition-all duration-700 rounded-full bg-inverse-primary w-17 h-8 flex items-center',
         className
       )}
       onClick={() => {

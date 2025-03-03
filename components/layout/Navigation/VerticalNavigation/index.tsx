@@ -1,5 +1,5 @@
 'use client';
-import { SectionIds } from '@/components/common/Section/types';
+import { SectionsEnum } from '@/components/common/Section/types';
 import { useInViewSection } from '@/hooks/useInViewSection';
 import {
   BriefcaseBusiness,
@@ -15,27 +15,53 @@ import {
 import { FC, HTMLAttributes } from 'react';
 
 const sectionsInfo: Array<{
-  icon: FC<{ size: number }>;
-  id: SectionIds;
+  icon: FC<{ size: number; className?: string }>;
+  id: SectionsEnum;
 }> = [
   {
     icon: ({ size }) => <Terminal size={size} />,
-    id: 'Hero',
-  },
-  { icon: ({ size }) => <User size={size} />, id: 'Introduction' },
-  { icon: ({ size }) => <Laptop size={size} />, id: 'TechStack' },
-  { icon: ({ size }) => <FolderGit2 size={size} />, id: 'Projects' },
-  { icon: ({ size }) => <BriefcaseBusiness size={size} />, id: 'Experience' },
-  {
-    icon: ({ size }) => <Mail size={size} />,
-    id: 'Testimonials',
+    id: SectionsEnum.Hero,
   },
   {
-    icon: ({ size }) => <Clock size={size} />,
-    id: 'Future',
+    icon: ({ size, className }) => <User size={size} className={className} />,
+    id: SectionsEnum.Introduction,
   },
-  { icon: ({ size }) => <ShieldCheck size={size} />, id: 'Certifications' },
-  { icon: ({ size }) => <Signature size={size} />, id: 'Footer' },
+  {
+    icon: ({ size, className }) => <Laptop size={size} className={className} />,
+    id: SectionsEnum.TechStack,
+  },
+  {
+    icon: ({ size, className }) => (
+      <FolderGit2 size={size} className={className} />
+    ),
+    id: SectionsEnum.Projects,
+  },
+  {
+    icon: ({ size, className }) => (
+      <BriefcaseBusiness size={size} className={className} />
+    ),
+    id: SectionsEnum.Experience,
+  },
+  {
+    icon: ({ size, className }) => <Mail size={size} className={className} />,
+    id: SectionsEnum.Testimonials,
+  },
+  {
+    icon: ({ size, className }) => <Clock size={size} className={className} />,
+    id: SectionsEnum.Future,
+  },
+  {
+    icon: ({ size, className }) => (
+      <ShieldCheck size={size} className={className} />
+    ),
+    id: SectionsEnum.Certifications,
+  },
+  {
+    icon: ({ size, className }) => (
+      <Signature size={size} className={className} />
+    ),
+    id: SectionsEnum.Footer,
+  },
 ];
 
 const VerticalNavigation: FC<HTMLAttributes<HTMLDivElement>> = ({
@@ -46,7 +72,7 @@ const VerticalNavigation: FC<HTMLAttributes<HTMLDivElement>> = ({
 
   return (
     <div
-      className={`fixed flex flex-col left-0 top-1/2 -translate-y-1/2 justify-center bg-surface-variant
+      className={`fixed flex flex-col left-0 top-1/2 -translate-y-1/2 justify-center bg-inverse-primary
          py-2 rounded-2xl shadow-lg shadow-shadow ${className}`}
       {...props}
     >
@@ -61,12 +87,12 @@ const VerticalNavigation: FC<HTMLAttributes<HTMLDivElement>> = ({
           }}
         >
           <span
-            className={`peer *:transition-all bg-surface-variant w-14 px-4 py-2  text-on-surface-variant ${index === 0 ? 'rounded-t-2xl pt-5' : index === sectionsInfo.length - 1 ? 'rounded-b-2xl pb-5' : ''}
+            className={`peer *:transition-all bg-inverse-primary w-14 px-4 py-2 text-primary ${index === 0 ? 'rounded-t-2xl pt-5' : index === sectionsInfo.length - 1 ? 'rounded-b-2xl pb-5' : ''}
              `}
           >
             <section.icon size={inViewSection === section.id ? 35 : 25} />
           </span>
-          <span className="-translate-x-7/8 -z-20 peer-hover:translate-x-8 transition-transform absolute left-10 text-nowrap bg-inverse-on-surface p-1 rounded-sm">
+          <span className="-translate-x-7/8 -z-20 peer-hover:translate-x-8 transition-transform absolute left-10 text-nowrap bg-surface-container-low text-on-surface p-1 rounded-sm">
             {section.id}
           </span>
         </span>

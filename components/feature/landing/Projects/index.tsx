@@ -4,9 +4,9 @@ export interface ProjectsProps {
   className?: string;
 }
 
-const Projects: FC<ProjectsProps> = () => {
+const Projects: FC<ProjectsProps> = ({ className }) => {
   return (
-    <Section id="Projects" className="bg-surface text-on-surface">
+    <Section id="Projects" className={className}>
       Projects
     </Section>
   );

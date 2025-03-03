@@ -4,12 +4,9 @@ export interface TechStackProps {
   className?: string;
 }
 
-const TechStack: FC<TechStackProps> = () => {
+const TechStack: FC<TechStackProps> = ({ className }) => {
   return (
-    <Section
-      id="TechStack"
-      className="bg-primary-container text-on-primary-container"
-    >
+    <Section id="TechStack" className={className}>
       Tech Stack
     </Section>
   );

@@ -4,9 +4,9 @@ export interface FooterProps {
   className?: string;
 }
 
-const Footer: FC<FooterProps> = () => {
+const Footer: FC<FooterProps> = ({ className }) => {
   return (
-    <Section id="Footer" className="bg-surface-dim text-on-surface">
+    <Section id="Footer" className={className}>
       Footer
     </Section>
   );
