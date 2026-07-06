@@ -1,0 +1,86 @@
+name: CI
+
+# dev  → experiment and break things safely
+# main → production-ready; merge only after CI passes
+#
+# Solo workflow: push to dev, open PR dev → main, merge when green.
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+run-name: CI · ${{ github.ref_name }} · ${{ github.event_name }}
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify required files
+        run: |
+          test -f README.md
+          echo "Repository checks passed on branch: ${{ github.ref_name }}"
+
+  quality:
+    name: Lint, typecheck, build & test
+    needs: validate
+    if: hashFiles('package.json') != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck --if-present
+
+      - name: Build
+        run: npm run build
+        env:
+          # Next.js collects anonymous telemetry during build unless opted out
+          NEXT_TELEMETRY_DISABLED: 1
+
+      - name: Test
+        run: npm test --if-present
+
+  scaffold-pending:
+    name: App scaffold pending
+    needs: validate
+    if: hashFiles('package.json') == ''
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "::notice title=Next.js not scaffolded yet::Push your app setup to dev first. Lint, build, and test jobs will run automatically once package.json exists."
