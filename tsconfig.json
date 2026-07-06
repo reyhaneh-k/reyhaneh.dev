@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    // Projects
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+
+    // Completeness
+    "skipLibCheck": true,
+
+    // Modules
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noUncheckedSideEffectImports": true,
+    "module": "ESNext",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    // Emit
+    "noEmit": true,
+
+    // Language And Environment
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
+    "target": "ES2024",
+    "useDefineForClassFields": true,
+
+    // Interop Constraints
+    "isolatedModules": true,
+
+    // Type checking
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  // Type Acquisition
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

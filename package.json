@@ -3,12 +3,11 @@
   "scripts": {
     "dev": "vite --port 3001 --open http://localhost:3001",
     "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --fix"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.0",
     "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.5",
