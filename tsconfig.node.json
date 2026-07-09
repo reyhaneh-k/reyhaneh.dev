@@ -2,32 +2,13 @@
   "compilerOptions": {
     // Projects
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-
-    // Completeness
-    "skipLibCheck": true,
-
+    "noEmit": false,
+    "composite": true,
     // Modules
-    "moduleResolution": "bundler",
-    "module": "ESNext",
-
-    // Emit
-    "noEmit": true,
-    "composite": false,
-
-    // Language And Environment
-    "moduleDetection": "force",
-    "lib": ["ES2024"],
-    "target": "ES2024",
-
-    // Interop Constraints
-    "isolatedModules": true,
-
-    // Type checking
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "types": ["node"],
+    "allowImportingTsExtensions": false
   },
   // Type Acquisition
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts"],
+  "extends": ["./tsconfig.base.json"]
 }

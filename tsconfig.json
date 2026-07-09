@@ -3,38 +3,21 @@
     // Projects
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
 
-    // Completeness
-    "skipLibCheck": true,
-
-    // Modules
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "noUncheckedSideEffectImports": true,
-    "module": "ESNext",
+    // Module Resolution
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     },
 
-    // Emit
-    "noEmit": true,
-
     // Language And Environment
-    "moduleDetection": "force",
     "jsx": "react-jsx",
-    "lib": ["ES2024", "DOM", "DOM.Iterable"],
-    "target": "ES2024",
-    "useDefineForClassFields": true,
-
-    // Interop Constraints
-    "isolatedModules": true,
-
-    // Type checking
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "lib": ["ES2024", "DOM", "DOM.Iterable"]
   },
-  // Type Acquisition
   "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "extends": ["./tsconfig.base.json"]
 }
