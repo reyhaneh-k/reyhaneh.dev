@@ -70,7 +70,7 @@ export default defineConfig([
   {
     files: ["src/**/*.{ts,tsx}"],
     extends: [
-      tseslint.configs.recommendedTypeChecked,
+      tseslint.configs.strictTypeChecked,
       tseslint.configs.stylisticTypeChecked,
     ],
     languageOptions: {

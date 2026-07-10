@@ -3,10 +3,10 @@
   "name": "reyhaneh.dev",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite --port 3001 --open http://localhost:3001",
+    "start": "vite --port 3001 --open http://localhost:3001",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --no-cache --fix",
+    "lint": "eslint",
     "format": "prettier --write \"src/**/*.{js,ts,tsx}\""
   },
   "devDependencies": {
