@@ -17,9 +17,11 @@ import {
   createNodeResolver,
 } from "eslint-plugin-import-x";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
-
+import htmlEslint from "@html-eslint/eslint-plugin";
+import jsonEslint from "@eslint/json";
+import cssEslint from "@eslint/css";
+import markdownEslint from "@eslint/markdown";
 import prettier from "eslint-config-prettier/flat";
-
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
@@ -40,7 +42,7 @@ export default defineConfig([
   // 2. Language baseline for all source files
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{js,mjs,cjs,jsx,ts,tsx}"],
+    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2024,
       sourceType: "module",
@@ -58,7 +60,7 @@ export default defineConfig([
   // 3. Core JS recommended rules
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{js,mjs,cjs,jsx,ts,tsx}"],
+    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     extends: [js.configs.recommended],
   },
 
@@ -68,7 +70,7 @@ export default defineConfig([
   //    per file automatically (v8 approach; no manual `project` glob needed).
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{ts,tsx}"],
+    files: ["**/*.{ts,tsx}"],
     extends: [
       tseslint.configs.strictTypeChecked,
       tseslint.configs.stylisticTypeChecked,
@@ -79,19 +81,34 @@ export default defineConfig([
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      "no-unused-vars": "off", // defer to the TS-aware version
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+      "@typescript-eslint/no-explicit-any": "warn",
+    },
   },
 
   // ─────────────────────────────────────────────────────────────
   // 5. React (with the new JSX runtime — no `import React` needed)
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{jsx,tsx}"],
+    files: ["**/*.{jsx,tsx}"],
     extends: [
       react.configs.flat.recommended,
       react.configs.flat["jsx-runtime"],
     ],
     settings: {
       react: { version: "19" },
+    },
+    rules: {
+      "react/prop-types": "off", // defer to the TS-aware version
     },
   },
 
@@ -101,7 +118,7 @@ export default defineConfig([
   //    experimental React Compiler rules.
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{jsx,tsx,ts,js}"],
+    files: ["**/*.{jsx,tsx,ts,js}"],
     extends: [reactHooks.configs.flat.recommended],
   },
 
@@ -109,7 +126,7 @@ export default defineConfig([
   // 7. Accessibility for JSX
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{jsx,tsx}"],
+    files: ["**/*.{jsx,tsx}"],
     extends: [jsxA11y.flatConfigs.recommended],
   },
 
@@ -118,17 +135,17 @@ export default defineConfig([
   //    Requires: eslint-import-resolver-typescript (install as devDep).
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{js,mjs,cjs,jsx,ts,tsx}"],
+    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     extends: [importX.flatConfigs.recommended],
   },
   {
     // The `typescript` preset wires up the TS parser + extension settings
     // that the import rules need to understand .ts/.tsx files.
-    files: ["src/**/*.{ts,tsx}"],
+    files: ["**/*.{ts,tsx}"],
     extends: [importX.flatConfigs.typescript],
   },
   {
-    files: ["src/**/*.{js,mjs,cjs,jsx,ts,tsx}"],
+    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     settings: {
       // The TypeScript resolver reads your tsconfig, so `import-x/no-unresolved`
       // now correctly understands path aliases like "@/components/Button".
@@ -173,20 +190,8 @@ export default defineConfig([
   // 9. Project rule tweaks (sensible defaults — adjust to taste)
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{js,mjs,cjs,jsx,ts,tsx}"],
+    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     rules: {
-      // Prefer the TS-aware unused-vars rule; allow `_`-prefixed on purpose.
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-          caughtErrorsIgnorePattern: "^_",
-        },
-      ],
-      "@typescript-eslint/no-explicit-any": "warn",
-      "react/prop-types": "off", // TypeScript handles prop types
       "no-console": "error",
       eqeqeq: ["error", "smart"],
     },
@@ -198,10 +203,7 @@ export default defineConfig([
   //     files that live outside your tsconfig's `include`.
   // ─────────────────────────────────────────────────────────────
   {
-    files: [
-      "**/*.{js,cjs,mjs}",
-      "*.config.{js,ts,mjs,cjs}",
-    ],
+    files: ["**/*.{js,cjs,mjs}", "*.config.{js,mjs,cjs}"],
     languageOptions: {
       globals: { ...globals.node },
     },
@@ -209,7 +211,47 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 11. Prettier — MUST be last. Turns off every rule that would fight
+  // 11. HTML — linting for HTML files
+  // ─────────────────────────────────────────────────────────────
+  {
+    files: ["**/*.html"],
+    plugins: { html: htmlEslint },
+    language: "html/html",
+    extends: [htmlEslint.configs.recommended],
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 12. JSON — linting for JSON files
+  // ─────────────────────────────────────────────────────────────
+  {
+    files: ["**/*.json"],
+    plugins: { json: jsonEslint },
+    language: "json/jsonc",
+    extends: [jsonEslint.configs.recommended],
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 13. CSS — linting for CSS files
+  // ─────────────────────────────────────────────────────────────
+  {
+    files: ["**/*.css"],
+    plugins: { css: cssEslint },
+    language: "css/css",
+    extends: [cssEslint.configs.recommended],
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 14. Markdown — linting for Markdown files
+  // ─────────────────────────────────────────────────────────────
+  {
+    files: ["**/*.md"],
+    plugins: { markdown: markdownEslint },
+    language: "markdown/commonmark",
+    extends: [markdownEslint.configs.recommended],
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 15. Prettier — MUST be last. Turns off every rule that would fight
   //     Prettier's formatting. (v10 flat entry point.)
   // ─────────────────────────────────────────────────────────────
   prettier,
