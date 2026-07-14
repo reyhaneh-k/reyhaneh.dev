@@ -9,6 +9,6 @@
     "allowImportingTsExtensions": false
   },
   // Type Acquisition
-  "include": ["vite.config.ts"],
+  "include": ["vite.config.ts", "lint-staged.config.ts"],
   "extends": ["./tsconfig.base.json"]
 }

@@ -6,23 +6,23 @@
 // If your package.json does NOT have "type": "module", rename this file to
 // eslint.config.mjs so the `import` statements resolve.
 
+import cssEslint from "@eslint/css";
 import js from "@eslint/js";
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import react from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
-import jsxA11y from "eslint-plugin-jsx-a11y";
+import jsonEslint from "@eslint/json";
+import markdownEslint from "@eslint/markdown";
+import htmlEslint from "@html-eslint/eslint-plugin";
+import { defineConfig, globalIgnores } from "eslint/config";
+import prettier from "eslint-config-prettier/flat";
+import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
 import {
   importX,
   createNodeResolver,
 } from "eslint-plugin-import-x";
-import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
-import htmlEslint from "@html-eslint/eslint-plugin";
-import jsonEslint from "@eslint/json";
-import cssEslint from "@eslint/css";
-import markdownEslint from "@eslint/markdown";
-import prettier from "eslint-config-prettier/flat";
-import { defineConfig, globalIgnores } from "eslint/config";
+import jsxA11y from "eslint-plugin-jsx-a11y";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 export default defineConfig([
   // ─────────────────────────────────────────────────────────────

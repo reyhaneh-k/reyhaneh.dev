@@ -1,0 +1,7 @@
+{
+  // Prompt to install these when opening the workspace
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
+}
