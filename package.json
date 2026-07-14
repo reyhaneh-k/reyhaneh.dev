@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview --port 3002 --open http://localhost:3002",
     "lint": "eslint --fix",
-    "format": "prettier --write \"src/**/*.{js,ts,tsx}\"",
+    "format": "prettier --write \"**/*.{js,ts,tsx,json,jsonc,html,css,markdown}\"",
     "pre-commit": "lint-staged",
     "pre-push": "prettier --write \"**/*.{js,ts,tsx}\" && pnpm run lint",
     "prepare": "husky"
