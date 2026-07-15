@@ -1,0 +1,2 @@
+# Working tree uses CRLF on all platforms; Git still stores LF in the object database.
+* text=auto eol=crlf
