@@ -92,6 +92,8 @@ export default defineConfig([
         },
       ],
       "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/restrict-template-expressions":
+        "off",
     },
   },
 

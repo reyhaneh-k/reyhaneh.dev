@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "scripts": {
     "serve": "vite serve --port 3001 --open http://localhost:3001",
-    "build": "vite build",
+    "build": "pnpm pre-push && vite build",
     "preview": "vite preview --port 3002 --open http://localhost:3002",
     "lint": "eslint --fix",
     "format": "prettier --write \"**/*.{js,ts,tsx,json,jsonc,html,css,markdown}\"",
     "pre-commit": "lint-staged",
-    "pre-push": "prettier --write \"**/*.{js,ts,tsx}\" && pnpm run lint",
+    "pre-push": "pnpm format && pnpm lint",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -35,5 +35,9 @@
     "typescript-eslint": "^8.62.1",
     "vite": "^8.1.3",
     "vite-plugin-checker": "^0.14.4"
+  },
+  "engines": {
+    "node": ">=22.18.0",
+    "pnpm": ">=10.9.0"
   }
 }
