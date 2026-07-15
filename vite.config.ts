@@ -1,3 +1,7 @@
+import babel from "@rolldown/plugin-babel";
+import react, {
+  reactCompilerPreset,
+} from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
 
@@ -7,6 +11,17 @@ const svgrCommonOptions = {
   plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx"],
   svgoConfig: {
     floatPrecision: 2,
+    plugins: [
+      {
+        name: "preset-default",
+      },
+      {
+        name: "convertColors",
+        params: {
+          currentColor: true,
+        },
+      },
+    ],
   },
   //Accessibility
   titleProp: true,
@@ -21,6 +36,10 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   plugins: [
+    react(),
+    babel({
+      presets: [reactCompilerPreset()],
+    }),
     svgr({
       svgrOptions: {
         ...svgrCommonOptions,
