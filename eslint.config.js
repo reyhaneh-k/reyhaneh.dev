@@ -13,6 +13,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import prettier from "eslint-config-prettier/flat";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
 import checkFile from "eslint-plugin-check-file";
+import pluginRouter from "@tanstack/eslint-plugin-router";
 import {
   importX,
   createNodeResolver,
@@ -34,7 +35,7 @@ export default defineConfig([
     "node_modules/**",
     "vite.config.*.timestamp-*", // Vite's temp config artifacts
     "**/*.min.js",
-    "**/router.gen.ts",
+    "**/routeTree.gen.ts",
   ]),
 
   // ─────────────────────────────────────────────────────────────
@@ -238,6 +239,7 @@ export default defineConfig([
   // ─────────────────────────────────────────────────────────────
   {
     files: ["src/**/*"],
+    ignores: ["src/routes/**/*"],
     plugins: { "check-file": checkFile },
     rules: {
       // No barrels: ban a BARE index.ts/tsx/js/jsx. Deliberately NOT `no-index`
@@ -271,7 +273,10 @@ export default defineConfig([
   // 14. Named exports everywhere by default
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{ts,tsx}"],
+    files: [
+      "src/{components,layout,providers}/**/*.{ts,tsx}",
+      "src/{hooks,stores,utils,consts,types,styles}/**/*.{ts,tsx}",
+    ],
     rules: { "import-x/no-default-export": "error" },
   },
   {
@@ -283,7 +288,40 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 15. Prettier — MUST be last. Turns off every rule that would fight
+  // 15. TanStack Router — linting for TanStack Router files
+  // ─────────────────────────────────────────────────────────────
+  {
+    plugins: {
+      "@tanstack/router": pluginRouter,
+    },
+    files: ["src/routes/**"],
+    extends: [pluginRouter.configs["flat/recommended"]],
+  },
+  {
+    files: ["src/routes/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/only-throw-error": [
+        "error",
+        {
+          allow: [
+            {
+              from: "package",
+              package: "@tanstack/router-core",
+              name: "Redirect",
+            },
+            {
+              from: "package",
+              package: "@tanstack/router-core",
+              name: "NotFoundError",
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 16. Prettier — MUST be last. Turns off every rule that would fight
   //     Prettier's formatting. (v10 flat entry point.)
   // ─────────────────────────────────────────────────────────────
   prettier,
