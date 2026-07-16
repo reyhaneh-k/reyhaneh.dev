@@ -1,5 +1,6 @@
 import babel from "@rolldown/plugin-babel";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react, {
   reactCompilerPreset,
 } from "@vitejs/plugin-react";
@@ -32,6 +33,10 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   plugins: [
+    tanstackRouter({
+      target: "react",
+      autoCodeSplitting: true,
+    }),
     react(),
     babel({
       presets: [reactCompilerPreset()],

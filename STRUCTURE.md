@@ -25,6 +25,7 @@ src/
 │  └─ modules/          # composites: feature-aware, may nest `subs/`
 ├─ layout/              # route shells (rootLayout, authLayout …), may nest `subs/`
 ├─ pages/               # route leaves, one per route (default export)
+├─ router/              # code-based TanStack Router: route tree wiring (not UI)
 ├─ hooks/               # useX units
 ├─ providers/           # context providers (+ their mount-time side effects)
 ├─ stores/              # client state units (zustand/jotai)
@@ -81,7 +82,7 @@ Consistent casing is also our case-sensitivity safety net (see §7).
 
 ## 3. Unit types
 
-Each unit is a folder containing a main file plus co-located siblings. Summary:
+Each unit is a folder containing a main file plus co-located siblings.
 
 ### components/prim
 
@@ -147,6 +148,47 @@ pages/home/
 ├─ index.helpers.ts
 └─ subs/               # subs are components → NAMED exports
 ```
+
+### router (§3a)
+
+Code-based TanStack Router. This layer holds the **route-tree wiring only** — it
+imports page/layout components and stitches them into a typed tree; it contains
+no UI of its own. Because we use _code-based_ (not file-based) routing, the
+router imposes **no** file conventions on us, so these files follow our own
+naming — `camelCase`, **not** PascalCase (they aren't components).
+
+```
+router/
+├─ router.tsx          # createRouter(...) + <RouterProvider> — named export
+├─ rootRoute.tsx       # createRootRouteWithContext (context type + root layout)
+├─ routeTree.tsx       # assembles rootRoute.addChildren([...]) — named export
+├─ index.types.ts      # RouterContext type + `declare module` Register augmentation
+└─ routes/
+   └─ home.route.tsx    # createRoute(...) → named `homeRoute`
+```
+
+A route file wires a path + data lifecycle to a page, importing the page's
+default export and re-exporting a **named** route object:
+
+```ts
+// router/routes/home.route.tsx
+import { createRoute } from "@tanstack/react-router";
+import Home from "@/pages/home/Home"; // page default export
+import { rootRoute } from "@/router/rootRoute";
+
+export const homeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: Home,
+  // beforeLoad / loaderDeps / loader (data lifecycle) live here
+});
+```
+
+Notes: route files use the `.route.tsx` suffix and export a named `xRoute`
+object (never default — the default export belongs to the page it points at).
+The router's `context` (e.g. a `queryClient`) is typed in `rootRoute` and the
+`Register` module augmentation in `router/index.types.ts` is what makes route
+paths, params, and search type-safe app-wide — ensure tsconfig includes it.
 
 ### hooks
 
@@ -225,6 +267,8 @@ CSS variables. Component-specific styles co-locate next to their component.
   - `pages/**` route leaves — one default export, for `React.lazy`.
   - SVGR icon/SVG imports — default by necessity (`import Logo from "./x.svg?react"`).
   - A layout you explicitly lazy-load — flip that one file to default.
+- **`router/` files are named exports** — route objects (`export const homeRoute`),
+  the router, and the tree. They import page _default_ exports but never default-export.
 - **One export per main file.** A `Component.tsx` exports exactly one component;
   never mix a named and default export of the same thing in one file.
 
@@ -238,7 +282,7 @@ specific time. Split side effects by **when** they must run:
 **Before React (entry-level).** Anything that must initialize before React
 mounts and before the app graph loads — e.g. `Sentry.init()`. The file can be
 co-located in its unit (`providers/sentry/sideEffect.ts`), but it is imported as
-the **first line of** `main.tsx`, as a bare side-effect import:
+the **first line of `main.tsx`**, as a bare side-effect import:
 
 ```ts
 // src/main.tsx
@@ -257,7 +301,7 @@ silently reintroduce the timing gap.
 (listeners, subscriptions, store↔storage sync) belong in a provider's
 `useEffect` / co-located `sideEffect.ts`, not at the entry.
 
-`sideEffect.ts` is the naming convention for any impure, imported-for-effect
+**`sideEffect.ts`** is the naming convention for any impure, imported-for-effect
 module. If `package.json` ever sets `"sideEffects": false`, list these so they
 aren't tree-shaken away: `"sideEffects": ["**/sideEffect.ts", "**/*.css"]`.
 
@@ -285,7 +329,8 @@ Local filesystems are case-insensitive; CI/Linux is case-sensitive. A casing
 mismatch that resolves locally will fail the build in CI. Rules:
 
 - Folders lowercase-camel; component/page/layout/provider files PascalCase;
-  everything else camelCase — pick the name once and match imports **exactly**.
+  everything else — including `router/` route files (`x.route.tsx`) — camelCase.
+  Pick the name once and match imports **exactly**.
 - `forceConsistentCasingInFileNames` is on (TS default) and will flag mismatches
   on every OS.
 - For a case-only rename on Windows, force it through a temp name

@@ -1,5 +1,19 @@
 {
   "compilerOptions": {
+    // Projects
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+
+    // Module Resolution,
+    "paths": {
+      "@/*": ["./*"]
+    },
+
+    // Language And Environment
+    "jsx": "react-jsx",
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
+    "moduleDetection": "force",
+    "useDefineForClassFields": true,
+
     // Completeness
     "skipLibCheck": true,
 
@@ -12,11 +26,6 @@
     // Emit
     "noEmit": true,
 
-    // Language And Environment
-    "moduleDetection": "force",
-    "lib": ["ES2024"],
-    "useDefineForClassFields": true,
-
     // Interop Constraints
     "isolatedModules": true,
 
@@ -25,5 +34,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
-  }
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
 }

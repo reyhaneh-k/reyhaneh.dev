@@ -34,6 +34,7 @@ export default defineConfig([
     "node_modules/**",
     "vite.config.*.timestamp-*", // Vite's temp config artifacts
     "**/*.min.js",
+    "**/router.gen.ts",
   ]),
 
   // ─────────────────────────────────────────────────────────────
@@ -145,13 +146,15 @@ export default defineConfig([
     extends: [importX.flatConfigs.typescript],
   },
   {
-    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
+    files: ["src/**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     settings: {
       // The TypeScript resolver reads your tsconfig, so `import-x/no-unresolved`
       // now correctly understands path aliases like "@/components/Button".
+      // App aliases (@/*) live in src/tsconfig.json; root tsconfig is Node-only.
       "import-x/resolver-next": [
         createTypeScriptImportResolver({
           alwaysTryTypes: true,
+          project: "./src/tsconfig.json",
         }),
         createNodeResolver(),
       ],
