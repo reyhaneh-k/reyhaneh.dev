@@ -64,11 +64,7 @@ const config: Configuration = {
     "🧠  Code — TypeScript / JavaScript / JSX",
     lintAndFormat
   ),
-
   "**/*.css": step("🎨  Styles — CSS", lintAndFormat),
-
-  "**/*.html": step("📄  Markup — HTML", lintAndFormat),
-
   "**/*.{json,jsonc}": step(
     "🗂️  Data — JSON / JSONC",
     lintAndFormat
