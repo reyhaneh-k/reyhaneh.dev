@@ -14,4 +14,4 @@ function SentryProvider({
   );
 }
 
-export default SentryProvider;
+export { SentryProvider };
