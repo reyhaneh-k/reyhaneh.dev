@@ -9,10 +9,10 @@
 import cssEslint from "@eslint/css";
 import js from "@eslint/js";
 import jsonEslint from "@eslint/json";
-import markdownEslint from "@eslint/markdown";
 import { defineConfig, globalIgnores } from "eslint/config";
 import prettier from "eslint-config-prettier/flat";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
+import checkFile from "eslint-plugin-check-file";
 import {
   importX,
   createNodeResolver,
@@ -22,7 +22,6 @@ import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-
 export default defineConfig([
   // ─────────────────────────────────────────────────────────────
   // 1. Global ignores — never linted (build output, deps, generated)
@@ -212,17 +211,7 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 11. HTML — linting for HTML files
-  // ─────────────────────────────────────────────────────────────
-  // {
-  //   files: ["**/*.html"],
-  //   plugins: { html: htmlEslint },
-  //   language: "html/html",
-  //   extends: [htmlEslint.configs.recommended],
-  // },
-
-  // ─────────────────────────────────────────────────────────────
-  // 12. JSON — linting for JSON files
+  // 11. JSON — linting for JSON files
   // ─────────────────────────────────────────────────────────────
   {
     files: ["**/*.json"],
@@ -232,7 +221,7 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 13. CSS — linting for CSS files
+  // 12. CSS — linting for CSS files
   // ─────────────────────────────────────────────────────────────
   {
     files: ["**/*.css"],
@@ -242,13 +231,52 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 14. Markdown — linting for Markdown files
+  // 13. File & folder naming (check-file)
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["**/*.md"],
-    plugins: { markdown: markdownEslint },
-    language: "markdown/commonmark",
-    extends: [markdownEslint.configs.recommended],
+    files: ["src/**/*"],
+    plugins: { "check-file": checkFile },
+    rules: {
+      // No barrels: ban a BARE index.ts/tsx/js/jsx. Deliberately NOT `no-index`
+      // (see note) so index.types.ts / index.consts.ts / index.helpers.ts survive.
+      "check-file/filename-blocklist": [
+        "error",
+        { "**/index.{js,jsx,ts,tsx}": "**/!(index).*" },
+      ],
+
+      // All folders under src are lowercase-camel (button, userCard, authStore…)
+      "check-file/folder-naming-convention": [
+        "error",
+        { "src/**/": "CAMEL_CASE" },
+      ],
+
+      // Component-shaped .tsx → PascalCase; hook/store/util/const/type .ts → camelCase
+      "check-file/filename-naming-convention": [
+        "error",
+        {
+          "src/{components,layout,pages,providers}/**/*.tsx":
+            "PASCAL_CASE",
+          "src/{hooks,stores,utils,consts,types}/**/*.ts":
+            "CAMEL_CASE",
+        },
+        { ignoreMiddleExtensions: true },
+      ],
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 14. Named exports everywhere by default
+  // ─────────────────────────────────────────────────────────────
+  {
+    files: ["src/**/*.{ts,tsx}"],
+    rules: { "import-x/no-default-export": "error" },
+  },
+  {
+    files: ["src/pages/**/*.tsx"],
+    rules: {
+      "import-x/no-default-export": "off",
+      "import-x/no-named-export": "error",
+    },
   },
 
   // ─────────────────────────────────────────────────────────────
