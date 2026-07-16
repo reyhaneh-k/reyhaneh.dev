@@ -76,7 +76,8 @@
   "files.insertFinalNewline": true,
   "files.watcherExclude": {
     "**/node_modules/**": true,
-    "**/dist/**": true
+    "**/dist/**": true,
+    "**/routeTree.gen.ts": true
   },
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
@@ -85,6 +86,11 @@
   "search.exclude": {
     "**/node_modules": true,
     "**/dist": true,
-    "**/pnpm-lock.yaml": true
+    "**/pnpm-lock.yaml": true,
+    "**/routeTree.gen.ts": true
+  },
+
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
   }
 }

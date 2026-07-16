@@ -9,11 +9,11 @@
 import cssEslint from "@eslint/css";
 import js from "@eslint/js";
 import jsonEslint from "@eslint/json";
-import markdownEslint from "@eslint/markdown";
-import htmlEslint from "@html-eslint/eslint-plugin";
 import { defineConfig, globalIgnores } from "eslint/config";
 import prettier from "eslint-config-prettier/flat";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
+import checkFile from "eslint-plugin-check-file";
+import pluginRouter from "@tanstack/eslint-plugin-router";
 import {
   importX,
   createNodeResolver,
@@ -23,7 +23,6 @@ import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-
 export default defineConfig([
   // ─────────────────────────────────────────────────────────────
   // 1. Global ignores — never linted (build output, deps, generated)
@@ -36,6 +35,7 @@ export default defineConfig([
     "node_modules/**",
     "vite.config.*.timestamp-*", // Vite's temp config artifacts
     "**/*.min.js",
+    "**/routeTree.gen.ts",
   ]),
 
   // ─────────────────────────────────────────────────────────────
@@ -147,13 +147,15 @@ export default defineConfig([
     extends: [importX.flatConfigs.typescript],
   },
   {
-    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
+    files: ["src/**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     settings: {
       // The TypeScript resolver reads your tsconfig, so `import-x/no-unresolved`
       // now correctly understands path aliases like "@/components/Button".
+      // App aliases (@/*) live in src/tsconfig.json; root tsconfig is Node-only.
       "import-x/resolver-next": [
         createTypeScriptImportResolver({
           alwaysTryTypes: true,
+          project: "./src/tsconfig.json",
         }),
         createNodeResolver(),
       ],
@@ -213,17 +215,7 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 11. HTML — linting for HTML files
-  // ─────────────────────────────────────────────────────────────
-  {
-    files: ["**/*.html"],
-    plugins: { html: htmlEslint },
-    language: "html/html",
-    extends: [htmlEslint.configs.recommended],
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // 12. JSON — linting for JSON files
+  // 11. JSON — linting for JSON files
   // ─────────────────────────────────────────────────────────────
   {
     files: ["**/*.json"],
@@ -233,7 +225,7 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 13. CSS — linting for CSS files
+  // 12. CSS — linting for CSS files
   // ─────────────────────────────────────────────────────────────
   {
     files: ["**/*.css"],
@@ -243,17 +235,93 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 14. Markdown — linting for Markdown files
+  // 13. File & folder naming (check-file)
   // ─────────────────────────────────────────────────────────────
   {
-    files: ["**/*.md"],
-    plugins: { markdown: markdownEslint },
-    language: "markdown/commonmark",
-    extends: [markdownEslint.configs.recommended],
+    files: ["src/**/*"],
+    ignores: ["src/routes/**/*"],
+    plugins: { "check-file": checkFile },
+    rules: {
+      // No barrels: ban a BARE index.ts/tsx/js/jsx. Deliberately NOT `no-index`
+      // (see note) so index.types.ts / index.consts.ts / index.helpers.ts survive.
+      "check-file/filename-blocklist": [
+        "error",
+        { "**/index.{js,jsx,ts,tsx}": "**/!(index).*" },
+      ],
+
+      // All folders under src are lowercase-camel (button, userCard, authStore…)
+      "check-file/folder-naming-convention": [
+        "error",
+        { "src/**/": "CAMEL_CASE" },
+      ],
+
+      // Component-shaped .tsx → PascalCase; hook/store/util/const/type .ts → camelCase
+      "check-file/filename-naming-convention": [
+        "error",
+        {
+          "src/{components,layout,pages,providers}/**/*.tsx":
+            "PASCAL_CASE",
+          "src/{hooks,stores,utils,consts,types}/**/*.ts":
+            "CAMEL_CASE",
+        },
+        { ignoreMiddleExtensions: true },
+      ],
+    },
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 15. Prettier — MUST be last. Turns off every rule that would fight
+  // 14. Named exports everywhere by default
+  // ─────────────────────────────────────────────────────────────
+  {
+    files: [
+      "src/{components,layout,providers}/**/*.{ts,tsx}",
+      "src/{hooks,stores,utils,consts,types,styles}/**/*.{ts,tsx}",
+    ],
+    rules: { "import-x/no-default-export": "error" },
+  },
+  {
+    files: ["src/pages/**/*.tsx"],
+    rules: {
+      "import-x/no-default-export": "off",
+      "import-x/no-named-export": "error",
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 15. TanStack Router — linting for TanStack Router files
+  // ─────────────────────────────────────────────────────────────
+  {
+    plugins: {
+      "@tanstack/router": pluginRouter,
+    },
+    files: ["src/routes/**"],
+    extends: [pluginRouter.configs["flat/recommended"]],
+  },
+  {
+    files: ["src/routes/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/only-throw-error": [
+        "error",
+        {
+          allow: [
+            {
+              from: "package",
+              package: "@tanstack/router-core",
+              name: "Redirect",
+            },
+            {
+              from: "package",
+              package: "@tanstack/router-core",
+              name: "NotFoundError",
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 16. Prettier — MUST be last. Turns off every rule that would fight
   //     Prettier's formatting. (v10 flat entry point.)
   // ─────────────────────────────────────────────────────────────
   prettier,

@@ -1,2 +1,10 @@
 node_modules
 dist
+build
+coverage
+package-lock.json
+pnpm-lock.yaml
+
+.env.local
+TODOS.md
+
