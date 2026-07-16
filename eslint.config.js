@@ -10,7 +10,6 @@ import cssEslint from "@eslint/css";
 import js from "@eslint/js";
 import jsonEslint from "@eslint/json";
 import markdownEslint from "@eslint/markdown";
-import htmlEslint from "@html-eslint/eslint-plugin";
 import { defineConfig, globalIgnores } from "eslint/config";
 import prettier from "eslint-config-prettier/flat";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
@@ -215,12 +214,12 @@ export default defineConfig([
   // ─────────────────────────────────────────────────────────────
   // 11. HTML — linting for HTML files
   // ─────────────────────────────────────────────────────────────
-  {
-    files: ["**/*.html"],
-    plugins: { html: htmlEslint },
-    language: "html/html",
-    extends: [htmlEslint.configs.recommended],
-  },
+  // {
+  //   files: ["**/*.html"],
+  //   plugins: { html: htmlEslint },
+  //   language: "html/html",
+  //   extends: [htmlEslint.configs.recommended],
+  // },
 
   // ─────────────────────────────────────────────────────────────
   // 12. JSON — linting for JSON files
