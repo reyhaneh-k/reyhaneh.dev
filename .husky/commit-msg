@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+# Skip: SKIP_COMMITLINT=1 git commit -m "..."
+if [ "${SKIP_COMMITLINT:-}" = "1" ]; then
+  exit 0
+fi
+
+# $1 = path to the temporary commit message file (from Git)
+pnpm run commitlint -- "$1"
