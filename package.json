@@ -57,9 +57,11 @@
   },
   "dependencies": {
     "@sentry/react": "^10.65.0",
+    "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-router": "^1.170.18",
     "@tanstack/react-router-devtools": "^1.167.0",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "tailwindcss": "^4.3.3"
   }
 }

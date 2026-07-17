@@ -1,6 +1,7 @@
 import babel from "@rolldown/plugin-babel";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
+import tailwindcss from "@tailwindcss/vite";
 import react, {
   reactCompilerPreset,
 } from "@vitejs/plugin-react";
@@ -92,5 +93,6 @@ export default defineConfig({
         deploy: { env: "production" }, // optional: record a deploy
       },
     }),
+    tailwindcss(),
   ],
 });
