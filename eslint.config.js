@@ -187,6 +187,25 @@ export default defineConfig([
           },
         },
       ],
+
+      "import-x/extensions": [
+        "error",
+        "never",
+        {
+          pattern: {
+            css: "always",
+            json: "always",
+            jsonc: "always",
+            svg: "always",
+            gif: "always",
+            webp: "always",
+            avif: "always",
+            woff: "always",
+            woff2: "always",
+            webm: "always",
+          },
+        },
+      ],
     },
   },
 
