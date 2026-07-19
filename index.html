@@ -7,6 +7,23 @@
       content="width=device-width, initial-scale=1.0"
     />
     <title>Vite App</title>
+    <script>
+      // Prevents flash of unstyled content
+      const key = "theme_storage_key";
+      const theme = localStorage.getItem(key);
+      if (theme === "dark" || theme === "light") {
+        document.documentElement.dataset.theme = theme;
+      } else {
+        const mediaQuery = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        );
+        const resolvedTheme = mediaQuery.matches
+          ? "dark"
+          : "light";
+        document.documentElement.dataset.theme =
+          resolvedTheme;
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

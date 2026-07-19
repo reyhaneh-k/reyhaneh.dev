@@ -19,7 +19,6 @@
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.2.0",
     "@commitlint/types": "^21.2.0",
-    "@eslint/css": "^1.4.0",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.0.1",
     "@rolldown/plugin-babel": "^0.2.3",
@@ -57,9 +56,12 @@
   },
   "dependencies": {
     "@sentry/react": "^10.65.0",
+    "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-router": "^1.170.18",
     "@tanstack/react-router-devtools": "^1.167.0",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "tailwindcss": "^4.3.3",
+    "zustand": "^5.0.14"
   }
 }

@@ -6,7 +6,6 @@
 // If your package.json does NOT have "type": "module", rename this file to
 // eslint.config.mjs so the `import` statements resolve.
 
-import cssEslint from "@eslint/css";
 import js from "@eslint/js";
 import jsonEslint from "@eslint/json";
 import { defineConfig, globalIgnores } from "eslint/config";
@@ -215,7 +214,7 @@ export default defineConfig([
   {
     files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     rules: {
-      "no-console": "error",
+      "no-console": "warn",
       eqeqeq: ["error", "smart"],
     },
   },
@@ -244,17 +243,7 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 12. CSS — linting for CSS files
-  // ─────────────────────────────────────────────────────────────
-  {
-    files: ["**/*.css"],
-    plugins: { css: cssEslint },
-    language: "css/css",
-    extends: [cssEslint.configs.recommended],
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // 13. File & folder naming (check-file)
+  // 12. File & folder naming (check-file)
   // ─────────────────────────────────────────────────────────────
   {
     files: ["src/**/*"],
@@ -289,7 +278,7 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 14. Named exports everywhere by default
+  // 13. Named exports everywhere by default
   // ─────────────────────────────────────────────────────────────
   {
     files: [
@@ -307,7 +296,7 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 15. TanStack Router — linting for TanStack Router files
+  // 14. TanStack Router — linting for TanStack Router files
   // ─────────────────────────────────────────────────────────────
   {
     plugins: {
@@ -340,7 +329,7 @@ export default defineConfig([
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 16. Prettier — MUST be last. Turns off every rule that would fight
+  // 15. Prettier — MUST be last. Turns off every rule that would fight
   //     Prettier's formatting. (v10 flat entry point.)
   // ─────────────────────────────────────────────────────────────
   prettier,

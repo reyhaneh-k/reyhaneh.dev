@@ -91,6 +91,7 @@ const config = {
         "commitlint",
         "vite",
         "tsconfig",
+        "tailwind",
         "deps",
         "ci",
         "sentry",

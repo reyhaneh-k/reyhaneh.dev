@@ -1,6 +1,7 @@
 import babel from "@rolldown/plugin-babel";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
+import tailwindcss from "@tailwindcss/vite";
 import react, {
   reactCompilerPreset,
 } from "@vitejs/plugin-react";
@@ -25,7 +26,8 @@ const svgrCommonOptions = {
 
 export default defineConfig({
   build: {
-    target: "ES2024",
+    target: "es2024",
+    cssTarget: "es2022",
     sourcemap: "hidden",
     outDir: "build",
   },
@@ -92,5 +94,6 @@ export default defineConfig({
         deploy: { env: "production" }, // optional: record a deploy
       },
     }),
+    tailwindcss(),
   ],
 });
