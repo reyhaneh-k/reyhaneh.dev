@@ -6,13 +6,9 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { Theme } from "@/stores/theme/index.const";
-import {
-  initializeTheme,
-  useTheme,
-} from "@/stores/theme/themeStore";
+import { useTheme } from "@/stores/theme/themeStore";
 
 const RootLayout = () => {
-  initializeTheme();
   const { theme, setTheme } = useTheme();
 
   return (

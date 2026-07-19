@@ -11,21 +11,13 @@ import { Theme } from "./index.const";
 
 //TODO: add window safegurads, add try-catch, sentry captures
 const updateTheme = (theme: Theme) => {
-  let cleanup = null;
   localStorage.setItem(STORAGE_KEYS.THEME, theme);
-  if (theme === Theme.AUTO) {
-    cleanup = getSystemTheme();
-  } else {
-    document.documentElement.dataset.theme = theme;
-  }
+  const cleanup = setDataAttribute(theme);
   notifyThemeChanged();
   return cleanup;
 };
 
-const getSystemTheme = () => {
-  const mediaQuery = window.matchMedia(
-    "(prefers-color-scheme: dark)"
-  );
+const setDataAttribute = (theme: Theme) => {
   const handleChange = (
     e: MediaQueryListEvent | MediaQueryList
   ) => {
@@ -35,12 +27,26 @@ const getSystemTheme = () => {
       document.documentElement.dataset.theme = Theme.LIGHT;
     }
   };
-  mediaQuery.addEventListener("change", handleChange);
-  handleChange(mediaQuery);
-
-  return () => {
-    mediaQuery.removeEventListener("change", handleChange);
-  };
+  const mediaQuery = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  );
+  switch (theme) {
+    case Theme.AUTO:
+      handleChange(mediaQuery);
+      mediaQuery.addEventListener("change", handleChange);
+      return () => {
+        mediaQuery.removeEventListener(
+          "change",
+          handleChange
+        );
+      };
+    case Theme.DARK:
+      document.documentElement.dataset.theme = Theme.DARK;
+      break;
+    case Theme.LIGHT:
+      document.documentElement.dataset.theme = Theme.LIGHT;
+      break;
+  }
 };
 
 const initializeTheme = () => {
@@ -48,7 +54,9 @@ const initializeTheme = () => {
   if (!theme) {
     localStorage.setItem(STORAGE_KEYS.THEME, Theme.AUTO);
     notifyThemeChanged();
+    return setDataAttribute(Theme.AUTO);
   }
+  return setDataAttribute(theme);
 };
 const notifyThemeChanged = (): void => {
   if (typeof window === "undefined") return;
@@ -82,25 +90,25 @@ const useTheme: () => {
   theme: Theme | null;
   setTheme: (theme: Theme) => void;
 } = () => {
-  const cleanupRef = useRef<(() => void) | null>(null);
+  const cleanupRef = useRef<(() => void) | undefined>(
+    undefined
+  );
 
   const theme = useSyncExternalStore(
     subscribeToThemeChanges,
     getThemeSnapshot
   );
   const setTheme = (theme: Theme) => {
+    cleanupRef.current?.();
     const cl = updateTheme(theme);
     cleanupRef.current = cl;
   };
 
   useEffect(() => {
-    return () => {
-      if (cleanupRef.current) {
-        cleanupRef.current();
-      }
-    };
+    cleanupRef.current = initializeTheme();
+    return () => cleanupRef.current?.();
   }, []);
   return { theme, setTheme };
 };
 
-export { useTheme, initializeTheme };
+export { useTheme };
