@@ -146,18 +146,23 @@ const handleLocalStorage = (
   options?: StorageOptions
 ): string | null | undefined => {
   if (isLocalStorageAvailableForAction(type, key, value)) {
-    switch (type) {
-      case StorageAction.GET:
-        return localStorage.getItem(key);
-      case StorageAction.SET:
-        localStorage.setItem(key, value);
-        break;
-      case StorageAction.REMOVE:
-        localStorage.removeItem(key);
-        break;
-      case StorageAction.CLEAR:
-        localStorage.clear();
-        break;
+    try {
+      switch (type) {
+        case StorageAction.GET:
+          return localStorage.getItem(key);
+        case StorageAction.SET:
+          localStorage.setItem(key, value);
+          break;
+        case StorageAction.REMOVE:
+          localStorage.removeItem(key);
+          break;
+        case StorageAction.CLEAR:
+          localStorage.clear();
+          break;
+      }
+    } catch {
+      //TODO catch via sentry
+      //safety catch
     }
   } else if (options?.shouldFallback) {
     if (
@@ -184,18 +189,23 @@ const handleSessionStorage = (
   if (
     isSessionStorageAvailableForAction(type, key, value)
   ) {
-    switch (type) {
-      case StorageAction.GET:
-        return sessionStorage.getItem(key);
-      case StorageAction.SET:
-        sessionStorage.setItem(key, value);
-        break;
-      case StorageAction.REMOVE:
-        sessionStorage.removeItem(key);
-        break;
-      case StorageAction.CLEAR:
-        sessionStorage.clear();
-        break;
+    try {
+      switch (type) {
+        case StorageAction.GET:
+          return sessionStorage.getItem(key);
+        case StorageAction.SET:
+          sessionStorage.setItem(key, value);
+          break;
+        case StorageAction.REMOVE:
+          sessionStorage.removeItem(key);
+          break;
+        case StorageAction.CLEAR:
+          sessionStorage.clear();
+          break;
+      }
+    } catch {
+      //TODO catch via sentry
+      //safety catch
     }
   } else if (options?.shouldFallback) {
     if (
