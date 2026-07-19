@@ -6,12 +6,17 @@ import {
 
 import { CUSTOM_EVENTS } from "@/consts/events";
 import { STORAGE_KEYS } from "@/consts/storage";
+import { STORAGE_TYPES, webStorage } from "@/utils/storage";
 
 import { Theme } from "./index.const";
 
 //TODO: add window safegurads, add try-catch, sentry captures
 const updateTheme = (theme: Theme) => {
-  localStorage.setItem(STORAGE_KEYS.THEME, theme);
+  webStorage.setStorageItem(
+    STORAGE_KEYS.THEME,
+    theme,
+    STORAGE_TYPES.LOCAL
+  );
   const cleanup = setDataAttribute(theme);
   notifyThemeChanged();
   return cleanup;
@@ -52,7 +57,11 @@ const setDataAttribute = (theme: Theme) => {
 const initializeTheme = () => {
   const theme = getThemeSnapshot();
   if (!theme) {
-    localStorage.setItem(STORAGE_KEYS.THEME, Theme.AUTO);
+    webStorage.setStorageItem(
+      STORAGE_KEYS.THEME,
+      Theme.AUTO,
+      STORAGE_TYPES.LOCAL
+    );
     notifyThemeChanged();
     return setDataAttribute(Theme.AUTO);
   }
@@ -82,8 +91,9 @@ const subscribeToThemeChanges = (
 };
 
 const getThemeSnapshot = (): Theme | null => {
-  return localStorage.getItem(
-    STORAGE_KEYS.THEME
+  return webStorage.getStorageItem(
+    STORAGE_KEYS.THEME,
+    STORAGE_TYPES.LOCAL
   ) as Theme | null;
 };
 const useTheme: () => {
