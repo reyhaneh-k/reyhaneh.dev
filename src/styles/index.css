@@ -35,10 +35,10 @@
 
 @layer base {
   html {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
   }
 
   body {
-    @apply min-h-dvh bg-background text-foreground;
+    @apply min-h-dvh bg-background text-foreground transition-colors duration-300 ease-in-out;
   }
 }
