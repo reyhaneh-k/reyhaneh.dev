@@ -1,17 +1,10 @@
-import {
-  useEffect,
-  useRef,
-  useSyncExternalStore,
-} from "react";
-
 import { CUSTOM_EVENTS } from "@/consts/events";
 import { STORAGE_KEYS } from "@/consts/storage";
 import { STORAGE_TYPES, webStorage } from "@/utils/storage";
 
 import { Theme } from "./index.const";
 
-//TODO: add window safegurads, add try-catch, sentry captures
-const updateTheme = (theme: Theme) => {
+export const updateTheme = (theme: Theme) => {
   webStorage.setStorageItem(
     STORAGE_KEYS.THEME,
     theme,
@@ -54,7 +47,7 @@ const setDataAttribute = (theme: Theme) => {
   }
 };
 
-const initializeTheme = () => {
+export const initializeTheme = () => {
   const theme = getThemeSnapshot();
   if (!theme) {
     webStorage.setStorageItem(
@@ -75,7 +68,7 @@ const notifyThemeChanged = (): void => {
   );
 };
 
-const subscribeToThemeChanges = (
+export const subscribeToThemeChanges = (
   onStoreChange: () => void
 ): (() => void) => {
   window.addEventListener(
@@ -90,35 +83,9 @@ const subscribeToThemeChanges = (
   };
 };
 
-const getThemeSnapshot = (): Theme | null => {
+export const getThemeSnapshot = (): Theme | null => {
   return webStorage.getStorageItem(
     STORAGE_KEYS.THEME,
     STORAGE_TYPES.LOCAL
   ) as Theme | null;
 };
-const useTheme: () => {
-  theme: Theme | null;
-  setTheme: (theme: Theme) => void;
-} = () => {
-  const cleanupRef = useRef<(() => void) | undefined>(
-    undefined
-  );
-
-  const theme = useSyncExternalStore(
-    subscribeToThemeChanges,
-    getThemeSnapshot
-  );
-  const setTheme = (theme: Theme) => {
-    cleanupRef.current?.();
-    const cl = updateTheme(theme);
-    cleanupRef.current = cl;
-  };
-
-  useEffect(() => {
-    cleanupRef.current = initializeTheme();
-    return () => cleanupRef.current?.();
-  }, []);
-  return { theme, setTheme };
-};
-
-export { useTheme };

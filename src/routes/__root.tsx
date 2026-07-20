@@ -5,8 +5,8 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
+import { useTheme } from "@/hooks/useTheme/useTheme";
 import { Theme } from "@/stores/theme/index.const";
-import { useTheme } from "@/stores/theme/themeStore";
 
 const RootLayout = () => {
   const { theme, setTheme } = useTheme();
