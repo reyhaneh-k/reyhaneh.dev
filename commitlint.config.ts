@@ -82,6 +82,7 @@ const config = {
         "types",
         "styles",
         "assets",
+        "html",
 
         // Tooling / infra
         "eslint",

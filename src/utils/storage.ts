@@ -60,6 +60,7 @@ const isLocalStorageAvailableForAction = (
       try {
         localStorage.setItem(key, value);
         localStorage.removeItem(key);
+        isAvailabe = true;
       } catch (e) {
         if (
           e instanceof DOMException &&
