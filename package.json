@@ -13,7 +13,9 @@
     "prepare": "husky",
     "commitlint": "commitlint --edit",
     "routes:generate": "tsr generate",
-    "routes:watch": "tsr watch"
+    "routes:watch": "tsr watch",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.1",
@@ -23,6 +25,8 @@
     "@eslint/json": "^2.0.1",
     "@rolldown/plugin-babel": "^0.2.3",
     "@sentry/vite-plugin": "^5.4.0",
+    "@storybook/addon-themes": "^10.5.2",
+    "@storybook/tanstack-react": "^10.5.2",
     "@svgr/plugin-svgo": "^8.1.0",
     "@tanstack/eslint-plugin-router": "^1.162.0",
     "@tanstack/router-cli": "^1.167.19",
@@ -40,10 +44,12 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-storybook": "^10.5.2",
     "globals": "^17.7.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
     "prettier": "3.9.4",
+    "storybook": "^10.5.2",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.62.1",
     "vite": "^8.1.3",

@@ -22,6 +22,10 @@ import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 import tseslint from "typescript-eslint";
+import storybook, {
+  configs as storyBookConfigs,
+} from "eslint-plugin-storybook";
+
 export default defineConfig([
   // ─────────────────────────────────────────────────────────────
   // 1. Global ignores — never linted (build output, deps, generated)
@@ -76,7 +80,12 @@ export default defineConfig([
     ],
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: [
+            ".storybook/main.ts",
+            ".storybook/preview.tsx",
+          ],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -333,4 +342,15 @@ export default defineConfig([
   //     Prettier's formatting. (v10 flat entry point.)
   // ─────────────────────────────────────────────────────────────
   prettier,
+
+  // ─────────────────────────────────────────────────────────────
+  // 16. Storybook — linting for Storybook files
+  // ─────────────────────────────────────────────────────────────
+  {
+    plugins: {
+      storybook: storybook,
+    },
+    files: ["**/*stories.{ts,tsx}"],
+    extends: [storyBookConfigs["flat/recommended"]],
+  },
 ]);

@@ -98,6 +98,7 @@ const config = {
         "seo",
         "a11y",
         "dx",
+        "storybook",
       ],
     ],
 
