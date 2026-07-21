@@ -60,6 +60,18 @@
     "node": ">=22.18.0",
     "pnpm": ">=11.0.0"
   },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=22.18.0",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": ">=11.0.0",
+      "onFail": "error"
+    }
+  },
   "dependencies": {
     "@sentry/react": "^10.65.0",
     "@tailwindcss/vite": "^4.3.3",
