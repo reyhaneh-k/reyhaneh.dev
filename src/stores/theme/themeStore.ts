@@ -2,8 +2,8 @@ import { CUSTOM_EVENTS } from "@/consts/events";
 import { STORAGE_KEYS } from "@/consts/storage";
 import { STORAGE_TYPES, webStorage } from "@/utils/storage";
 
-import { Theme } from "./index.const";
-const setThemeStorage = (theme: Theme) => {
+import { THEME } from "./index.const";
+const setThemeStorage = (theme: THEME) => {
   webStorage.setStorageItem(
     STORAGE_KEYS.THEME,
     theme,
@@ -16,22 +16,22 @@ const getThemeStorage = () => {
     STORAGE_TYPES.LOCAL
   );
 };
-export const updateTheme = (theme: Theme) => {
+export const updateTheme = (theme: THEME) => {
   setThemeStorage(theme);
   const cleanup = setDataAndMeta(theme);
   notifyThemeChanged();
   return cleanup;
 };
 
-const setDataAndMeta = (theme: Theme) => {
+const setDataAndMeta = (theme: THEME) => {
   const handleChange = (
     e: MediaQueryListEvent | MediaQueryList
   ) => {
     if (e.matches) {
-      document.documentElement.dataset.theme = Theme.DARK;
+      document.documentElement.dataset.theme = THEME.DARK;
       setMetaTag();
     } else {
-      document.documentElement.dataset.theme = Theme.LIGHT;
+      document.documentElement.dataset.theme = THEME.LIGHT;
       setMetaTag();
     }
   };
@@ -39,7 +39,7 @@ const setDataAndMeta = (theme: Theme) => {
     "(prefers-color-scheme: dark)"
   );
   switch (theme) {
-    case Theme.AUTO:
+    case THEME.AUTO:
       handleChange(mediaQuery);
       mediaQuery.addEventListener("change", handleChange);
       return () => {
@@ -48,12 +48,12 @@ const setDataAndMeta = (theme: Theme) => {
           handleChange
         );
       };
-    case Theme.DARK:
-      document.documentElement.dataset.theme = Theme.DARK;
+    case THEME.DARK:
+      document.documentElement.dataset.theme = THEME.DARK;
       setMetaTag();
       break;
-    case Theme.LIGHT:
-      document.documentElement.dataset.theme = Theme.LIGHT;
+    case THEME.LIGHT:
+      document.documentElement.dataset.theme = THEME.LIGHT;
       setMetaTag();
       break;
   }
@@ -62,8 +62,8 @@ const setDataAndMeta = (theme: Theme) => {
 export const initializeTheme = () => {
   const theme = getThemeSnapshot();
   if (!theme) {
-    setThemeStorage(Theme.AUTO);
-    const cl = setDataAndMeta(Theme.AUTO);
+    setThemeStorage(THEME.AUTO);
+    const cl = setDataAndMeta(THEME.AUTO);
     notifyThemeChanged();
     return cl;
   }
@@ -91,8 +91,8 @@ export const subscribeToThemeChanges = (
   };
 };
 
-export const getThemeSnapshot = (): Theme | null => {
-  return getThemeStorage() as Theme | null;
+export const getThemeSnapshot = (): THEME | null => {
+  return getThemeStorage() as THEME | null;
 };
 
 const setMetaTag = () => {

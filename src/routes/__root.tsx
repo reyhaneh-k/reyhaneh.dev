@@ -4,14 +4,10 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import { RootLayout as RootLayoutComponent } from "@/layouts/rootLayout/RootLayout";
-
 const RootLayout = () => {
   return (
     <>
-      <RootLayoutComponent>
-        <Outlet />
-      </RootLayoutComponent>
+      <Outlet />
       <TanStackRouterDevtools />
     </>
   );

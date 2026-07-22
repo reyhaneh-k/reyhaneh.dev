@@ -1,14 +1,12 @@
+import { Outlet } from "@tanstack/react-router";
+
 import Navbar from "./components/navbar/Navbar";
 
-const RootLayout = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+const RootLayout = () => {
   return (
-    <section className="p-4">
+    <section className="h-full w-full p-5">
       <Navbar />
-      {children}
+      <Outlet />
     </section>
   );
 };

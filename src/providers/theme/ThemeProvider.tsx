@@ -6,7 +6,7 @@ import {
   useSyncExternalStore,
 } from "react";
 
-import { Theme } from "@/stores/theme/index.const";
+import { THEME } from "@/stores/theme/index.const";
 import {
   subscribeToThemeChanges,
   getThemeSnapshot,
@@ -15,10 +15,10 @@ import {
 } from "@/stores/theme/themeStore";
 
 export const ThemeContext = createContext<{
-  theme: Theme | null;
-  setTheme: (theme: Theme) => void;
+  theme: THEME;
+  setTheme: (theme: THEME) => void;
 }>({
-  theme: null,
+  theme: THEME.AUTO,
   setTheme: () => {
     return;
   },
@@ -31,11 +31,11 @@ const ThemeProvider = ({
   const cleanupRef = useRef<(() => void) | undefined>(
     undefined
   );
-  const theme = useSyncExternalStore(
+  const theme = useSyncExternalStore<THEME | null>(
     subscribeToThemeChanges,
     getThemeSnapshot
   );
-  const setTheme = useCallback((theme: Theme) => {
+  const setTheme = useCallback((theme: THEME) => {
     cleanupRef.current?.();
     const cl = updateTheme(theme);
     cleanupRef.current = cl;
@@ -46,9 +46,11 @@ const ThemeProvider = ({
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext
+      value={{ theme: theme ?? THEME.AUTO, setTheme }}
+    >
       {children}
-    </ThemeContext.Provider>
+    </ThemeContext>
   );
 };
 

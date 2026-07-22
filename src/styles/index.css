@@ -40,7 +40,7 @@
   /* Accents */
   --color-accent: var(--accent);
   --color-tertiary: var(--tertiary);
-  --color-on-coral: var(--on-coral);
+  --color-on-accent: var(--on-accent);
 
   /* Aliases — keep older utility names working */
   --color-background: var(--canvas);
@@ -89,7 +89,7 @@
   --ink-muted: #525d6b;
   --ink-subtle: #8b95a3;
   --line: rgb(40 49 61 / 0.13);
-  --on-coral: #1a1010;
+  --on-accent: #1a1010;
 
   --accent: var(--color-coral-500);
   --tertiary: var(--color-lime-500);
@@ -106,10 +106,10 @@
   --ink-muted: #9aa5b2;
   --ink-subtle: #5d6875;
   --line: rgb(228 233 239 / 0.13);
-  --on-coral: #1a1010;
+  --on-accent: #1a1010;
 
-  --accent: var(--color-coral-500);
-  --tertiary: var(--color-lime-500);
+  --tertiary: var(--color-coral-500);
+  --accent: var(--color-lime-500);
 }
 
 @utility font-optical-auto {
@@ -120,9 +120,16 @@
 }
 
 @layer base {
-  body {
-    @apply bg-canvas text-ink font-optical-auto font-sans transition-colors duration-300 ease-in-out;
+  html {
+    @apply h-full max-w-full;
   }
+  body {
+    @apply bg-canvas text-ink font-optical-auto h-full w-full font-sans transition-colors duration-300 ease-in-out;
+  }
+  main {
+    @apply h-full w-full;
+  }
+
   h1,
   h2,
   h3,

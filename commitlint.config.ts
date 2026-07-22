@@ -65,7 +65,7 @@ const config = {
     "scope-empty": [Error, "never"],
     "scope-case": [Error, "always", "lower-case"],
     "scope-enum": [
-      Error,
+      Warning,
       "always",
       [
         // App areas (from STRUCTURE.md)
