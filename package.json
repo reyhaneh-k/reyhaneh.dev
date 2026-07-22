@@ -49,6 +49,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
     "prettier": "3.9.4",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "storybook": "^10.5.2",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.62.1",
@@ -77,8 +78,10 @@
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-router": "^1.170.18",
     "@tanstack/react-router-devtools": "^1.167.0",
+    "clsx": "^2.1.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.3",
     "zustand": "^5.0.14"
   }

@@ -28,13 +28,35 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
+  --color-tertiary: var(--tertiary);
   --font-sans:
     "DM Sans", system-ui, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   --font-display:
     "Bricolage Grotesque", "Segoe UI", system-ui,
     "Helvetica Neue", Arial, sans-serif;
+}
+
+@theme {
+  --color-coral-100: #fff1ef;
+  --color-coral-200: #ffd9d4;
+  --color-coral-300: #ffb7af;
+  --color-coral-400: #fb9a91;
+  --color-coral-500: #f88379;
+  --color-coral-600: #e5665c;
+  --color-coral-700: #c24b42;
+  --color-coral-800: #9e3f38;
+  --color-coral-900: #7a332e;
+
+  --color-lime-100: #f5ffe0;
+  --color-lime-200: #e6ffb0;
+  --color-lime-300: #d6ff78;
+  --color-lime-400: #d4ff4f;
+  --color-lime-500: #c8f54a;
+  --color-lime-600: #a9d12f;
+  --color-lime-700: #86a522;
+  --color-lime-800: #6a831e;
+  --color-lime-900: #566b1c;
 }
 
 :root {
@@ -44,8 +66,8 @@
   --foreground: #15202b;
   --muted: #5c6b7a;
   --border: #d5dce6;
-  --accent: #f88379;
-  --accent-2: #c8f54a;
+  --accent: var(--color-coral-500);
+  --tertiary: var(--color-lime-500);
 }
 
 :root[data-theme="dark"] {
@@ -55,8 +77,8 @@
   --foreground: #f0f3f7;
   --muted: #9aa5b1;
   --border: #2a2a2e;
-  --accent: #f88379;
-  --accent-2: #d4ff4f;
+  --accent: var(--color-coral-500);
+  --tertiary: var(--color-lime-500);
 }
 
 @utility font-optical-auto {
@@ -67,12 +89,8 @@
 }
 
 @layer base {
-  html {
-    @apply bg-background text-foreground transition-colors duration-300;
-  }
-
   body {
-    @apply min-h-dvh font-sans bg-background text-foreground transition-colors duration-300 ease-in-out font-optical-auto;
+    @apply bg-background text-foreground font-optical-auto font-sans transition-colors duration-300 ease-in-out;
   }
   h1,
   h2,
