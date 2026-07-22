@@ -6,10 +6,10 @@ const RootLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div>
+    <section className="p-4">
       <Navbar />
       {children}
-    </div>
+    </section>
   );
 };
 export { RootLayout };

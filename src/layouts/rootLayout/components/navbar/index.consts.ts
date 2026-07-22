@@ -1,4 +1,7 @@
-const NAV_LINKS = [
+const NAV_LINKS: {
+  label: string;
+  href: string;
+}[] = [
   {
     label: "Work",
     href: "/work",
@@ -8,6 +11,7 @@ const NAV_LINKS = [
     href: "/writing",
   },
   { label: "Study", href: "/study" },
+
   {
     label: "About",
     href: "/about",
@@ -19,4 +23,9 @@ const NAV_LINKS = [
   },
 ];
 
-export default NAV_LINKS;
+const ROOT_LINK = {
+  label: ["reyhaneh", ".dev"],
+  href: "/",
+};
+
+export { NAV_LINKS, ROOT_LINK };
