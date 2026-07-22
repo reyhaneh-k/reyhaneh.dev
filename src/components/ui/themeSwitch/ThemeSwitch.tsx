@@ -15,8 +15,8 @@ const ThemeSwitch = ({
       aria-label="Color theme"
       role="radiogroup"
       className={cn(
-        "border-border flex gap-0.5 rounded-full border p-0.5",
-        "flex-col md:flex-row",
+        "border-border flex rounded-full border p-0.75 shadow-sm md:w-fit md:flex-row md:gap-1",
+        "w-10 flex-col",
         className
       )}
     >
@@ -30,14 +30,15 @@ const ThemeSwitch = ({
               aria-checked={th === theme}
               role="radio"
               className={cn(
-                "text-foreground aspect-square size-5 rounded-full transition-colors duration-100 ease-linear",
-                th === theme && "bg-accent text-on-accent"
+                "text-foreground aspect-square size-5.5 rounded-full transition-colors duration-100 ease-linear",
+                th === theme && "bg-accent text-on-accent",
+                ""
               )}
               onClick={() => {
                 setTheme(th);
               }}
             >
-              <Icon className="m-auto size-3" />
+              <Icon className="m-auto size-3.75" />
             </button>
           );
         }
