@@ -15,11 +15,11 @@ const ThemeSwitch = ({
 
   return (
     <div
-      aria-label="Color theme"
+      aria-label="Select color theme"
       role="radiogroup"
       className={cn(
-        "border-border shadow-shadow flex rounded-full border p-1 shadow-sm md:w-fit md:flex-row md:gap-1",
-        "relative w-10 flex-col",
+        "border-border shadow-shadow flex w-fit rounded-full border p-1 shadow-sm md:flex-row md:gap-1",
+        "bg-surface relative flex-col-reverse md:bg-transparent",
         className
       )}
     >
@@ -27,14 +27,15 @@ const ThemeSwitch = ({
         layout
         className={cn(
           "bg-accent absolute my-auto size-5.5 rounded-full",
-          theme === THEME.LIGHT && "right-1",
-          theme === THEME.DARK && "left-1",
+          theme === THEME.LIGHT && "top-1 md:right-1",
+          theme === THEME.DARK && "bottom-1 md:left-1",
           theme === THEME.AUTO &&
-            "right-1/2 translate-x-1/2"
+            "bottom-1/2 translate-y-1/2 md:right-1/2 md:translate-x-1/2"
         )}
         transition={{
           type: "spring",
-          visualDuration: 0.2,
+          stiffness: 200,
+          damping: 15,
           bounce: 0.2,
         }}
       />

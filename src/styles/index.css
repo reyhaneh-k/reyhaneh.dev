@@ -81,6 +81,10 @@
   --color-lime-900: #566b1c;
 }
 
+@theme {
+  --breakpoint-xs: 30rem;
+}
+
 :root {
   color-scheme: light;
 
@@ -106,7 +110,9 @@
   --canvas-muted: #0f131a;
   --surface: #151a22;
   --surface-muted: #1b212b;
-  --ink: #e4rgba(255, 0, 0, 0.55)-ink-subtle: #5d6875;
+  --ink: #e4e9ef;
+  --ink-muted: #c5cad0;
+  --ink-subtle: #a1a7af;
   --line: rgb(228 233 239 / 0.13);
   --on-accent: #1a1010;
   --shadow: rgb(228 233 239 / 0.08);
@@ -124,7 +130,7 @@
 
 @layer base {
   html {
-    @apply h-full max-w-full;
+    @apply h-full max-w-full scrollbar-none *:scrollbar-none;
   }
   body {
     @apply bg-canvas text-ink font-optical-auto h-full w-full font-sans transition-colors duration-300 ease-in-out;
