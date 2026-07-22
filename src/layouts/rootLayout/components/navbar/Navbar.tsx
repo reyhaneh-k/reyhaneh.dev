@@ -16,11 +16,25 @@ const Navbar = () => {
         )}
       >
         {NAV_LINKS.slice(0, 3).map((link) => (
-          <li key={link.href}>
+          <li
+            key={link.href}
+            className={cn(
+              "relative",
+              "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
+              "after:scale-x-0 after:transition-transform after:duration-100 after:ease-linear after:content-['']",
+              "hover:after:scale-x-100",
+              "md:vible hidden"
+            )}
+          >
             <Link to={link.href}>{link.label}</Link>
           </li>
         ))}
-        <li className="font-display mx-3 text-xl font-bold">
+        <li
+          className={cn(
+            "font-display mx-3 text-xl font-bold",
+            "transition-transform duration-100 ease-linear hover:-translate-y-0.5 hover:scale-105"
+          )}
+        >
           <Link to="/">
             <span>{ROOT_LINK.label[0]}</span>
             <span className="text-accent">
@@ -29,7 +43,15 @@ const Navbar = () => {
           </Link>
         </li>
         {NAV_LINKS.slice(3).map((link) => (
-          <li key={link.href}>
+          <li
+            key={link.href}
+            className={cn(
+              "relative",
+              "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
+              "after:scale-x-0 after:transition-transform after:duration-100 after:ease-linear after:content-['']",
+              "hover:after:scale-x-100"
+            )}
+          >
             <Link to={link.href}>{link.label}</Link>
           </li>
         ))}

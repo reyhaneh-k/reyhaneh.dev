@@ -4,6 +4,7 @@ import {
   RouterProvider,
   createRouter,
 } from "@tanstack/react-router";
+import { MotionConfig } from "motion/react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -31,7 +32,9 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <SentryProvider>
         <ThemeProvider>
-          <RouterProvider router={router} />
+          <MotionConfig reducedMotion="user">
+            <RouterProvider router={router} />
+          </MotionConfig>
         </ThemeProvider>
       </SentryProvider>
     </StrictMode>

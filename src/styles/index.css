@@ -48,6 +48,9 @@
   --color-muted: var(--ink-muted);
   --color-border: var(--line);
 
+  /* Shadows */
+  --color-shadow: var(--shadow);
+
   --font-sans:
     "DM Sans", system-ui, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
@@ -90,6 +93,7 @@
   --ink-subtle: #8b95a3;
   --line: rgb(40 49 61 / 0.13);
   --on-accent: #1a1010;
+  --shadow: rgba(0, 0, 0, 0.12);
 
   --accent: var(--color-coral-500);
   --tertiary: var(--color-lime-500);
@@ -102,11 +106,10 @@
   --canvas-muted: #0f131a;
   --surface: #151a22;
   --surface-muted: #1b212b;
-  --ink: #e4e9ef;
-  --ink-muted: #9aa5b2;
-  --ink-subtle: #5d6875;
+  --ink: #e4rgba(255, 0, 0, 0.55)-ink-subtle: #5d6875;
   --line: rgb(228 233 239 / 0.13);
   --on-accent: #1a1010;
+  --shadow: rgb(228 233 239 / 0.08);
 
   --tertiary: var(--color-coral-500);
   --accent: var(--color-lime-500);
