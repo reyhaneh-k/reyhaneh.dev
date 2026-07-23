@@ -9,13 +9,20 @@ import {
 import { SCROLL_STATUS } from "./index.type";
 
 const THROTTLE_TIME = 200;
+const TOP_THRESHOLD = 8;
 
 const useScroll = () => {
   const [scrollStatus, setScrollStatus] = useState<
     SCROLL_STATUS | undefined
   >(undefined);
-  const [isAtTop, setIsAtTop] = useState(true);
-  const lastScrollY = useRef<number>(0);
+  const [isAtTop, setIsAtTop] = useState(() =>
+    typeof window === "undefined"
+      ? true
+      : window.scrollY <= TOP_THRESHOLD
+  );
+  const lastScrollY = useRef(
+    typeof window === "undefined" ? 0 : window.scrollY
+  );
   const throttleTimer = useRef<
     ReturnType<typeof setTimeout> | undefined
   >(undefined);
@@ -23,33 +30,30 @@ const useScroll = () => {
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
 
-    if (currentScrollY === 0) {
-      setIsAtTop(true);
-    } else {
-      setIsAtTop(false);
-    }
+    setIsAtTop(currentScrollY <= TOP_THRESHOLD);
 
     if (currentScrollY > lastScrollY.current) {
       setScrollStatus(SCROLL_STATUS.DOWN);
     } else if (currentScrollY < lastScrollY.current) {
       setScrollStatus(SCROLL_STATUS.UP);
     }
+
+    lastScrollY.current = currentScrollY;
   }, []);
 
   const handleWithThrottle = useEffectEvent(() => {
     if (throttleTimer.current) return;
-    lastScrollY.current = window.scrollY;
-    const timeout = setTimeout(() => {
+
+    throttleTimer.current = setTimeout(() => {
       handleScroll();
-      clearTimeout(throttleTimer.current);
       throttleTimer.current = undefined;
     }, THROTTLE_TIME);
-
-    throttleTimer.current = timeout;
   });
 
   useEffect(() => {
-    window.addEventListener("scroll", handleWithThrottle);
+    window.addEventListener("scroll", handleWithThrottle, {
+      passive: true,
+    });
     return () => {
       window.removeEventListener(
         "scroll",

@@ -7,7 +7,7 @@ export function Hero() {
         <h1
           key={index}
           className={cn(
-            "text-4xl font-bold",
+            "text-center text-4xl font-bold",
             index % 2 === 0 && "text-red-500"
           )}
         >

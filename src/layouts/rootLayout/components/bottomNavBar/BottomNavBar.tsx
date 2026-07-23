@@ -3,9 +3,10 @@ import { Link } from "@tanstack/react-router";
 import { cn } from "@/utils/classname";
 
 import { NAV_LINKS } from "./index.consts";
-const BottomNavBar = () => {
+import { type BottomNavBarProps } from "./index.type";
+const BottomNavBar = ({ className }: BottomNavBarProps) => {
   return (
-    <nav>
+    <nav className={cn("w-full", className)}>
       <ol
         className={cn(
           "flex w-full gap-6 self-center px-8 py-3 text-center",

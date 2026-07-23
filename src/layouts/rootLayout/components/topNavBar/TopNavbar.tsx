@@ -2,51 +2,70 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 
 import { ThemeSwitch } from "@/components/ui/themeSwitch/ThemeSwitch";
+import { SCROLL_STATUS } from "@/hooks/useScroll/index.type";
 import { cn } from "@/utils/classname";
 
 import { NAV_LINKS, ROOT_LINK } from "./index.consts";
 import { type TopNavBarProps } from "./index.type";
 
+const NAV_EASE = [0.22, 1, 0.36, 1] as const;
+
 const TopNavbar = ({
   className,
-  hidden,
+  compact,
+  scrollStatus,
 }: TopNavBarProps) => {
   return (
     <motion.nav
       className={cn(
         "w-full",
-        "p-2 pb-5 md:mb-2 md:p-5",
-        "[--top-offset:0%] md:[--top-offset:-100%]",
+        "[--padding-custom:calc(4px*4)] md:[--padding-custom:calc(2px*4)] lg:[--padding-custom:calc(4px*4)]",
+        "[--padding-compact:calc(4px*4)] md:[--padding-compact:calc(1px*4)] lg:[--padding-compact:calc(2px*4)]",
         className
       )}
+      initial={false}
       animate={{
-        y: hidden ? "var(--top-offset)" : "0%",
+        padding: compact
+          ? "var(--padding-compact)"
+          : "var(--padding-custom)",
       }}
       transition={{
         type: "spring",
         stiffness: 120,
-        damping: 15,
-        mass: 0.8,
-        // omit bounce, or bounce: 0
       }}
     >
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute inset-x-0 -inset-y-4 -z-1 md:-inset-y-5",
-          "bg-canvas/30 backdrop-blur-md",
-          "mask-b-from-50% mask-b-to-100%"
+          "pointer-events-none absolute inset-x-0 -inset-y-4 -z-1",
+          "bg-canvas/30 backdrop-blur-lg",
+          "mask-b-from-50% mask-b-to-100%",
+          "block md:hidden"
         )}
       />
-      <ol
+      <motion.ol
         className={cn(
-          "relative flex w-fit gap-5 text-center md:gap-4 md:py-3 lg:gap-6",
+          "relative flex gap-6 text-center md:gap-4 lg:gap-6",
+          "md:bg-surface/30 bg-transparent",
+          "md:backdrop-blur-lg md:backdrop-saturate-50",
           "items-start justify-between md:items-baseline md:justify-center",
-          "w-full text-sm md:mx-auto md:rounded-full",
-          "sm:px-0 md:px-28 lg:px-32",
-          "md:bg-surface bg-transparent",
-          "md:border-border border-transparent md:border"
+          "w-full text-sm md:mx-auto md:w-fit md:rounded-full",
+          "md:border-border border-transparent md:border",
+          "md:py-4",
+          "[--padding-custom:0px] md:[--padding-custom:calc(28px*4)] lg:[--padding-custom:calc(40px*4)]",
+          "[--padding-compact:0px] md:[--padding-compact:calc(28px*4)] lg:[--padding-compact:calc(32px*4)]"
         )}
+        animate={{
+          paddingInline: compact
+            ? "var(--padding-compact)"
+            : "var(--padding-custom)",
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 20,
+          mass: 0.8,
+        }}
       >
         {NAV_LINKS.slice(0, 3).map((link) => (
           <li
@@ -92,11 +111,14 @@ const TopNavbar = ({
 
         <motion.div
           className={cn(
-            "absolute right-0 my-auto md:right-4",
+            "absolute right-0 md:top-1/2 md:right-4 md:-translate-y-1/2",
             "[--x-translate:150%] md:[--x-translate:0%]"
           )}
           animate={{
-            x: hidden ? "var(--x-translate)" : "0%",
+            x:
+              scrollStatus === SCROLL_STATUS.DOWN
+                ? "var(--x-translate)"
+                : "0%",
           }}
           transition={{
             type: "spring",
@@ -107,7 +129,7 @@ const TopNavbar = ({
         >
           <ThemeSwitch />
         </motion.div>
-      </ol>
+      </motion.ol>
     </motion.nav>
   );
 };
