@@ -13,8 +13,8 @@ const NAV_LINKS: {
   { label: "Study", href: "/study" },
 
   {
-    label: "About",
-    href: "/about",
+    label: "Projects",
+    href: "/projects",
   },
   { label: "Map", href: "/map" },
   {

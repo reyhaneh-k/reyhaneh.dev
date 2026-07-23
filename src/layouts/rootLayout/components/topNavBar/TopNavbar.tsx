@@ -15,7 +15,7 @@ const TopNavbar = ({
     <motion.nav
       className={cn(
         "w-full",
-        "p-2 pb-10 md:mb-2 md:p-5",
+        "p-2 pb-5 md:mb-2 md:p-5",
         "[--top-offset:0%] md:[--top-offset:-100%]",
         className
       )}
@@ -33,8 +33,8 @@ const TopNavbar = ({
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute inset-x-0 top-0 -z-1 h-full md:hidden",
-          "bg-canvas/50 backdrop-blur-md",
+          "pointer-events-none absolute inset-x-0 -inset-y-4 -z-1 md:-inset-y-5",
+          "bg-canvas/30 backdrop-blur-md",
           "mask-b-from-50% mask-b-to-100%"
         )}
       />

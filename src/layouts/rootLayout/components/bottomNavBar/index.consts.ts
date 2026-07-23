@@ -4,6 +4,7 @@ import {
   PenIcon,
   MapIcon,
   ContactRoundIcon,
+  CodeIcon,
 } from "lucide-react";
 
 const NAV_LINKS: {
@@ -28,6 +29,11 @@ const NAV_LINKS: {
   },
 
   { label: "Map", href: "/map", icon: MapIcon },
+  {
+    label: "Projects",
+    href: "/projects",
+    icon: CodeIcon,
+  },
   {
     label: "Contact",
     href: "/contact",

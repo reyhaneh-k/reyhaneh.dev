@@ -14,6 +14,7 @@ const useScroll = () => {
   const [scrollStatus, setScrollStatus] = useState<
     SCROLL_STATUS | undefined
   >(undefined);
+  const [isAtTop, setIsAtTop] = useState(true);
   const lastScrollY = useRef<number>(0);
   const throttleTimer = useRef<
     ReturnType<typeof setTimeout> | undefined
@@ -21,6 +22,12 @@ const useScroll = () => {
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
+
+    if (currentScrollY === 0) {
+      setIsAtTop(true);
+    } else {
+      setIsAtTop(false);
+    }
 
     if (currentScrollY > lastScrollY.current) {
       setScrollStatus(SCROLL_STATUS.DOWN);
@@ -52,6 +59,6 @@ const useScroll = () => {
     };
   }, []);
 
-  return { scrollStatus };
+  return { scrollStatus, isAtTop };
 };
 export { useScroll };
