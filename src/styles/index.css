@@ -83,6 +83,7 @@
 
 @theme {
   --breakpoint-xs: 30rem;
+  --breakpoint-2xs: 20rem;
 }
 
 :root {

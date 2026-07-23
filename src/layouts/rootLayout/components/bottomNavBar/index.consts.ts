@@ -39,5 +39,10 @@ const NAV_LINKS = [
     icon: CodeIcon,
   },
 ] as const;
-
-export { NAV_LINKS };
+const SPRING = {
+  type: "spring" as const,
+  stiffness: 120,
+  damping: 18,
+  mass: 0.85,
+};
+export { NAV_LINKS, SPRING };

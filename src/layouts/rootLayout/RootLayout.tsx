@@ -25,7 +25,7 @@ const RootLayout = () => {
       />
 
       <Outlet />
-      <BottomNavBar className="fixed inset-x-0 bottom-0 md:hidden" />
+      <BottomNavBar className="fixed inset-x-0 bottom-0 z-3 md:hidden" />
     </section>
   );
 };

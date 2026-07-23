@@ -294,6 +294,7 @@ export default defineConfig([
       "src/{components,layout,providers}/**/*.{ts,tsx}",
       "src/{hooks,stores,utils,consts,types,styles}/**/*.{ts,tsx}",
     ],
+    ignores: ["src/**/*.stories.tsx"],
     rules: { "import-x/no-default-export": "error" },
   },
   {
