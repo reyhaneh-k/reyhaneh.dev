@@ -1,50 +1,73 @@
 import { Link, useLocation } from "@tanstack/react-router";
+import { motion } from "motion/react";
 import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-} from "motion/react";
-import { useEffect, useEffectEvent, useRef } from "react";
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+} from "react";
 
 import bellNotch from "@/assets/svgs/bellNotch.svg";
-import { useResize } from "@/hooks/useResize/useResize";
 import { cn } from "@/utils/classname";
 
 import { NAV_LINKS, SPRING } from "./index.consts";
-import { syncMaskFromBall } from "./index.helpers";
-import { type BottomNavBarProps } from "./index.type";
+import { getMaskMetrics } from "./index.helpers";
+import {
+  type BottomNavBarProps,
+  type MaskMetrics,
+} from "./index.type";
 
 const BottomNavBar = ({ className }: BottomNavBarProps) => {
   const { pathname } = useLocation();
   const olRef = useRef<HTMLOListElement>(null);
-  const maskX = useMotionValue(0);
-  const maskPosition = useMotionTemplate`${maskX}px 0px, 0% 0%`;
+  const [mask, setMask] = useState<MaskMetrics>({
+    x: 0,
+    w: 0,
+    h: 0,
+  });
 
   const syncMask = useEffectEvent(() => {
-    syncMaskFromBall(pathname, olRef.current, maskX);
+    const next = getMaskMetrics(pathname, olRef.current);
+    if (!next) return;
+    setMask(next);
   });
 
   useEffect(() => {
     syncMask();
   }, [pathname]);
 
-  useResize(() => {
-    syncMaskFromBall(pathname, olRef.current, maskX);
-  });
+  useEffect(() => {
+    const ol = olRef.current;
+    if (!ol) return;
+
+    const ro = new ResizeObserver(() => {
+      syncMask();
+    });
+    ro.observe(ol);
+    return () => {
+      ro.disconnect();
+    };
+  }, []);
 
   const activeLink = NAV_LINKS.find(
     (link) => link.to === pathname
   );
+  const maskPosition = `${mask.x}px 0px, 0% 0%`;
+  const maskSize = `${mask.w}px ${mask.h}px, 100% 100%`;
+
   return (
     <nav className={cn("w-full px-4 py-2", className)}>
       <motion.ol
-        ref={olRef}
+        ref={(el) => {
+          olRef.current = el;
+        }}
         className={cn(
           "relative flex w-full items-end justify-center bg-transparent",
           "2xs:gap-6 xs:gap-10 gap-2 p-2"
         )}
       >
         <motion.div
+          aria-hidden
           className={cn(
             "bg-surface absolute inset-0",
             "rounded-2xl shadow-lg"
@@ -58,13 +81,16 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
               : "none",
             maskRepeat: "no-repeat, no-repeat",
             WebkitMaskRepeat: "no-repeat, no-repeat",
-            maskSize: "5rem 3rem, 100% 100%",
-            WebkitMaskSize: "5rem 3rem, 100% 100%",
+            maskSize,
+            WebkitMaskSize: maskSize,
             maskComposite: "exclude",
             WebkitMaskComposite: "xor",
-            maskPosition,
-            WebkitMaskPosition: maskPosition,
           }}
+          animate={{
+            maskPosition: maskPosition,
+            maskSize: maskSize,
+          }}
+          transition={SPRING}
         />
         {NAV_LINKS.map((link) => {
           const Icon = link.icon;
@@ -83,6 +109,7 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
                 {isActive && (
                   <motion.div
                     aria-hidden
+                    data-nav-ball
                     layoutId="bottom-nav-active"
                     className={cn(
                       "pointer-events-none",

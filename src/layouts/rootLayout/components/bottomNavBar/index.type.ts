@@ -2,4 +2,10 @@ interface BottomNavBarProps {
   className?: string;
 }
 
-export type { BottomNavBarProps };
+interface MaskMetrics {
+  x: number;
+  w: number;
+  h: number;
+}
+
+export type { BottomNavBarProps, MaskMetrics };
