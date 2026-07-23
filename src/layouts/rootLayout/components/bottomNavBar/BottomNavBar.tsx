@@ -32,9 +32,6 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
                 className="flex items-center gap-2"
               >
                 <Icon className="xs:size-4 size-4" />
-                <span className="text-muted xs:inline hidden text-xs">
-                  {link.label}
-                </span>
               </Link>
             </li>
           );

@@ -3,7 +3,6 @@ import {
   GraduationCapIcon,
   PenIcon,
   MapIcon,
-  ContactRoundIcon,
   CodeIcon,
 } from "lucide-react";
 
@@ -33,11 +32,6 @@ const NAV_LINKS: {
     label: "Projects",
     href: "/projects",
     icon: CodeIcon,
-  },
-  {
-    label: "Contact",
-    href: "/contact",
-    icon: ContactRoundIcon,
   },
 ];
 
