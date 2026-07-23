@@ -8,8 +8,6 @@ import { cn } from "@/utils/classname";
 import { NAV_LINKS, ROOT_LINK } from "./index.consts";
 import { type TopNavBarProps } from "./index.type";
 
-const NAV_EASE = [0.22, 1, 0.36, 1] as const;
-
 const TopNavbar = ({
   className,
   compact,
@@ -69,7 +67,7 @@ const TopNavbar = ({
       >
         {NAV_LINKS.slice(0, 3).map((link) => (
           <li
-            key={link.href}
+            key={link.to}
             className={cn(
               "relative",
               "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
@@ -78,7 +76,7 @@ const TopNavbar = ({
               "hidden md:inline"
             )}
           >
-            <Link to={link.href}>{link.label}</Link>
+            <Link to={link.to}>{link.label}</Link>
           </li>
         ))}
         <li
@@ -87,7 +85,7 @@ const TopNavbar = ({
             "transition-transform duration-100 ease-linear hover:-translate-y-0.5 hover:scale-105"
           )}
         >
-          <Link to="/">
+          <Link to={ROOT_LINK.to}>
             <span>{ROOT_LINK.label[0]}</span>
             <span className="text-accent">
               {ROOT_LINK.label[1]}
@@ -96,7 +94,7 @@ const TopNavbar = ({
         </li>
         {NAV_LINKS.slice(3).map((link) => (
           <li
-            key={link.href}
+            key={link.to}
             className={cn(
               "relative",
               "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
@@ -105,7 +103,7 @@ const TopNavbar = ({
               "hidden md:inline"
             )}
           >
-            <Link to={link.href}>{link.label}</Link>
+            <Link to={link.to}>{link.label}</Link>
           </li>
         ))}
 

@@ -19,7 +19,7 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
           const Icon = link.icon;
           return (
             <li
-              key={link.href}
+              key={link.to}
               className={cn(
                 "relative",
                 "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
@@ -28,7 +28,7 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
               )}
             >
               <Link
-                to={link.href}
+                to={link.to}
                 className="flex items-center gap-2"
               >
                 <Icon className="xs:size-4 size-4" />

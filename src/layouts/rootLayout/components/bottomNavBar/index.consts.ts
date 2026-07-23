@@ -1,38 +1,43 @@
 import {
   BriefcaseIcon,
-  GraduationCapIcon,
-  PenIcon,
-  MapIcon,
   CodeIcon,
+  GraduationCapIcon,
+  MapIcon,
+  PenIcon,
 } from "lucide-react";
 
-const NAV_LINKS: {
-  label: string;
-  href: string;
-  icon: React.ElementType;
-}[] = [
+import { Route as mapRoute } from "@/routes/_app/map";
+import { Route as projectsRoute } from "@/routes/_app/projects";
+import { Route as studyRoute } from "@/routes/_app/study";
+import { Route as workRoute } from "@/routes/_app/work";
+import { Route as writingRoute } from "@/routes/_app/writing";
+
+const NAV_LINKS = [
   {
     label: "Work",
-    href: "/work",
+    to: workRoute.to,
     icon: BriefcaseIcon,
   },
   {
     label: "Writing",
-    href: "/writing",
+    to: writingRoute.to,
     icon: PenIcon,
   },
   {
     label: "Study",
-    href: "/study",
+    to: studyRoute.to,
     icon: GraduationCapIcon,
   },
-
-  { label: "Map", href: "/map", icon: MapIcon },
+  {
+    label: "Map",
+    to: mapRoute.to,
+    icon: MapIcon,
+  },
   {
     label: "Projects",
-    href: "/projects",
+    to: projectsRoute.to,
     icon: CodeIcon,
   },
-];
+] as const;
 
 export { NAV_LINKS };
