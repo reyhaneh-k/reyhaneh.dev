@@ -2,47 +2,51 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 
 import { ThemeSwitch } from "@/components/ui/themeSwitch/ThemeSwitch";
-import { useScroll } from "@/hooks/useScroll/useScroll";
 import { cn } from "@/utils/classname";
 
 import { NAV_LINKS, ROOT_LINK } from "./index.consts";
-const TopNavbar = () => {
-  const { hasScrolled } = useScroll();
+import { type TopNavBarProps } from "./index.type";
+
+const TopNavbar = ({
+  className,
+  hidden,
+}: TopNavBarProps) => {
   return (
-    <nav
+    <motion.nav
       className={cn(
-        "fixed top-0 w-full md:static",
-        "p-2 pb-3 md:p-5"
+        "w-full",
+        "p-2 pb-10 md:mb-2 md:p-5",
+        "[--top-offset:0%] md:[--top-offset:-100%]",
+        className
       )}
+      animate={{
+        y: hidden ? "var(--top-offset)" : "0%",
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 120,
+        damping: 15,
+        mass: 0.8,
+        // omit bounce, or bounce: 0
+      }}
     >
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute inset-x-0 top-0 -z-10 h-full md:hidden",
+          "pointer-events-none absolute inset-x-0 top-0 -z-1 h-full md:hidden",
           "bg-canvas/50 backdrop-blur-md",
-          "mask-[linear-gradient(to_bottom,black_0%,black_45%,transparent_100%)]",
-          "[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_45%,transparent_100%)]"
+          "mask-b-from-50% mask-b-to-100%"
         )}
       />
-      <motion.ol
-        data-should-hide={hasScrolled}
+      <ol
         className={cn(
-          "group",
           "relative flex w-fit gap-5 text-center md:gap-4 md:py-3 lg:gap-6",
-          "items-start justify-between md:items-center md:justify-center",
+          "items-start justify-between md:items-baseline md:justify-center",
           "w-full text-sm md:mx-auto md:rounded-full",
           "sm:px-0 md:px-28 lg:px-32",
           "md:bg-surface bg-transparent",
-          "md:border-border border-transparent md:border",
-          "md:data-[should-hide=true]:translate-y-[-200%]"
+          "md:border-border border-transparent md:border"
         )}
-        layout
-        transition={{
-          type: "spring",
-          stiffness: 200,
-          damping: 15,
-          bounce: 0.25,
-        }}
       >
         {NAV_LINKS.slice(0, 3).map((link) => (
           <li
@@ -86,14 +90,25 @@ const TopNavbar = () => {
           </li>
         ))}
 
-        <ThemeSwitch
+        <motion.div
           className={cn(
-            "absolute right-0 my-auto transition-transform duration-100 ease-in-out md:right-4",
-            "group-data-[should-hide=true]:translate-x-[200%]"
+            "absolute right-0 my-auto md:right-4",
+            "[--x-translate:150%] md:[--x-translate:0%]"
           )}
-        />
-      </motion.ol>
-    </nav>
+          animate={{
+            x: hidden ? "var(--x-translate)" : "0%",
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 200,
+            damping: 15,
+            bounce: 0.25,
+          }}
+        >
+          <ThemeSwitch />
+        </motion.div>
+      </ol>
+    </motion.nav>
   );
 };
 

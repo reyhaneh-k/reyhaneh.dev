@@ -1,17 +1,57 @@
-import { useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+} from "react";
+
+import { SCROLL_STATUS } from "./index.type";
+
+const THROTTLE_TIME = 200;
 
 const useScroll = () => {
-  const [hasScrolled, setHasScrolled] = useState(false);
+  const [scrollStatus, setScrollStatus] = useState<
+    SCROLL_STATUS | undefined
+  >(undefined);
+  const lastScrollY = useRef<number>(0);
+  const throttleTimer = useRef<
+    ReturnType<typeof setTimeout> | undefined
+  >(undefined);
+
+  const handleScroll = useCallback(() => {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > lastScrollY.current) {
+      setScrollStatus(SCROLL_STATUS.DOWN);
+    } else if (currentScrollY < lastScrollY.current) {
+      setScrollStatus(SCROLL_STATUS.UP);
+    }
+  }, []);
+
+  const handleWithThrottle = useEffectEvent(() => {
+    if (throttleTimer.current) return;
+    lastScrollY.current = window.scrollY;
+    const timeout = setTimeout(() => {
+      handleScroll();
+      clearTimeout(throttleTimer.current);
+      throttleTimer.current = undefined;
+    }, THROTTLE_TIME);
+
+    throttleTimer.current = timeout;
+  });
+
   useEffect(() => {
-    const handleScroll = () => {
-      setHasScrolled(window.scrollY > 0);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleWithThrottle);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener(
+        "scroll",
+        handleWithThrottle
+      );
+      clearTimeout(throttleTimer.current);
     };
   }, []);
-  return { hasScrolled };
+
+  return { scrollStatus };
 };
 export { useScroll };
