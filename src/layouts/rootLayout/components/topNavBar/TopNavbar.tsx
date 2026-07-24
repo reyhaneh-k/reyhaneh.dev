@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { SendHorizontalIcon } from "lucide-react";
 import { motion } from "motion/react";
 
 import { ThemeSwitch } from "@/components/ui/themeSwitch/ThemeSwitch";
@@ -35,15 +34,6 @@ const TopNavbar = ({
       }}
       transition={SPRING}
     >
-      {/* <div
-        aria-hidden
-        className={cn(
-          "pointer-events-none absolute inset-x-0 -inset-y-4 -z-1",
-          "bg-transparent backdrop-blur-lg backdrop-saturate-50",
-          "mask-b-from-50% mask-b-to-100%",
-          "block md:hidden"
-        )}
-      /> */}
       <motion.ol
         className={cn(
           "relative flex gap-6 text-center md:gap-4 lg:gap-6",
@@ -54,15 +44,26 @@ const TopNavbar = ({
           "md:border-border border-transparent md:border",
           "[--padding-custom:calc(3px*4)] md:[--padding-custom:calc(28px*4)] lg:[--padding-custom:calc(40px*4)]",
           "[--padding-compact:calc(3px*4)] md:[--padding-compact:calc(28px*4)] lg:[--padding-compact:calc(32px*4)]",
-          "py-4"
+          "[--scale-compact:1] md:[--scale-compact:0.95] lg:[--scale-compact:1]",
+          "pt-4 pb-10 md:py-4"
         )}
         animate={{
+          scale: compact ? "var(--scale-compact)" : 1,
           paddingInline: compact
             ? "var(--padding-compact)"
             : "var(--padding-custom)",
         }}
         transition={SPRING}
       >
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-0 -z-1",
+            "bg-canvas/50 backdrop-blur-sm backdrop-saturate-50",
+            "mask-b-from-50% mask-b-to-100%",
+            "block md:hidden"
+          )}
+        />
         {NAV_LINKS.slice(0, 3).map((link) => (
           <li
             key={link.to}
@@ -85,19 +86,8 @@ const TopNavbar = ({
         >
           <Link
             to={ROOT_LINK.to}
-            className={cn(
-              "flex items-center gap-2",
-              "border-border rounded-full border p-1 px-2",
-              "backdrop-blur-lg backdrop-saturate-50",
-              "md:rounded-none md:border-0 md:p-0 md:backdrop-filter-none"
-            )}
+            className={cn("flex items-center gap-2")}
           >
-            <SendHorizontalIcon
-              className={cn(
-                "size-5",
-                "text-accent inline md:hidden"
-              )}
-            />
             <span>
               <span>{ROOT_LINK.label[0]}</span>
               <span className="text-accent">
@@ -120,7 +110,6 @@ const TopNavbar = ({
             <Link to={link.to}>{link.label}</Link>
           </li>
         ))}
-
         <motion.div
           className={cn(
             "absolute right-3 md:top-1/2 md:right-4 md:-translate-y-1/2",
