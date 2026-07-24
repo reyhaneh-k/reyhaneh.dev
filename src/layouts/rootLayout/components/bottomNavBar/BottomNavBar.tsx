@@ -59,7 +59,7 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
           "2xs:px-6 xs:px-8 px-0 py-2 sm:px-10"
         )}
       >
-        <motion.div
+        <div
           aria-hidden
           className={cn(
             "bg-surface absolute inset-0",
@@ -68,7 +68,8 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
             "[--mask-w:calc(1.7*(--spacing(10)))]",
             "xs:[--mask-w:calc(1.7*(--spacing(12)))]",
             "[--mask-h:calc(var(--mask-w)*48/80)]", // maskX = centerX - maskW/2
-            "[--mask-x:calc(var(--center-x)-var(--mask-w)/2)]"
+            "[--mask-x:calc(var(--center-x)-var(--mask-w)/2)]",
+            "ease-spring-snappy transition-[mask-position,-webkit-mask-position] duration-500"
           )}
           style={{
             ["--center-x" as string]:
@@ -84,14 +85,11 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
             WebkitMaskRepeat: "no-repeat, no-repeat",
             maskSize: `var(--mask-w) var(--mask-h), 100% 100%`,
             WebkitMaskSize: `var(--mask-w) var(--mask-h), 100% 100%`,
+            maskPosition: `var(--mask-x) 0px, 0% 0%`,
+            WebkitMaskPosition: "var(--mask-x) 0px, 0% 0%",
             maskComposite: "exclude",
             WebkitMaskComposite: "xor",
           }}
-          animate={{
-            maskPosition: `var(--mask-x) 0px, 0% 0%`,
-            maskSize: `var(--mask-w) var(--mask-h), 100% 100%`,
-          }}
-          transition={SPRING}
         />
         {NAV_LINKS.map((link) => {
           const Icon = link.icon;

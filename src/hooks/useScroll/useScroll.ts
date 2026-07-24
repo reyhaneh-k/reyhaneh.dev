@@ -11,7 +11,7 @@ import { SCROLL_STATUS } from "./index.type";
 const THROTTLE_TIME = 200;
 const TOP_THRESHOLD = 8;
 
-const useScroll = () => {
+const useScrollIndications = () => {
   const [scrollStatus, setScrollStatus] = useState<
     SCROLL_STATUS | undefined
   >(undefined);
@@ -65,4 +65,4 @@ const useScroll = () => {
 
   return { scrollStatus, isAtTop };
 };
-export { useScroll };
+export { useScrollIndications };

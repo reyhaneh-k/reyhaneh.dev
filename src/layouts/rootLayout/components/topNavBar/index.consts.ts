@@ -38,4 +38,10 @@ const ROOT_LINK = {
   to: indexRoute.to,
 };
 
-export { NAV_LINKS, ROOT_LINK };
+const SPRING = {
+  type: "spring",
+  stiffness: 200,
+  damping: 15,
+  bounce: 0.25,
+} as const;
+export { NAV_LINKS, ROOT_LINK, SPRING };
