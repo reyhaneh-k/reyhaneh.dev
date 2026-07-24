@@ -65,7 +65,7 @@ const config = {
     "scope-empty": [Error, "never"],
     "scope-case": [Error, "always", "lower-case"],
     "scope-enum": [
-      Error,
+      Warning,
       "always",
       [
         // App areas (from STRUCTURE.md)
@@ -82,6 +82,7 @@ const config = {
         "types",
         "styles",
         "assets",
+        "html",
 
         // Tooling / infra
         "eslint",
@@ -98,6 +99,7 @@ const config = {
         "seo",
         "a11y",
         "dx",
+        "storybook",
       ],
     ],
 

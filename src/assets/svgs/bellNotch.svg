@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 48" fill="none">
+  <!-- flipped so the flare opens from y=0 (the bar's top edge) and closes going down into the bar -->
+  <g transform="translate(0 48) scale(1 -1)">
+    <path
+      fill="#fff"
+      d="M 4 48 C 12 48 16.37 42 18.2 38 A 24 24 0 0 1 61.8 38 C 63.63 42 68 48 76 48 Z"
+    />
+  </g>
+</svg>

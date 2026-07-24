@@ -1,42 +1,45 @@
-import {
-  useEffect,
-  useRef,
-  useSyncExternalStore,
-} from "react";
-
 import { CUSTOM_EVENTS } from "@/consts/events";
 import { STORAGE_KEYS } from "@/consts/storage";
 import { STORAGE_TYPES, webStorage } from "@/utils/storage";
 
-import { Theme } from "./index.const";
-
-//TODO: add window safegurads, add try-catch, sentry captures
-const updateTheme = (theme: Theme) => {
+import { THEME } from "./index.const";
+const setThemeStorage = (theme: THEME) => {
   webStorage.setStorageItem(
     STORAGE_KEYS.THEME,
     theme,
     STORAGE_TYPES.LOCAL
   );
-  const cleanup = setDataAttribute(theme);
+};
+const getThemeStorage = () => {
+  return webStorage.getStorageItem(
+    STORAGE_KEYS.THEME,
+    STORAGE_TYPES.LOCAL
+  );
+};
+export const updateTheme = (theme: THEME) => {
+  setThemeStorage(theme);
+  const cleanup = setDataAndMeta(theme);
   notifyThemeChanged();
   return cleanup;
 };
 
-const setDataAttribute = (theme: Theme) => {
+const setDataAndMeta = (theme: THEME) => {
   const handleChange = (
     e: MediaQueryListEvent | MediaQueryList
   ) => {
     if (e.matches) {
-      document.documentElement.dataset.theme = Theme.DARK;
+      document.documentElement.dataset.theme = THEME.DARK;
+      setMetaTag();
     } else {
-      document.documentElement.dataset.theme = Theme.LIGHT;
+      document.documentElement.dataset.theme = THEME.LIGHT;
+      setMetaTag();
     }
   };
   const mediaQuery = window.matchMedia(
     "(prefers-color-scheme: dark)"
   );
   switch (theme) {
-    case Theme.AUTO:
+    case THEME.AUTO:
       handleChange(mediaQuery);
       mediaQuery.addEventListener("change", handleChange);
       return () => {
@@ -45,37 +48,35 @@ const setDataAttribute = (theme: Theme) => {
           handleChange
         );
       };
-    case Theme.DARK:
-      document.documentElement.dataset.theme = Theme.DARK;
+    case THEME.DARK:
+      document.documentElement.dataset.theme = THEME.DARK;
+      setMetaTag();
       break;
-    case Theme.LIGHT:
-      document.documentElement.dataset.theme = Theme.LIGHT;
+    case THEME.LIGHT:
+      document.documentElement.dataset.theme = THEME.LIGHT;
+      setMetaTag();
       break;
   }
 };
 
-const initializeTheme = () => {
+export const initializeTheme = () => {
   const theme = getThemeSnapshot();
   if (!theme) {
-    webStorage.setStorageItem(
-      STORAGE_KEYS.THEME,
-      Theme.AUTO,
-      STORAGE_TYPES.LOCAL
-    );
+    setThemeStorage(THEME.AUTO);
+    const cl = setDataAndMeta(THEME.AUTO);
     notifyThemeChanged();
-    return setDataAttribute(Theme.AUTO);
+    return cl;
   }
-  return setDataAttribute(theme);
+  return setDataAndMeta(theme);
 };
 const notifyThemeChanged = (): void => {
   if (typeof window === "undefined") return;
-
   window.dispatchEvent(
     new Event(CUSTOM_EVENTS.THEME_CHANGED)
   );
 };
 
-const subscribeToThemeChanges = (
+export const subscribeToThemeChanges = (
   onStoreChange: () => void
 ): (() => void) => {
   window.addEventListener(
@@ -90,35 +91,26 @@ const subscribeToThemeChanges = (
   };
 };
 
-const getThemeSnapshot = (): Theme | null => {
-  return webStorage.getStorageItem(
-    STORAGE_KEYS.THEME,
-    STORAGE_TYPES.LOCAL
-  ) as Theme | null;
-};
-const useTheme: () => {
-  theme: Theme | null;
-  setTheme: (theme: Theme) => void;
-} = () => {
-  const cleanupRef = useRef<(() => void) | undefined>(
-    undefined
-  );
-
-  const theme = useSyncExternalStore(
-    subscribeToThemeChanges,
-    getThemeSnapshot
-  );
-  const setTheme = (theme: Theme) => {
-    cleanupRef.current?.();
-    const cl = updateTheme(theme);
-    cleanupRef.current = cl;
-  };
-
-  useEffect(() => {
-    cleanupRef.current = initializeTheme();
-    return () => cleanupRef.current?.();
-  }, []);
-  return { theme, setTheme };
+export const getThemeSnapshot = (): THEME | null => {
+  return getThemeStorage() as THEME | null;
 };
 
-export { useTheme };
+const setMetaTag = () => {
+  const themeColorMetaTag = document.querySelector(
+    'meta[name="theme-color"]'
+  );
+  const backgroundColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("background-color");
+  if (themeColorMetaTag) {
+    themeColorMetaTag.setAttribute(
+      "content",
+      backgroundColor
+    );
+  } else {
+    const metaTag = document.createElement("meta");
+    metaTag.setAttribute("name", "theme-color");
+    metaTag.setAttribute("content", backgroundColor);
+    document.head.appendChild(metaTag);
+  }
+};

@@ -26,8 +26,7 @@ const svgrCommonOptions = {
 
 export default defineConfig({
   build: {
-    target: "es2024",
-    cssTarget: "es2022",
+    target: "baseline-widely-available",
     sourcemap: "hidden",
     outDir: "build",
   },

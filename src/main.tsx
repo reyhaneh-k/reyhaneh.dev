@@ -4,11 +4,13 @@ import {
   RouterProvider,
   createRouter,
 } from "@tanstack/react-router";
+import { MotionConfig } from "motion/react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { initSentry } from "./providers/sentry/index.helpers";
 import { SentryProvider } from "./providers/sentry/SentryProvider";
+import { ThemeProvider } from "./providers/theme/ThemeProvider";
 import { routeTree } from "./routeTree.gen";
 
 const router = createRouter({ routeTree });
@@ -29,7 +31,11 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <SentryProvider>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+          <MotionConfig reducedMotion="user">
+            <RouterProvider router={router} />
+          </MotionConfig>
+        </ThemeProvider>
       </SentryProvider>
     </StrictMode>
   );

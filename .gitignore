@@ -8,3 +8,6 @@ pnpm-lock.yaml
 .env.local
 TODOS.md
 
+
+*storybook.log
+storybook-static

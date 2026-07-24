@@ -9,68 +9,193 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AppContactRouteImport } from './routes/_app/contact'
+import { Route as AppMapRouteImport } from './routes/_app/map'
+import { Route as AppProjectsRouteImport } from './routes/_app/projects'
+import { Route as AppStudyRouteImport } from './routes/_app/study'
+import { Route as AppWorkRouteImport } from './routes/_app/work'
+import { Route as AppWritingRouteImport } from './routes/_app/writing'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppContactRoute = AppContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppMapRoute = AppMapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppProjectsRoute = AppProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppStudyRoute = AppStudyRouteImport.update({
+  id: '/study',
+  path: '/study',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppWorkRoute = AppWorkRouteImport.update({
+  id: '/work',
+  path: '/work',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppWritingRoute = AppWritingRouteImport.update({
+  id: '/writing',
+  path: '/writing',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/': typeof AppIndexRoute
+  '/contact': typeof AppContactRoute
+  '/map': typeof AppMapRoute
+  '/projects': typeof AppProjectsRoute
+  '/study': typeof AppStudyRoute
+  '/work': typeof AppWorkRoute
+  '/writing': typeof AppWritingRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/contact': typeof AppContactRoute
+  '/map': typeof AppMapRoute
+  '/projects': typeof AppProjectsRoute
+  '/study': typeof AppStudyRoute
+  '/work': typeof AppWorkRoute
+  '/writing': typeof AppWritingRoute
+  '/': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/_app': typeof AppRouteRouteWithChildren
+  '/_app/contact': typeof AppContactRoute
+  '/_app/map': typeof AppMapRoute
+  '/_app/projects': typeof AppProjectsRoute
+  '/_app/study': typeof AppStudyRoute
+  '/_app/work': typeof AppWorkRoute
+  '/_app/writing': typeof AppWritingRoute
+  '/_app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths:
+    '/' | '/contact' | '/map' | '/projects' | '/study' | '/work' | '/writing'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/contact' | '/map' | '/projects' | '/study' | '/work' | '/writing' | '/'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_app/contact'
+    | '/_app/map'
+    | '/_app/projects'
+    | '/_app/study'
+    | '/_app/work'
+    | '/_app/writing'
+    | '/_app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_app/': {
+      id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/contact': {
+      id: '/_app/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof AppContactRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/map': {
+      id: '/_app/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof AppMapRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/projects': {
+      id: '/_app/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof AppProjectsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/study': {
+      id: '/_app/study'
+      path: '/study'
+      fullPath: '/study'
+      preLoaderRoute: typeof AppStudyRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/work': {
+      id: '/_app/work'
+      path: '/work'
+      fullPath: '/work'
+      preLoaderRoute: typeof AppWorkRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/writing': {
+      id: '/_app/writing'
+      path: '/writing'
+      fullPath: '/writing'
+      preLoaderRoute: typeof AppWritingRouteImport
+      parentRoute: typeof AppRouteRoute
     }
   }
 }
 
+interface AppRouteRouteChildren {
+  AppContactRoute: typeof AppContactRoute
+  AppMapRoute: typeof AppMapRoute
+  AppProjectsRoute: typeof AppProjectsRoute
+  AppStudyRoute: typeof AppStudyRoute
+  AppWorkRoute: typeof AppWorkRoute
+  AppWritingRoute: typeof AppWritingRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppContactRoute: AppContactRoute,
+  AppMapRoute: AppMapRoute,
+  AppProjectsRoute: AppProjectsRoute,
+  AppStudyRoute: AppStudyRoute,
+  AppWorkRoute: AppWorkRoute,
+  AppWritingRoute: AppWritingRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

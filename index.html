@@ -6,27 +6,30 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
+    <meta
+      name="color-scheme"
+      content="light dark"
+      media="(prefers-color-scheme: light)"
+      media="(prefers-color-scheme: dark)"
+    />
     <title>Vite App</title>
-    <script>
-      // Prevents flash of unstyled content
-      const key = "theme_storage_key";
-      const theme = localStorage.getItem(key);
-      if (theme === "dark" || theme === "light") {
-        document.documentElement.dataset.theme = theme;
-      } else {
-        const mediaQuery = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        );
-        const resolvedTheme = mediaQuery.matches
-          ? "dark"
-          : "light";
-        document.documentElement.dataset.theme =
-          resolvedTheme;
-      }
-    </script>
+    <link
+      rel="preload"
+      href="./src/assets/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="./src/assets/fonts/DMSans-VariableFont_opsz,wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
   </head>
   <body>
-    <div id="root"></div>
+    <main id="root"></main>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
