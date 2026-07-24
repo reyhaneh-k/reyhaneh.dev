@@ -1,16 +1,24 @@
 import {
   BriefcaseIcon,
   CodeIcon,
+  ContactRound,
   GraduationCapIcon,
   MapIcon,
   PenIcon,
 } from "lucide-react";
 
+import { Route as contactRoute } from "@/routes/_app/contact";
 import { Route as mapRoute } from "@/routes/_app/map";
 import { Route as projectsRoute } from "@/routes/_app/projects";
 import { Route as studyRoute } from "@/routes/_app/study";
 import { Route as workRoute } from "@/routes/_app/work";
 import { Route as writingRoute } from "@/routes/_app/writing";
+
+const CONTACT_LINK = {
+  label: "Contact",
+  to: contactRoute.to,
+  icon: ContactRound,
+} as const;
 
 const NAV_LINKS = [
   {
@@ -24,6 +32,11 @@ const NAV_LINKS = [
     icon: PenIcon,
   },
   {
+    label: "Projects",
+    to: projectsRoute.to,
+    icon: CodeIcon,
+  },
+  {
     label: "Study",
     to: studyRoute.to,
     icon: GraduationCapIcon,
@@ -32,11 +45,6 @@ const NAV_LINKS = [
     label: "Map",
     to: mapRoute.to,
     icon: MapIcon,
-  },
-  {
-    label: "Projects",
-    to: projectsRoute.to,
-    icon: CodeIcon,
   },
 ] as const;
 
@@ -47,4 +55,4 @@ const SPRING = {
   mass: 0.85,
 };
 
-export { NAV_LINKS, SPRING };
+export { CONTACT_LINK, NAV_LINKS, SPRING };
