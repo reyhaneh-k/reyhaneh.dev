@@ -209,3 +209,10 @@
     background-position: 0% 50%;
   }
 }
+
+/* CSS custom properties for bottom nav bar */
+@property --center-x {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}

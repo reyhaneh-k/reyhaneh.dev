@@ -1,13 +1,8 @@
 const getMaskMetrics = (
-  id: string,
+  item: HTMLElement | null,
   list: HTMLElement | null
 ): number | null => {
-  if (!id || !list) return null;
-
-  const item = list.querySelector<HTMLElement>(
-    `[id="${CSS.escape(id)}"]`
-  );
-  if (!item) return null;
+  if (!item || !list) return null;
 
   const itemBox = item.getBoundingClientRect();
   const olBox = list.getBoundingClientRect();

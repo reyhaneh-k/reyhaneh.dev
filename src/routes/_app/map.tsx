@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_app/map")({
   component: MapPage,
+  staticData: {
+    breadcrumb: "Map",
+  },
 });
 
 function MapPage() {

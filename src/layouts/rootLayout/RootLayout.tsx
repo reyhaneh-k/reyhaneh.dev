@@ -16,7 +16,6 @@ const RootLayout = () => {
     <section
       className={cn(
         "relative h-full w-full",
-        "md:h-screen",
         "pt-16 md:pt-20 lg:pt-24"
       )}
     >

@@ -14,4 +14,7 @@ const RootLayout = () => {
 
 export const Route = createRootRoute({
   component: RootLayout,
+  staticData: {
+    breadcrumb: "",
+  },
 });

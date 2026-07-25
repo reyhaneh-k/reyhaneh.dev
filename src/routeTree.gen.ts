@@ -16,7 +16,11 @@ import { Route as AppMapRouteImport } from './routes/_app/map'
 import { Route as AppProjectsRouteImport } from './routes/_app/projects'
 import { Route as AppStudyRouteImport } from './routes/_app/study'
 import { Route as AppWorkRouteImport } from './routes/_app/work'
-import { Route as AppWritingRouteImport } from './routes/_app/writing'
+import { Route as AppWritingRouteRouteImport } from './routes/_app/writing/route'
+import { Route as AppWritingIndexRouteImport } from './routes/_app/writing/index'
+import { Route as AppWritingArticlesRouteImport } from './routes/_app/writing/articles'
+import { Route as AppWritingCarouselsRouteImport } from './routes/_app/writing/carousels'
+import { Route as AppWritingPostsRouteImport } from './routes/_app/writing/posts'
 
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
@@ -52,20 +56,44 @@ const AppWorkRoute = AppWorkRouteImport.update({
   path: '/work',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppWritingRoute = AppWritingRouteImport.update({
+const AppWritingRouteRoute = AppWritingRouteRouteImport.update({
   id: '/writing',
   path: '/writing',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppWritingIndexRoute = AppWritingIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppWritingRouteRoute,
+} as any)
+const AppWritingArticlesRoute = AppWritingArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => AppWritingRouteRoute,
+} as any)
+const AppWritingCarouselsRoute = AppWritingCarouselsRouteImport.update({
+  id: '/carousels',
+  path: '/carousels',
+  getParentRoute: () => AppWritingRouteRoute,
+} as any)
+const AppWritingPostsRoute = AppWritingPostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => AppWritingRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
+  '/writing': typeof AppWritingRouteRouteWithChildren
   '/contact': typeof AppContactRoute
   '/map': typeof AppMapRoute
   '/projects': typeof AppProjectsRoute
   '/study': typeof AppStudyRoute
   '/work': typeof AppWorkRoute
-  '/writing': typeof AppWritingRoute
+  '/writing/articles': typeof AppWritingArticlesRoute
+  '/writing/carousels': typeof AppWritingCarouselsRoute
+  '/writing/posts': typeof AppWritingPostsRoute
+  '/writing/': typeof AppWritingIndexRoute
 }
 export interface FileRoutesByTo {
   '/contact': typeof AppContactRoute
@@ -73,36 +101,67 @@ export interface FileRoutesByTo {
   '/projects': typeof AppProjectsRoute
   '/study': typeof AppStudyRoute
   '/work': typeof AppWorkRoute
-  '/writing': typeof AppWritingRoute
   '/': typeof AppIndexRoute
+  '/writing/articles': typeof AppWritingArticlesRoute
+  '/writing/carousels': typeof AppWritingCarouselsRoute
+  '/writing/posts': typeof AppWritingPostsRoute
+  '/writing': typeof AppWritingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteRouteWithChildren
+  '/_app/writing': typeof AppWritingRouteRouteWithChildren
   '/_app/contact': typeof AppContactRoute
   '/_app/map': typeof AppMapRoute
   '/_app/projects': typeof AppProjectsRoute
   '/_app/study': typeof AppStudyRoute
   '/_app/work': typeof AppWorkRoute
-  '/_app/writing': typeof AppWritingRoute
   '/_app/': typeof AppIndexRoute
+  '/_app/writing/articles': typeof AppWritingArticlesRoute
+  '/_app/writing/carousels': typeof AppWritingCarouselsRoute
+  '/_app/writing/posts': typeof AppWritingPostsRoute
+  '/_app/writing/': typeof AppWritingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/contact' | '/map' | '/projects' | '/study' | '/work' | '/writing'
+    | '/'
+    | '/writing'
+    | '/contact'
+    | '/map'
+    | '/projects'
+    | '/study'
+    | '/work'
+    | '/writing/articles'
+    | '/writing/carousels'
+    | '/writing/posts'
+    | '/writing/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/contact' | '/map' | '/projects' | '/study' | '/work' | '/writing' | '/'
+  to:
+    | '/contact'
+    | '/map'
+    | '/projects'
+    | '/study'
+    | '/work'
+    | '/'
+    | '/writing/articles'
+    | '/writing/carousels'
+    | '/writing/posts'
+    | '/writing'
   id:
     | '__root__'
     | '/_app'
+    | '/_app/writing'
     | '/_app/contact'
     | '/_app/map'
     | '/_app/projects'
     | '/_app/study'
     | '/_app/work'
-    | '/_app/writing'
     | '/_app/'
+    | '/_app/writing/articles'
+    | '/_app/writing/carousels'
+    | '/_app/writing/posts'
+    | '/_app/writing/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -164,29 +223,75 @@ declare module '@tanstack/react-router' {
       id: '/_app/writing'
       path: '/writing'
       fullPath: '/writing'
-      preLoaderRoute: typeof AppWritingRouteImport
+      preLoaderRoute: typeof AppWritingRouteRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/_app/writing/': {
+      id: '/_app/writing/'
+      path: '/'
+      fullPath: '/writing/'
+      preLoaderRoute: typeof AppWritingIndexRouteImport
+      parentRoute: typeof AppWritingRouteRoute
+    }
+    '/_app/writing/articles': {
+      id: '/_app/writing/articles'
+      path: '/articles'
+      fullPath: '/writing/articles'
+      preLoaderRoute: typeof AppWritingArticlesRouteImport
+      parentRoute: typeof AppWritingRouteRoute
+    }
+    '/_app/writing/carousels': {
+      id: '/_app/writing/carousels'
+      path: '/carousels'
+      fullPath: '/writing/carousels'
+      preLoaderRoute: typeof AppWritingCarouselsRouteImport
+      parentRoute: typeof AppWritingRouteRoute
+    }
+    '/_app/writing/posts': {
+      id: '/_app/writing/posts'
+      path: '/posts'
+      fullPath: '/writing/posts'
+      preLoaderRoute: typeof AppWritingPostsRouteImport
+      parentRoute: typeof AppWritingRouteRoute
     }
   }
 }
 
+interface AppWritingRouteRouteChildren {
+  AppWritingArticlesRoute: typeof AppWritingArticlesRoute
+  AppWritingCarouselsRoute: typeof AppWritingCarouselsRoute
+  AppWritingPostsRoute: typeof AppWritingPostsRoute
+  AppWritingIndexRoute: typeof AppWritingIndexRoute
+}
+
+const AppWritingRouteRouteChildren: AppWritingRouteRouteChildren = {
+  AppWritingArticlesRoute: AppWritingArticlesRoute,
+  AppWritingCarouselsRoute: AppWritingCarouselsRoute,
+  AppWritingPostsRoute: AppWritingPostsRoute,
+  AppWritingIndexRoute: AppWritingIndexRoute,
+}
+
+const AppWritingRouteRouteWithChildren = AppWritingRouteRoute._addFileChildren(
+  AppWritingRouteRouteChildren,
+)
+
 interface AppRouteRouteChildren {
+  AppWritingRouteRoute: typeof AppWritingRouteRouteWithChildren
   AppContactRoute: typeof AppContactRoute
   AppMapRoute: typeof AppMapRoute
   AppProjectsRoute: typeof AppProjectsRoute
   AppStudyRoute: typeof AppStudyRoute
   AppWorkRoute: typeof AppWorkRoute
-  AppWritingRoute: typeof AppWritingRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppWritingRouteRoute: AppWritingRouteRouteWithChildren,
   AppContactRoute: AppContactRoute,
   AppMapRoute: AppMapRoute,
   AppProjectsRoute: AppProjectsRoute,
   AppStudyRoute: AppStudyRoute,
   AppWorkRoute: AppWorkRoute,
-  AppWritingRoute: AppWritingRoute,
   AppIndexRoute: AppIndexRoute,
 }
 

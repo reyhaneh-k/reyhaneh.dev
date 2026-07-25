@@ -4,7 +4,7 @@ import { Route as mapRoute } from "@/routes/_app/map";
 import { Route as projectsRoute } from "@/routes/_app/projects";
 import { Route as studyRoute } from "@/routes/_app/study";
 import { Route as workRoute } from "@/routes/_app/work";
-import { Route as writingRoute } from "@/routes/_app/writing";
+import { Route as writingRoute } from "@/routes/_app/writing/route";
 
 const NAV_LINKS = [
   {

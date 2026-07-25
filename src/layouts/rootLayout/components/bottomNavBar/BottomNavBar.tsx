@@ -1,14 +1,15 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import {
+  useCallback,
   useEffect,
-  useEffectEvent,
+  useLayoutEffect,
   useRef,
-  useState,
 } from "react";
 
 import contactIcon from "@/assets/icons/contact.svg";
 import bellNotch from "@/assets/svgs/bellNotch.svg";
+import { useMatchesRoute } from "@/hooks/useMatchesRoute/useMatchesRoute";
 import { cn } from "@/utils/classname";
 
 import {
@@ -22,37 +23,54 @@ import { type BottomNavBarProps } from "./index.type";
 const BottomNavBar = ({ className }: BottomNavBarProps) => {
   const { pathname } = useLocation();
   const listRef = useRef<HTMLOListElement>(null);
-  const [centerX, setCenterX] = useState<number | null>(
-    null
+  const activeLinkRef = useRef<HTMLAnchorElement>(null);
+  const surfaceRef = useRef<HTMLDivElement>(null);
+  const matches = useMatchesRoute({
+    target: [
+      ...NAV_LINKS.map((link) => ({
+        to: link.to,
+      })),
+    ],
+  });
+  const syncMask = useCallback(
+    (el: HTMLAnchorElement | null) => {
+      const next = getMaskMetrics(el, listRef.current);
+      if (surfaceRef.current) {
+        surfaceRef.current.style.setProperty(
+          "--center-x",
+          `${next ?? -10}px`
+        );
+      }
+      activeLinkRef.current = el;
+    },
+    []
   );
 
-  const syncMask = useEffectEvent(() => {
-    const next = getMaskMetrics(pathname, listRef.current);
-    setCenterX(next);
-  });
+  // sync mask when active link changes
+  useLayoutEffect(() => {
+    if (!activeLinkRef.current) return;
+    syncMask(activeLinkRef.current);
+  }, [pathname, syncMask]);
 
-  useEffect(() => {
-    syncMask();
-  }, [pathname]);
-
+  // sync mask when list is resized
   useEffect(() => {
     const ol = listRef.current;
     if (!ol) return;
 
     const ro = new ResizeObserver(() => {
-      syncMask();
+      syncMask(activeLinkRef.current);
     });
     ro.observe(ol);
     return () => {
       ro.disconnect();
     };
-  }, []);
+  }, [syncMask]);
 
-  const activeLink = NAV_LINKS.find(
-    (link) => link.to === pathname
-  );
-  const isContactActive = pathname === CONTACT_LINK.to;
+  const activeLink = matches.find(
+    (match) => match.isMatch
+  )?.to;
 
+  const isContactActive = activeLink === CONTACT_LINK.to;
   return (
     <nav
       className={cn(
@@ -62,15 +80,21 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
     >
       <Link
         to={CONTACT_LINK.to}
+        ref={(el) => {
+          if (isContactActive && el) {
+            syncMask(el);
+          }
+        }}
         aria-label={CONTACT_LINK.label}
         aria-current={isContactActive ? "page" : undefined}
         className={cn(
           "relative z-1 shrink-0",
-          "bg-surface inset-shadow-lg rounded-2xl shadow-lg",
+          "bg-surface inset-shadow-shadow shadow-shadow rounded-2xl shadow-lg inset-shadow-sm",
           "transition-colors",
-          "aspect-square",
+          "aspect-square transition-shadow",
           "2xs:size-13 xs:size-14 size-12",
-          isContactActive && "text-accent"
+          isContactActive && "text-accent",
+          isContactActive && "inset-shadow-none"
         )}
       >
         <div
@@ -106,9 +130,7 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
       </Link>
 
       <motion.ol
-        ref={(el) => {
-          listRef.current = el;
-        }}
+        ref={listRef}
         className={cn(
           "relative flex grow items-center justify-around bg-transparent",
           "xs:gap-4 gap-0 p-2 sm:gap-6",
@@ -117,20 +139,18 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
       >
         <div
           aria-hidden
+          ref={surfaceRef}
           className={cn(
             "bg-surface absolute inset-0",
-            "rounded-2xl shadow-lg",
+            "shadow-shadow rounded-2xl shadow-lg",
             // match size-10 / xs:size-12 × ratio (same idea as --y-offset)
             "[--mask-w:calc(1.5*(--spacing(10)))]",
             "xs:[--mask-w:calc(1.7*(--spacing(12)))]",
             "[--mask-h:calc(var(--mask-w)*48/80)]", // maskX = centerX - maskW/2
             "[--mask-x:calc(var(--center-x)-var(--mask-w)/2)]",
-            "ease-spring-snappy transition-[mask-position,-webkit-mask-position] duration-500"
+            "ease-spring-snappy transition-[--center-x] duration-500"
           )}
           style={{
-            ["--center-x" as string]:
-              centerX != null ? `${centerX}px` : "0px",
-
             maskImage: activeLink
               ? `url("${bellNotch}"), linear-gradient(#000,#000)`
               : "none",
@@ -147,18 +167,25 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
             WebkitMaskComposite: "xor",
           }}
         />
-        {NAV_LINKS.map((link) => {
+        {NAV_LINKS.filter(
+          (link) => link.to !== CONTACT_LINK.to
+        ).map((link) => {
           const Icon = link.icon;
-          const isActive = pathname === link.to;
+          const isActive = activeLink === link.to;
 
           return (
             <li key={link.to} id={link.to}>
               <Link
+                ref={(el) => {
+                  if (isActive && el) {
+                    syncMask(el);
+                  }
+                }}
                 to={link.to}
                 className={cn(
                   "relative flex flex-col items-center justify-center",
                   "transition-colors",
-                  "w-fit py-2",
+                  "active:text-accent w-fit py-2",
                   isActive && "text-accent"
                 )}
               >
@@ -170,10 +197,13 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
                     className={cn(
                       "pointer-events-none",
                       "absolute -top-10 left-1/2 z-0 -translate-x-1/2",
-                      "bg-surface inset-shadow-lg rounded-full",
+                      "bg-surface shadow-shadow rounded-full shadow-lg",
                       "xs:size-12 size-10"
                     )}
-                    transition={SPRING}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.22, 1.4, 0.36, 1] as const,
+                    }}
                   />
                 )}
 

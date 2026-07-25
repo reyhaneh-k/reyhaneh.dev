@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_app/work")({
   component: WorkPage,
+  staticData: {
+    breadcrumb: "Work",
+  },
 });
 
 function WorkPage() {

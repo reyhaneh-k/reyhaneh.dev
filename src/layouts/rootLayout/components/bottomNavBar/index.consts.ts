@@ -12,7 +12,7 @@ import { Route as mapRoute } from "@/routes/_app/map";
 import { Route as projectsRoute } from "@/routes/_app/projects";
 import { Route as studyRoute } from "@/routes/_app/study";
 import { Route as workRoute } from "@/routes/_app/work";
-import { Route as writingRoute } from "@/routes/_app/writing";
+import { Route as writingRoute } from "@/routes/_app/writing/route";
 
 const CONTACT_LINK = {
   label: "Contact",
@@ -46,7 +46,12 @@ const NAV_LINKS = [
     to: mapRoute.to,
     icon: MapIcon,
   },
-] as const;
+  CONTACT_LINK,
+] as const satisfies {
+  label: string;
+  to: string;
+  icon: React.ElementType;
+}[];
 
 const SPRING = {
   type: "spring" as const,

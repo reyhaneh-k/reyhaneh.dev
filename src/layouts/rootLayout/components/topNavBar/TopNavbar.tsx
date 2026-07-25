@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { motion } from "motion/react";
 
 import { ThemeSwitch } from "@/components/ui/themeSwitch/ThemeSwitch";
@@ -17,6 +17,7 @@ const TopNavbar = ({
   compact,
   scrollStatus,
 }: TopNavBarProps) => {
+  const { pathname } = useLocation();
   return (
     <motion.nav
       className={cn(
@@ -71,8 +72,9 @@ const TopNavbar = ({
               "relative",
               "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
               "after:scale-x-0 after:transition-transform after:duration-100 after:ease-linear after:content-['']",
-              "hover:after:scale-x-100",
-              "hidden md:inline"
+              "hover:after:scale-x-100 active:after:scale-x-100",
+              "hidden transition-colors md:inline",
+              pathname === link.to && "text-accent"
             )}
           >
             <Link to={link.to}>{link.label}</Link>
@@ -81,7 +83,8 @@ const TopNavbar = ({
         <li
           className={cn(
             "font-display text-xl font-bold md:mx-3",
-            "transition-transform duration-100 ease-linear md:hover:-translate-y-0.5 md:hover:scale-105"
+            "transition-transform duration-100 ease-linear md:hover:-translate-y-0.5",
+            "hover:scale-105 active:scale-105"
           )}
         >
           <Link
@@ -103,8 +106,9 @@ const TopNavbar = ({
               "relative",
               "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
               "after:scale-x-0 after:transition-transform after:duration-100 after:ease-linear after:content-['']",
-              "hover:after:scale-x-100",
-              "hidden md:inline"
+              "hover:after:scale-x-100 active:after:scale-x-100",
+              "hidden transition-colors md:inline",
+              pathname === link.to && "text-accent"
             )}
           >
             <Link to={link.to}>{link.label}</Link>
