@@ -72,7 +72,8 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
 
   const isContactActive = activeLink === CONTACT_LINK.to;
   return (
-    <nav
+    <motion.nav
+      layoutRoot
       className={cn(
         "text-ink-muted flex w-full flex-row-reverse items-center gap-2 px-4 py-2",
         className
@@ -89,7 +90,7 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
         aria-current={isContactActive ? "page" : undefined}
         className={cn(
           "relative z-1 shrink-0",
-          "bg-surface inset-shadow-shadow shadow-shadow rounded-2xl shadow-lg inset-shadow-sm",
+          "bg-surface inset-shadow-shadow shadow-shadow rounded-2xl shadow-sm inset-shadow-sm",
           "transition-colors",
           "aspect-square transition-shadow",
           "2xs:size-13 xs:size-14 size-12",
@@ -194,6 +195,7 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
                     aria-hidden
                     data-nav-ball
                     layoutId="bottom-nav-active"
+                    layoutDependency={activeLink}
                     className={cn(
                       "pointer-events-none",
                       "absolute -top-10 left-1/2 z-0 -translate-x-1/2",
@@ -245,7 +247,7 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
           );
         })}
       </motion.ol>
-    </nav>
+    </motion.nav>
   );
 };
 

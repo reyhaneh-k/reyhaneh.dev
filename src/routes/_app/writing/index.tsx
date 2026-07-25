@@ -8,5 +8,11 @@ export const Route = createFileRoute("/_app/writing/")({
 });
 
 function RouteComponent() {
-  return <div>Hello &quot;/_app/writing/&quot;!</div>;
+  return (
+    <div>
+      {Array.from({ length: 100 }).map((_, index) => (
+        <div key={index}>{index}</div>
+      ))}
+    </div>
+  );
 }

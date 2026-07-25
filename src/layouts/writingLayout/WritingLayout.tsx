@@ -23,7 +23,6 @@ function WritingLayout({
     >
       <BreadCrumb />
       <div className="flex items-center gap-2">
-        {" "}
         {LayoutLinks.map((link) => (
           <Link
             key={link.href}

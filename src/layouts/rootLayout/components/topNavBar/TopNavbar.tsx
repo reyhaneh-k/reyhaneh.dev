@@ -20,6 +20,7 @@ const TopNavbar = ({
   const { pathname } = useLocation();
   return (
     <motion.nav
+      layoutRoot
       className={cn(
         "fixed mx-0 md:mx-auto",
         "h-fit bg-transparent md:w-fit md:rounded-full",
@@ -27,7 +28,11 @@ const TopNavbar = ({
         "[--offset-compact:calc(0px*4)] md:[--offset-compact:calc(1px*4)] lg:[--offset-compact:calc(2px*4)]",
         className
       )}
-      initial={false}
+      initial={{
+        inset: compact
+          ? "var(--offset-compact)"
+          : "var(--offset-custom)",
+      }}
       animate={{
         inset: compact
           ? "var(--offset-compact)"
@@ -48,6 +53,12 @@ const TopNavbar = ({
           "[--scale-compact:1] md:[--scale-compact:0.95] lg:[--scale-compact:1]",
           "pt-4 pb-10 md:py-4"
         )}
+        initial={{
+          scale: compact ? "var(--scale-compact)" : 1,
+          paddingInline: compact
+            ? "var(--padding-compact)"
+            : "var(--padding-custom)",
+        }}
         animate={{
           scale: compact ? "var(--scale-compact)" : 1,
           paddingInline: compact
@@ -119,6 +130,9 @@ const TopNavbar = ({
             "absolute right-3 md:top-1/2 md:right-4 md:-translate-y-1/2",
             "[--x-translate:150%] md:[--x-translate:0%]"
           )}
+          initial={{
+            x: "0%",
+          }}
           animate={{
             x:
               scrollStatus === SCROLL_STATUS.DOWN

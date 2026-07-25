@@ -11,12 +11,12 @@ const RootLayout = () => {
   const { scrollStatus, isAtTop } = useScrollIndications();
   const { scrollYProgress } = useScroll();
   const compact = !isAtTop;
-
   return (
     <section
       className={cn(
         "relative h-full w-full",
-        "pt-16 md:pt-20 lg:pt-24"
+        "pt-16 md:pt-20 lg:pt-24",
+        "bg-atmosphere"
       )}
     >
       <motion.div

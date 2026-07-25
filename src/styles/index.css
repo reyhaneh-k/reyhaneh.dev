@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
+/* =============================================================================
+   Fonts
+   ============================================================================= */
+
 @font-face {
   font-family: "Bricolage Grotesque";
   src: url("../assets/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.woff2")
     format("woff2");
   font-weight: 200 800;
-  /* font-width: 75% 100%; */
   font-stretch: 75% 100%;
   font-style: normal;
   font-display: swap;
@@ -20,43 +23,53 @@
   font-display: swap;
 }
 
+/* =============================================================================
+   Variants
+   ============================================================================= */
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* =============================================================================
+   Tailwind theme — bridges runtime CSS vars → utilities (bg-canvas, text-ink…)
+   ============================================================================= */
+
 @theme inline {
-  /* Layered grounds */
+  /* Surfaces */
   --color-canvas: var(--canvas);
   --color-canvas-muted: var(--canvas-muted);
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
 
-  /* Type hierarchy */
+  /* Ink */
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
   --color-ink-subtle: var(--ink-subtle);
 
-  /* Hairlines */
+  /* Borders / accents */
   --color-line: var(--line);
-
-  /* Accents */
   --color-accent: var(--accent);
   --color-tertiary: var(--tertiary);
   --color-on-accent: var(--on-accent);
 
-  /* Aliases — keep older utility names working */
+  /* Legacy aliases */
   --color-background: var(--canvas);
   --color-foreground: var(--ink);
   --color-muted: var(--ink-muted);
   --color-border: var(--line);
 
-  /* Shadows */
+  /* Shadow color token (use with shadow-sm, etc.) */
   --color-shadow: var(--shadow);
 
-  /* Contact shine */
+  /* Contact button shimmer (bg-contact-shine) */
   --background-image-contact-shine: var(--contact-shine);
   --background-image-contact-shine-muted: var(
     --contact-shine-muted
   );
 
+  /* Page atmosphere washes (bg-atmosphere) — pair with bg-canvas */
+  --background-image-atmosphere: var(--atmosphere);
+
+  /* Font families */
   --font-sans:
     "DM Sans", system-ui, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
@@ -65,7 +78,12 @@
     "Helvetica Neue", Arial, sans-serif;
 }
 
+/* =============================================================================
+   Tailwind theme — static design tokens
+   ============================================================================= */
+
 @theme {
+  /* Brand palette — coral */
   --color-coral-100: #fff1ef;
   --color-coral-200: #ffd9d4;
   --color-coral-300: #ffb7af;
@@ -76,6 +94,7 @@
   --color-coral-800: #9e3f38;
   --color-coral-900: #7a332e;
 
+  /* Brand palette — lime */
   --color-lime-100: #f5ffe0;
   --color-lime-200: #e6ffb0;
   --color-lime-300: #d6ff78;
@@ -85,37 +104,57 @@
   --color-lime-700: #86a522;
   --color-lime-800: #6a831e;
   --color-lime-900: #566b1c;
-}
 
-@theme {
+  /* Breakpoints below default `sm` */
   --breakpoint-xs: 30rem;
   --breakpoint-2xs: 20rem;
-}
 
-@theme {
-  /* quick settle, tiny overshoot */
+  /* Motion easings (overshoot ≈ spring) */
   --ease-spring-snappy: cubic-bezier(0.22, 1.4, 0.36, 1);
-
-  /* smoother settle, light overshoot */
   --ease-spring: cubic-bezier(0.22, 1.2, 0.36, 1);
 }
+
+/* =============================================================================
+   Runtime theme — light / dark (data-theme)
+   ============================================================================= */
+
 :root {
   color-scheme: light;
 
+  /* Surfaces */
   --canvas: #e9edf1;
   --canvas-muted: #dfe4ea;
   --surface: #f6f8fb;
   --surface-muted: #eef1f5;
+
+  /* Ink */
   --ink: #28313d;
   --ink-muted: #525d6b;
   --ink-subtle: #8b95a3;
+
+  /* Chrome */
   --line: rgb(40 49 61 / 0.13);
   --on-accent: #1a1010;
   --shadow: rgba(0, 0, 0, 0.12);
 
+  /* Semantic accents (swap in dark) */
   --accent: var(--color-coral-500);
   --tertiary: var(--color-lime-500);
 
+  /* Soft radial washes — stronger on light canvas so coral/lime read */
+  --atmosphere:
+    radial-gradient(
+      120% 70% at 78% 0%,
+      color-mix(in srgb, var(--accent) 28%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      90% 60% at 8% 42%,
+      color-mix(in srgb, var(--tertiary) 10%, transparent),
+      transparent 60%
+    );
+
+  /* Contact icon gradients */
   --contact-shine: linear-gradient(
     110deg,
     var(--accent) 0%,
@@ -143,9 +182,11 @@
   --canvas-muted: #0f131a;
   --surface: #151a22;
   --surface-muted: #1b212b;
+
   --ink: #e4e9ef;
   --ink-muted: #c5cad0;
   --ink-subtle: #a1a7af;
+
   --line: rgb(228 233 239 / 0.13);
   --on-accent: #1a1010;
   --shadow: rgb(228 233 239 / 0.08);
@@ -153,40 +194,45 @@
   --tertiary: var(--color-coral-500);
   --accent: var(--color-lime-500);
 
-  --contact-shine: linear-gradient(
-    110deg,
-    var(--accent) 0%,
-    var(--accent) 38%,
-    color-mix(in oklab, var(--accent) 30%, var(--canvas))
-      50%,
-    var(--accent) 62%,
-    var(--accent) 100%
-  );
-  --contact-shine-muted: linear-gradient(
-    110deg,
-    var(--ink-muted) 0%,
-    var(--ink-muted) 38%,
-    color-mix(in oklab, var(--ink-muted) 50%, var(--canvas))
-      50%,
-    var(--ink-muted) 62%,
-    var(--ink-muted) 100%
-  );
+  /* Dark: accents already pop — keep washes almost ambient */
+  --atmosphere:
+    radial-gradient(
+      120% 70% at 78% 0%,
+      color-mix(in srgb, var(--accent) 7%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      90% 60% at 8% 42%,
+      color-mix(in srgb, var(--tertiary) 5%, transparent),
+      transparent 60%
+    );
 }
+
+/* =============================================================================
+   Custom utilities
+   ============================================================================= */
 
 @utility font-optical-auto {
   font-optical-sizing: auto;
 }
+
 @utility font-optical-none {
   font-optical-sizing: none;
 }
+
+/* =============================================================================
+   Base element styles
+   ============================================================================= */
 
 @layer base {
   html {
     @apply h-full max-w-full scrollbar-none *:scrollbar-none;
   }
+
   body {
     @apply bg-canvas text-ink font-optical-auto h-full w-full font-sans transition-colors duration-300 ease-in-out;
   }
+
   main {
     @apply h-full w-full;
   }
@@ -201,6 +247,10 @@
   }
 }
 
+/* =============================================================================
+   Keyframes
+   ============================================================================= */
+
 @keyframes contact-shine {
   from {
     background-position: 100% 50%;
@@ -210,7 +260,11 @@
   }
 }
 
-/* CSS custom properties for bottom nav bar */
+/* =============================================================================
+   Registered custom properties (Houdini) — enable length interpolation
+   ============================================================================= */
+
+/* Bottom nav notch: transition --center-x; --mask-x / mask-position follow */
 @property --center-x {
   syntax: "<length>";
   inherits: false;

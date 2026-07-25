@@ -43,6 +43,7 @@ const ThemeSwitch = ({
               {isActive && (
                 <motion.div
                   layoutId="theme-switch-active"
+                  layoutDependency={theme}
                   className={cn(
                     "bg-accent absolute inset-0 z-0 rounded-full",
                     "shadow-shadow inset-shadow-sm"
