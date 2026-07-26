@@ -30,3 +30,5 @@ function TabsContent({
 }: TabsContentProps) {
   return <Tabs.Content {...props}>{children}</Tabs.Content>;
 }
+
+export { TabsRoot, TabsList, TabsTrigger, TabsContent };

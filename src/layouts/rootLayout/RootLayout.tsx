@@ -12,7 +12,7 @@ const RootLayout = () => {
   const { scrollYProgress } = useScroll();
   const compact = !isAtTop;
   return (
-    <section
+    <div
       className={cn(
         "relative h-full w-full",
         "pt-16 md:pt-20 lg:pt-24",
@@ -32,7 +32,7 @@ const RootLayout = () => {
 
       <Outlet />
       <BottomNavBar className="fixed inset-x-0 bottom-0 z-3 md:hidden" />
-    </section>
+    </div>
   );
 };
 export { RootLayout };
