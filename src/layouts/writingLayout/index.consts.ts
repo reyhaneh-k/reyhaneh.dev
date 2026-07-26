@@ -3,7 +3,7 @@ import { Route as carouselsRoute } from "@/routes/_app/writing/carousels";
 import { Route as writingRoute } from "@/routes/_app/writing/index";
 import { Route as postsRoute } from "@/routes/_app/writing/posts";
 const writingLayoutConsts = {
-  title: "Thinking, out loud.",
+  title: { part1: "Thinking", part2: "out loud." },
   description:
     "Notes on shipping, systems, and the craft of interfaces. Long essays, carousel breakdowns, and short posts.",
   totalPosts: 16,

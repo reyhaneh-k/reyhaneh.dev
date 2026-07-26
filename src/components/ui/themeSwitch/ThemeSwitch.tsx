@@ -19,7 +19,7 @@ const ThemeSwitch = ({
       role="radiogroup"
       className={cn(
         "border-border shadow-shadow flex w-fit rounded-full border p-1 shadow-sm md:flex-row md:gap-1",
-        "bg-surface flex-col-reverse md:bg-transparent",
+        "bg-surface flex-col md:bg-transparent",
         className
       )}
     >
@@ -32,9 +32,10 @@ const ThemeSwitch = ({
             <button
               key={th}
               aria-checked={th === theme}
+              aria-label={th}
               role="radio"
               className={cn(
-                "text-foreground relative z-20 aspect-square size-5.5 cursor-pointer rounded-full transition-colors duration-100 ease-linear"
+                "text-foreground relative z-20 aspect-square size-6 cursor-pointer rounded-full transition-colors duration-100 ease-linear"
               )}
               onClick={() => {
                 setTheme(th);
@@ -42,6 +43,7 @@ const ThemeSwitch = ({
             >
               {isActive && (
                 <motion.div
+                  aria-hidden
                   layoutId="theme-switch-active"
                   layoutDependency={theme}
                   className={cn(
@@ -57,6 +59,7 @@ const ThemeSwitch = ({
                 />
               )}
               <Icon
+                aria-label={`${th} theme icon`}
                 className={cn(
                   "active:text-accent absolute inset-0 z-10 m-auto size-3.75",
                   th === theme && "text-on-accent"

@@ -137,7 +137,7 @@ export default defineConfig([
   // ─────────────────────────────────────────────────────────────
   {
     files: ["**/*.{jsx,tsx}"],
-    extends: [jsxA11y.flatConfigs.recommended],
+    extends: [jsxA11y.flatConfigs.strict],
   },
 
   // ─────────────────────────────────────────────────────────────

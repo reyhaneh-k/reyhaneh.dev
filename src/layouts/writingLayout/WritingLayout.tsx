@@ -16,12 +16,24 @@ function WritingLayout({
   return (
     <article
       className={cn(
-        "flex flex-col gap-4",
+        "flex flex-col gap-4 md:gap-8",
         "h-full w-full",
         "p-4 md:p-6 lg:p-8"
       )}
     >
-      <BreadCrumb />
+      <BreadCrumb className="mb-4 md:mb-8" />
+
+      <span className="text-accent text-sm uppercase">
+        Writing · {writingLayoutConsts.totalPosts} pieces
+      </span>
+      <h1 className="text-4xl font-bold md:text-6xl lg:text-8xl">
+        {writingLayoutConsts.title.part1},
+        <br />
+        {writingLayoutConsts.title.part2}
+      </h1>
+      <p className="text-ink-muted text-sm">
+        {writingLayoutConsts.description}
+      </p>
       <div className="flex items-center gap-2">
         {LayoutLinks.map((link) => (
           <Link
@@ -31,17 +43,8 @@ function WritingLayout({
           >
             {link.label}
           </Link>
-        ))}{" "}
+        ))}
       </div>
-      <span className="text-muted-foreground text-sm">
-        Writing · {writingLayoutConsts.totalPosts} pieces
-      </span>
-      <h1 className="text-2xl font-bold">
-        {writingLayoutConsts.title}
-      </h1>
-      <p className="text-muted-foreground text-sm">
-        {writingLayoutConsts.description}
-      </p>
       {children}
     </article>
   );

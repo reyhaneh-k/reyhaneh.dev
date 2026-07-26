@@ -125,7 +125,7 @@ const TopNavbar = ({
             <Link to={link.to}>{link.label}</Link>
           </li>
         ))}
-        <motion.div
+        <motion.li
           className={cn(
             "absolute right-3 md:top-1/2 md:right-4 md:-translate-y-1/2",
             "[--x-translate:150%] md:[--x-translate:0%]"
@@ -142,7 +142,7 @@ const TopNavbar = ({
           transition={SPRING}
         >
           <ThemeSwitch />
-        </motion.div>
+        </motion.li>
       </motion.ol>
     </motion.nav>
   );

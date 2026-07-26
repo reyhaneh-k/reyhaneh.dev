@@ -1,9 +1,15 @@
 import { useMatches } from "@tanstack/react-router";
 import { motion } from "motion/react";
 
+import { cn } from "@/utils/classname";
+
 import { Crumb } from "./components/crumb/Crumb";
 
-const BreadCrumb = () => {
+const BreadCrumb = ({
+  className,
+}: {
+  className?: string;
+}) => {
   const matches = useMatches({
     select: (s) =>
       s
@@ -14,9 +20,13 @@ const BreadCrumb = () => {
         })),
   });
   return (
-    <motion.div className="flex items-center gap-2">
+    <motion.div
+      className={cn("flex items-center gap-2", className)}
+    >
       {matches.map((breadcrumb, index) => (
-        <motion.div
+        <motion.button
+          type="button"
+          aria-label={`Navigate to ${breadcrumb.title}`}
           key={breadcrumb.path}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -28,7 +38,7 @@ const BreadCrumb = () => {
             index={matches.length - index - 1}
             isStandAlone={matches.length === 1}
           />
-        </motion.div>
+        </motion.button>
       ))}
     </motion.div>
   );

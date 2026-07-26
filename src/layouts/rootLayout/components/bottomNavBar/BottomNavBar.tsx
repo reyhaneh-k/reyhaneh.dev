@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import {
   useCallback,
   useEffect,
@@ -75,61 +75,10 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
     <motion.nav
       layoutRoot
       className={cn(
-        "text-ink-muted flex w-full flex-row-reverse items-center gap-2 px-4 py-2",
+        "text-ink-muted flex w-full items-center gap-2 px-4 py-2",
         className
       )}
     >
-      <Link
-        to={CONTACT_LINK.to}
-        ref={(el) => {
-          if (isContactActive && el) {
-            syncMask(el);
-          }
-        }}
-        aria-label={CONTACT_LINK.label}
-        aria-current={isContactActive ? "page" : undefined}
-        className={cn(
-          "relative z-1 shrink-0",
-          "bg-surface inset-shadow-shadow shadow-shadow rounded-2xl shadow-sm inset-shadow-sm",
-          "transition-colors",
-          "aspect-square transition-shadow",
-          "2xs:size-13 xs:size-14 size-12",
-          isContactActive && "text-accent",
-          isContactActive && "inset-shadow-none"
-        )}
-      >
-        <div
-          className={cn(
-            "absolute inset-0 rounded-2xl",
-            isContactActive
-              ? "bg-contact-shine"
-              : "bg-contact-shine-muted",
-            // same breakpoints as "2xs:size-5 xs:size-6 size-4"
-            "[--icon-size:--spacing(4)]",
-            "2xs:[--icon-size:--spacing(5)]",
-            "xs:[--icon-size:--spacing(6)]",
-            isContactActive && "[--icon-size:--spacing(6)]",
-            isContactActive &&
-              "2xs:[--icon-size:--spacing(7)]",
-            isContactActive &&
-              "xs:[--icon-size:--spacing(8)]",
-            "ease-spring transition-[mask-size,-webkit-mask-size] duration-300",
-            "bg-size-[220%_100%]",
-            "animate-[contact-shine_1.5s_ease-in-out_infinite_alternate]"
-          )}
-          style={{
-            maskImage: `url("${contactIcon}")`,
-            WebkitMaskImage: `url("${contactIcon}")`,
-            maskSize: "var(--icon-size)",
-            WebkitMaskSize: "var(--icon-size)",
-            maskRepeat: "no-repeat",
-            WebkitMaskRepeat: "no-repeat",
-            maskPosition: "center",
-            WebkitMaskPosition: "center",
-          }}
-        />
-      </Link>
-
       <motion.ol
         ref={listRef}
         className={cn(
@@ -182,6 +131,8 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
                     syncMask(el);
                   }
                 }}
+                aria-label={link.label}
+                aria-current={isActive ? "page" : "false"}
                 to={link.to}
                 className={cn(
                   "relative flex flex-col items-center justify-center",
@@ -190,24 +141,39 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
                   isActive && "text-accent"
                 )}
               >
-                {isActive && (
-                  <motion.div
-                    aria-hidden
-                    data-nav-ball
-                    layoutId="bottom-nav-active"
-                    layoutDependency={activeLink}
-                    className={cn(
-                      "pointer-events-none",
-                      "absolute -top-10 left-1/2 z-0 -translate-x-1/2",
-                      "bg-surface shadow-shadow rounded-full shadow-lg",
-                      "xs:size-12 size-10"
-                    )}
-                    transition={{
-                      duration: 0.5,
-                      ease: [0.22, 1.4, 0.36, 1] as const,
-                    }}
-                  />
-                )}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.div
+                      aria-hidden
+                      data-nav-ball
+                      layoutId="bottom-nav-active"
+                      layoutDependency={activeLink}
+                      initial={{
+                        opacity: 0,
+                        y: 10,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        scale: 0,
+                        y: -10,
+                      }}
+                      className={cn(
+                        "pointer-events-none",
+                        "absolute -top-10 left-1/2 z-0 -translate-x-1/2",
+                        "bg-surface shadow-shadow rounded-full shadow-lg",
+                        "xs:size-12 size-10"
+                      )}
+                      transition={{
+                        duration: 0.5,
+                        ease: [0.22, 1.4, 0.36, 1] as const,
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
 
                 <motion.span
                   className={cn(
@@ -247,6 +213,56 @@ const BottomNavBar = ({ className }: BottomNavBarProps) => {
           );
         })}
       </motion.ol>
+      <Link
+        to={CONTACT_LINK.to}
+        ref={(el) => {
+          if (isContactActive && el) {
+            syncMask(el);
+          }
+        }}
+        aria-label={CONTACT_LINK.label}
+        aria-current={isContactActive ? "page" : "false"}
+        className={cn(
+          "relative z-1 shrink-0",
+          "bg-surface inset-shadow-shadow shadow-shadow rounded-2xl shadow-sm inset-shadow-sm",
+          "transition-colors",
+          "aspect-square transition-shadow",
+          "2xs:size-13 xs:size-14 size-12",
+          isContactActive && "text-accent",
+          isContactActive && "inset-shadow-none"
+        )}
+      >
+        <div
+          className={cn(
+            "absolute inset-0 rounded-2xl",
+            isContactActive
+              ? "bg-contact-shine"
+              : "bg-contact-shine-muted",
+            // same breakpoints as "2xs:size-5 xs:size-6 size-4"
+            "[--icon-size:--spacing(4)]",
+            "2xs:[--icon-size:--spacing(5)]",
+            "xs:[--icon-size:--spacing(6)]",
+            isContactActive && "[--icon-size:--spacing(6)]",
+            isContactActive &&
+              "2xs:[--icon-size:--spacing(7)]",
+            isContactActive &&
+              "xs:[--icon-size:--spacing(8)]",
+            "ease-spring transition-[mask-size,-webkit-mask-size] duration-300",
+            "bg-size-[220%_100%]",
+            "animate-[contact-shine_1.5s_ease-in-out_infinite_alternate]"
+          )}
+          style={{
+            maskImage: `url("${contactIcon}")`,
+            WebkitMaskImage: `url("${contactIcon}")`,
+            maskSize: "var(--icon-size)",
+            WebkitMaskSize: "var(--icon-size)",
+            maskRepeat: "no-repeat",
+            WebkitMaskRepeat: "no-repeat",
+            maskPosition: "center",
+            WebkitMaskPosition: "center",
+          }}
+        />
+      </Link>
     </motion.nav>
   );
 };
