@@ -24,8 +24,8 @@ const TopNavbar = ({
       className={cn(
         "fixed mx-0 md:mx-auto",
         "h-fit bg-transparent md:w-fit md:rounded-full",
-        "[--offset-custom:calc(0px*4)] md:[--offset-custom:calc(2px*4)] lg:[--offset-custom:calc(4px*4)]",
-        "[--offset-compact:calc(0px*4)] md:[--offset-compact:calc(1px*4)] lg:[--offset-compact:calc(2px*4)]",
+        "[--offset-custom:calc(0px*4)] md:[--offset-custom:calc(3px*4)] lg:[--offset-custom:calc(4px*4)]",
+        "[--offset-compact:calc(0px*4)] md:[--offset-compact:calc(2px*4)] lg:[--offset-compact:calc(3px*4)]",
         className
       )}
       initial={{
@@ -45,11 +45,11 @@ const TopNavbar = ({
           "relative flex gap-6 text-center md:gap-4 lg:gap-6",
           "md:bg-surface/30 bg-transparent",
           "md:backdrop-blur-lg md:backdrop-saturate-50",
-          "items-start justify-between md:items-baseline md:justify-center",
+          "items-start justify-between md:items-center md:justify-center",
           "w-full text-sm md:mx-auto md:w-fit md:rounded-full",
           "md:border-border border-transparent md:border",
-          "[--padding-custom:calc(3px*4)] md:[--padding-custom:calc(28px*4)] lg:[--padding-custom:calc(40px*4)]",
-          "[--padding-compact:calc(3px*4)] md:[--padding-compact:calc(28px*4)] lg:[--padding-compact:calc(32px*4)]",
+          "[--padding-custom:calc(3px*4)] md:[--padding-custom:calc(32px*4)] lg:[--padding-custom:calc(40px*4)]",
+          "[--padding-compact:calc(3px*4)] md:[--padding-compact:calc(30px*4)] lg:[--padding-compact:calc(32px*4)]",
           "[--scale-compact:1] md:[--scale-compact:0.95] lg:[--scale-compact:1]",
           "pt-4 pb-10 md:py-4"
         )}
@@ -93,7 +93,7 @@ const TopNavbar = ({
         ))}
         <li
           className={cn(
-            "font-display text-xl font-bold md:mx-3",
+            "font-display text-xl leading-normal font-bold md:mx-3",
             "transition-transform duration-100 ease-linear md:hover:-translate-y-0.5",
             "hover:scale-105 active:scale-105"
           )}

@@ -1,4 +1,10 @@
 import { Link, useLocation } from "@tanstack/react-router";
+import {
+  motion,
+  useScroll,
+  useTransform,
+} from "motion/react";
+import { useRef } from "react";
 
 import { BreadCrumb } from "@/components/ui/breadCrumb/BreadCrumb";
 import {
@@ -6,6 +12,7 @@ import {
   TabsRoot,
   TabsTrigger,
 } from "@/components/ui/tabs/Tabs";
+import { useBoundingClientRect } from "@/hooks/useBoundingClientRect/useBoundingClientRect";
 import { useIsMobile } from "@/stores/mobile/mobile";
 import { cn } from "@/utils/classname";
 
@@ -22,10 +29,26 @@ function WritingLayout({
   children: React.ReactNode;
 }) {
   const { pathname } = useLocation();
+
   const activeValue = LayoutLinks.find(
     (link) => link.href === pathname
   );
+  const targetRef = useRef<HTMLElement>(null);
+
+  const [rect] = useBoundingClientRect(targetRef);
+
   const isMobile = useIsMobile();
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: rect
+      ? [`0px ${rect.top}px`, `100% ${rect.top}px`]
+      : [`0px 0px`, `100% 0px`],
+  });
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [1, 0.1, 0]
+  );
 
   return (
     <section
@@ -34,14 +57,15 @@ function WritingLayout({
         "p-4 md:p-6 lg:p-8"
       )}
     >
-      <BreadCrumb className="mb-2 md:mb-4" />
-
-      <header
+      <motion.header
+        ref={targetRef}
         className={cn(
           "flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-16"
         )}
+        style={{ opacity }}
       >
         <div className="mt-6 flex max-w-3xl flex-col gap-4 md:gap-6 lg:mt-10">
+          <BreadCrumb className="mb-2 md:mb-4" />
           <h1 className="text-4xl leading-[0.95] font-bold tracking-tight md:text-6xl lg:text-8xl">
             {writingLayoutConsts.title.part1},
             <br />
@@ -72,7 +96,7 @@ function WritingLayout({
             ))}
           </TabsList>
         </TabsRoot>
-      </header>
+      </motion.header>
 
       <div className="min-h-0 flex-1">{children}</div>
     </section>
