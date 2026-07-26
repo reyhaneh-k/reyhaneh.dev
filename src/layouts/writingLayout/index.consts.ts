@@ -6,25 +6,29 @@ const writingLayoutConsts = {
   title: { part1: "Thinking", part2: "out loud." },
   description:
     "Notes on shipping, systems, and the craft of interfaces. Long essays, carousel breakdowns, and short posts.",
-  totalPosts: 16,
+  totalPosts: 28,
 };
 
 const LayoutLinks = [
   {
-    label: "Articles",
-    href: articlesRoute.to,
-  },
-  {
-    label: "Carousels",
-    href: carouselsRoute.to,
+    label: "All",
+    href: writingRoute.to,
+    badge: 28,
   },
   {
     label: "Posts",
     href: postsRoute.to,
+    badge: 14,
   },
   {
-    label: "All",
-    href: writingRoute.to,
+    label: "Articles",
+    href: articlesRoute.to,
+    badge: 8,
+  },
+  {
+    label: "Carousels",
+    href: carouselsRoute.to,
+    badge: 6,
   },
 ];
 

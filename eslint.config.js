@@ -91,6 +91,7 @@ export default defineConfig([
     },
     rules: {
       "no-unused-vars": "off", // defer to the TS-aware version
+
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {

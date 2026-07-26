@@ -61,7 +61,7 @@ const ThemeSwitch = ({
               <Icon
                 aria-label={`${th} theme icon`}
                 className={cn(
-                  "active:text-accent absolute inset-0 z-10 m-auto size-3.75",
+                  "active:text-accent/80 hover:text-accent/80 absolute inset-0 z-10 m-auto size-3.75",
                   th === theme && "text-on-accent"
                 )}
               />
