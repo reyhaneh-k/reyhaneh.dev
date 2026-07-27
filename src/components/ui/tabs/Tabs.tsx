@@ -105,7 +105,7 @@ function TabsTrigger<T extends string>({
     <RadixTabs.Trigger
       className={cn(
         "relative flex items-baseline gap-2.5",
-        "px-3 py-2.5 group-data-[orientation=vertical]:px-4 group-data-[orientation=vertical]:py-2",
+        "px-1 py-2.5 group-data-[orientation=vertical]:px-4 group-data-[orientation=vertical]:py-2",
         "font-display transition-colors duration-200",
         "cursor-pointer outline-none",
         "focus-visible:ring-accent/40 focus-visible:ring-offset-canvas focus-visible:ring-2 focus-visible:ring-offset-2",

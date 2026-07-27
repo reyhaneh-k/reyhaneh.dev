@@ -89,4 +89,9 @@ const carouselMockData: CarouselStackProps[] = [
   },
 ];
 
-export { carouselMockData };
+const carouselTexts = {
+  title: "Carousels",
+  description:
+    "Slide-by-slide breakdowns, built for the LinkedIn feed.",
+};
+export { carouselMockData, carouselTexts };

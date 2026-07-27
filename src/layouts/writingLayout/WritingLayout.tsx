@@ -46,8 +46,8 @@ function WritingLayout({
   });
   const opacity = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
-    [1, 0.1, 0]
+    [0, 1],
+    [1, 0]
   );
 
   return (
@@ -60,7 +60,8 @@ function WritingLayout({
       <motion.header
         ref={targetRef}
         className={cn(
-          "flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-16"
+          "flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-16",
+          "border-border border-b pb-10"
         )}
         style={{ opacity }}
       >
@@ -80,7 +81,10 @@ function WritingLayout({
           value={activeValue?.href}
           orientation={isMobile ? "horizontal" : "vertical"}
         >
-          <TabsList aria-label="Writing formats">
+          <TabsList
+            aria-label="Writing formats"
+            className={cn("xs:gap-4 gap-0")}
+          >
             {LayoutLinks.map((link) => (
               <TabsTrigger<TabValue>
                 key={link.href}

@@ -12,7 +12,7 @@ function CarouselStack({
   return (
     <motion.div
       className={cn(
-        "relative h-64 w-72 overflow-hidden",
+        "relative aspect-3/4 w-72 overflow-hidden",
         className
       )}
       initial="rest"
@@ -23,10 +23,10 @@ function CarouselStack({
         <motion.div
           key={item}
           className={cn(
-            "absolute top-0 right-8 bottom-0 left-0 overflow-hidden rounded-lg",
+            "absolute top-0 right-6 bottom-0 left-0 overflow-hidden rounded-2xl",
             index > 0 && "border-border border",
             index === 0 &&
-              "after:from-tertiary/30 after:absolute after:inset-0 after:bg-linear-to-b after:to-transparent after:content-['']"
+              "after:from-accent after:via-accent after:pointer-events-none after:absolute after:inset-0 after:bg-linear-to-b after:from-0% after:via-10% after:to-transparent after:to-20% after:content-['']"
           )}
           variants={{
             rest: { rotate: 0 },
