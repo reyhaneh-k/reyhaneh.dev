@@ -98,7 +98,7 @@ function WritingLayout({
         </TabsRoot>
       </motion.header>
 
-      <div className="min-h-0 flex-1">{children}</div>
+      {children}
     </section>
   );
 }

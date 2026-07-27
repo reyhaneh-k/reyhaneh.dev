@@ -299,7 +299,7 @@ export default defineConfig([
     rules: { "import-x/no-default-export": "error" },
   },
   {
-    files: ["src/pages/**/*.tsx"],
+    files: ["src/pages/*/*.tsx"],
     rules: {
       "import-x/no-default-export": "off",
       "import-x/no-named-export": "error",

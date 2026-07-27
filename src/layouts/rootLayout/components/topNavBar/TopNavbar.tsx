@@ -22,7 +22,7 @@ const TopNavbar = ({
     <motion.nav
       layoutRoot
       className={cn(
-        "fixed mx-0 md:mx-auto",
+        "fixed z-100 mx-0 md:mx-auto",
         "h-fit bg-transparent md:w-fit md:rounded-full",
         "[--offset-custom:calc(0px*4)] md:[--offset-custom:calc(3px*4)] lg:[--offset-custom:calc(4px*4)]",
         "[--offset-compact:calc(0px*4)] md:[--offset-compact:calc(2px*4)] lg:[--offset-compact:calc(3px*4)]",
