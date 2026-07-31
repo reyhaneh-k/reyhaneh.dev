@@ -61,7 +61,7 @@ function WritingLayout({
         ref={targetRef}
         className={cn(
           "flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-16",
-          "border-border border-b pb-10"
+          !isMobile && "border-border border-b pb-10"
         )}
         style={{ opacity }}
       >

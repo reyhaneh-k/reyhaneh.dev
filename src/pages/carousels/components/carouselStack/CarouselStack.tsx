@@ -4,49 +4,127 @@ import { cn } from "@/utils/classname";
 
 import { CarouselStackProps } from "./index.types";
 
-function CarouselStack({
+function StackSlide({
+  src,
   title,
-  data,
-  className,
-}: CarouselStackProps) {
+  index,
+}: {
+  src: string;
+  title: string;
+  index: number;
+}) {
   return (
     <motion.div
       className={cn(
-        "relative aspect-3/4 w-72 overflow-hidden",
+        "absolute top-0 right-6 bottom-6 left-0 overflow-hidden rounded-2xl",
+        "border-2 border-white"
+      )}
+      variants={{
+        rest: { rotate: index * 4 },
+        hover: { rotate: 0 },
+      }}
+      style={{
+        zIndex: 2 - index,
+        backgroundImage: `url(${src})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundClip: "padding-box",
+      }}
+      transition={{
+        duration: 0.2,
+        ease: "easeInOut",
+        delay: index * 0.04,
+      }}
+    >
+      <div className="absolute inset-0 -z-10 backdrop-blur-sm" />
+      <img
+        src={src}
+        aria-hidden={index > 0}
+        alt={index === 0 ? title : ""}
+        className="z-1 h-full w-full object-contain"
+      />
+    </motion.div>
+  );
+}
+
+function CarouselStack({
+  title,
+  description,
+  data,
+  className,
+}: CarouselStackProps) {
+  const slideCount = data.length;
+
+  return (
+    <motion.div
+      className={cn(
+        "relative aspect-3/4 w-72 cursor-pointer overflow-hidden",
         className
       )}
       initial="rest"
       whileHover="hover"
       animate="rest"
+      variants={{
+        rest: {
+          scale: 1,
+          transition: {
+            ease: "easeInOut",
+            duration: 0.1,
+          },
+        },
+        hover: {
+          scale: 1.05,
+          transition: {
+            ease: "easeInOut",
+            duration: 0.1,
+          },
+        },
+      }}
     >
       {data.slice(0, 3).map((item, index) => (
-        <motion.div
-          key={item}
-          className={cn(
-            "absolute top-0 right-6 bottom-0 left-0 overflow-hidden rounded-2xl",
-            index > 0 && "border-border border",
-            index === 0 &&
-              "after:from-accent after:via-accent after:pointer-events-none after:absolute after:inset-0 after:bg-linear-to-b after:from-0% after:via-10% after:to-transparent after:to-20% after:content-['']"
-          )}
-          variants={{
-            rest: { rotate: 0 },
-            hover: { rotate: index * 4 },
-          }}
-          style={{ zIndex: 2 - index }}
-          transition={{
-            duration: 0.2,
-            ease: "easeInOut",
-            delay: index * 0.1,
-          }}
-        >
-          <img
-            src={item}
-            aria-hidden={index > 0}
-            alt={title}
-            className="h-full w-full object-cover"
-          />
-        </motion.div>
+        <StackSlide
+          key={`${item}-${index}`}
+          src={item}
+          title={title}
+          index={index}
+        />
       ))}
+
+      <motion.div
+        aria-hidden
+        className={cn(
+          "absolute top-0 right-6 bottom-6 left-0 z-10 overflow-hidden rounded-2xl p-4",
+          "backdrop-blur-md backdrop-saturate-150"
+        )}
+        style={{
+          backgroundImage: `
+            radial-gradient(90% 120% at 20% 0%, color-mix(in srgb, var(--accent) 32%, transparent), transparent 60%),
+            radial-gradient(70% 90% at 80% 100%, color-mix(in srgb, var(--tertiary) 20%, transparent), transparent 60%),
+            linear-gradient(color-mix(in srgb, var(--surface) 55%, transparent), color-mix(in srgb, var(--surface) 55%, transparent))
+          `,
+        }}
+        variants={{
+          rest: { opacity: 0 },
+          hover: { opacity: 1 },
+        }}
+        transition={{
+          duration: 0.22,
+          ease: "easeOut",
+        }}
+      >
+        <span className="text-accent absolute top-4 right-4 text-xs font-medium tracking-wider uppercase">
+          {slideCount} slides
+        </span>
+        <div className="absolute inset-x-4 bottom-4 flex flex-col gap-1.5">
+          <h3 className="font-display text-ink line-clamp-2 text-lg leading-tight font-semibold">
+            {title}
+          </h3>
+          <p className="text-ink-muted line-clamp-2 text-sm leading-relaxed">
+            {description}
+          </p>
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
