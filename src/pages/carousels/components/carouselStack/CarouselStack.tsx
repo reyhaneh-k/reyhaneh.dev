@@ -2,51 +2,8 @@ import { motion } from "motion/react";
 
 import { cn } from "@/utils/classname";
 
+import SlideStack from "./components/slideStack/SlideStack";
 import { CarouselStackProps } from "./index.types";
-
-function StackSlide({
-  src,
-  title,
-  index,
-}: {
-  src: string;
-  title: string;
-  index: number;
-}) {
-  return (
-    <motion.div
-      className={cn(
-        "absolute top-0 right-6 bottom-6 left-0 overflow-hidden rounded-2xl",
-        "border-2 border-white"
-      )}
-      variants={{
-        rest: { rotate: index * 4 },
-        hover: { rotate: 0 },
-      }}
-      style={{
-        zIndex: 2 - index,
-        backgroundImage: `url(${src})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundClip: "padding-box",
-      }}
-      transition={{
-        duration: 0.2,
-        ease: "easeInOut",
-        delay: index * 0.04,
-      }}
-    >
-      <div className="absolute inset-0 -z-10 backdrop-blur-sm" />
-      <img
-        src={src}
-        aria-hidden={index > 0}
-        alt={index === 0 ? title : ""}
-        className="z-1 h-full w-full object-contain"
-      />
-    </motion.div>
-  );
-}
 
 function CarouselStack({
   title,
@@ -83,7 +40,7 @@ function CarouselStack({
       }}
     >
       {data.slice(0, 3).map((item, index) => (
-        <StackSlide
+        <SlideStack
           key={`${item}-${index}`}
           src={item}
           title={title}
