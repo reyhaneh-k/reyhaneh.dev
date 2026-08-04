@@ -2,7 +2,8 @@ import { motion } from "motion/react";
 
 import { cn } from "@/utils/classname";
 
-import SlideStack from "./components/slideStack/SlideStack";
+import SlideStack from "../slideStack/SlideStack";
+
 import { CarouselStackProps } from "./index.types";
 
 function CarouselStack({

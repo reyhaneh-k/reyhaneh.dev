@@ -36,12 +36,14 @@ function SlideStack({
       }}
     >
       <div className="absolute inset-0 -z-10 backdrop-blur-sm" />
-      <img
-        src={src}
-        aria-hidden={index > 0}
-        alt={index === 0 ? title : ""}
-        className="z-1 h-full w-full object-contain"
-      />
+      {index === 0 && (
+        <img
+          src={src}
+          alt={title}
+          loading="lazy"
+          className="z-1 h-full w-full object-contain"
+        />
+      )}
     </motion.div>
   );
 }

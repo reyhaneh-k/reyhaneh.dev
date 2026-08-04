@@ -15,13 +15,12 @@ function Carousles() {
       <p className="text-ink-muted mb-8">
         {carouselTexts.description}
       </p>
+
       <div
         className={cn(
-          "mx-auto grid w-fit grid-cols-1 gap-y-10",
-          "@xl:grid-cols-2 @xl:gap-x-4",
-          "@4xl:grid-cols-3",
-          "@6xl:grid-cols-4",
-          "ps-3"
+          "grid w-full gap-x-10 gap-y-10",
+          "justify-items-center",
+          "grid-cols-[repeat(auto-fit,minmax(300px,1fr))]"
         )}
       >
         {carouselMockData.map((item) => (
