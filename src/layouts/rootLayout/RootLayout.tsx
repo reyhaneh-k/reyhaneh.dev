@@ -16,6 +16,7 @@ const RootLayout = () => {
       className={cn(
         "relative h-full w-full",
         "pt-16 md:pt-20 lg:pt-24",
+        "pb-16 md:pb-20 lg:pb-24",
         "bg-atmosphere"
       )}
     >

@@ -87,8 +87,26 @@ const carouselTexts = {
 };
 
 const virtualSizes = {
-  MIN_CARD_WIDTH: 288,
+  CARD_WIDTH: 288,
   GAP: 40,
-  ROW_HEIGHT: (288 / 3) * 4,
 };
-export { carouselMockData, carouselTexts, virtualSizes };
+
+/** Enough rows that virtualization is obvious while scrolling. */
+const carouselListData: CarouselStackProps[] = Array.from(
+  { length: 25 },
+  (_, index) => {
+    const seedIndex = index % carouselMockData.length;
+    const seed = carouselMockData[seedIndex];
+    return {
+      ...seed,
+      id: `carousel-${index}`,
+    };
+  }
+);
+
+export {
+  carouselMockData,
+  carouselListData,
+  carouselTexts,
+  virtualSizes,
+};

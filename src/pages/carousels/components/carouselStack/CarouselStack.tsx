@@ -17,7 +17,7 @@ function CarouselStack({
   return (
     <motion.div
       className={cn(
-        "relative aspect-3/4 w-72 cursor-pointer overflow-hidden",
+        "relative aspect-3/4 w-full max-w-72 cursor-pointer overflow-hidden",
         className
       )}
       initial="rest"
