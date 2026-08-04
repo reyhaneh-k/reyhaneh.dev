@@ -43,6 +43,41 @@ const carouselMockData: CarouselStackProps[] = [
       "Building a dual-theme canvas with SVG noise, radial washes, and color-mix stops that stay subtle in dark mode without disappearing in light.",
     data: slides,
   },
+  {
+    id: "6",
+    title: "The Future of CSS",
+    description:
+      "A look at the future of CSS, including new features and how they will be implemented.",
+    data: slides,
+  },
+  {
+    id: "7",
+    title: "The Future of CSS",
+    description:
+      "A look at the future of CSS, including new features and how they will be implemented.",
+    data: slides,
+  },
+  {
+    id: "8",
+    title: "The Future of CSS",
+    description:
+      "A look at the future of CSS, including new features and how they will be implemented.",
+    data: slides,
+  },
+  {
+    id: "9",
+    title: "The Future of CSS",
+    description:
+      "A look at the future of CSS, including new features and how they will be implemented.",
+    data: slides,
+  },
+  {
+    id: "10",
+    title: "The Future of CSS",
+    description:
+      "A look at the future of CSS, including new features and how they will be implemented.",
+    data: slides,
+  },
 ];
 
 const carouselTexts = {
@@ -51,4 +86,9 @@ const carouselTexts = {
     "Slide-by-slide breakdowns, built for the LinkedIn feed.",
 };
 
-export { carouselMockData, carouselTexts };
+const virtualSizes = {
+  MIN_CARD_WIDTH: 288,
+  GAP: 40,
+  ROW_HEIGHT: (288 / 3) * 4,
+};
+export { carouselMockData, carouselTexts, virtualSizes };
