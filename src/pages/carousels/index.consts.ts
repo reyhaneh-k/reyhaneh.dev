@@ -1,4 +1,4 @@
-import img from "@/assets/images/carousel1/post_01_perceived_performance_carousel.avif";
+import img from "@/assets/images/carousel1/post_05_timings_latency_startup_carousel.avif";
 
 import { CarouselStackProps } from "./components/carouselStack/index.types";
 

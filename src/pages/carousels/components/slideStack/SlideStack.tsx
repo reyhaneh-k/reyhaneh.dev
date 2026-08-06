@@ -2,15 +2,14 @@ import { motion } from "motion/react";
 
 import { cn } from "@/utils/classname";
 
+import { SlideStackProps } from "./index.type";
+
 function SlideStack({
   src,
   title,
   index,
-}: {
-  src: string;
-  title: string;
-  index: number;
-}) {
+  loading,
+}: SlideStackProps) {
   return (
     <motion.div
       className={cn(
@@ -18,8 +17,11 @@ function SlideStack({
         "border-2 border-white"
       )}
       variants={{
-        rest: { rotate: index * 4 },
-        hover: { rotate: 0 },
+        rest: {
+          rotate: index * 4,
+          translate: `${index * 2}px ${index * 2}px`,
+        },
+        hover: { rotate: 0, translate: "none" },
       }}
       style={{
         zIndex: 2 - index,
@@ -38,9 +40,9 @@ function SlideStack({
       <div className="absolute inset-0 -z-10 backdrop-blur-sm" />
       {index === 0 && (
         <img
+          loading={loading}
           src={src}
           alt={title}
-          loading="lazy"
           className="z-1 h-full w-full object-contain"
         />
       )}

@@ -16,7 +16,9 @@ function Carousles() {
       gap={virtualSizes.GAP}
       cellHeight={(virtualSizes.CARD_WIDTH * 4) / 3}
       getItemKey={(item) => item.id}
-      renderItem={(item) => <CarouselStack {...item} />}
+      renderItem={(item, index) => (
+        <CarouselStack {...item} index={index} />
+      )}
       className="space-y-2"
     >
       <h2 className="text-2xl font-bold">

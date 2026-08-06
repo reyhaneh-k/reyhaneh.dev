@@ -76,7 +76,6 @@ function WritingLayout({
             {writingLayoutConsts.description}
           </p>
         </div>
-
         <TabsRoot<TabValue>
           value={activeValue?.href}
           orientation={isMobile ? "horizontal" : "vertical"}
@@ -101,7 +100,6 @@ function WritingLayout({
           </TabsList>
         </TabsRoot>
       </motion.header>
-
       {children}
     </section>
   );

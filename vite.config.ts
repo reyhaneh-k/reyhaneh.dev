@@ -29,6 +29,7 @@ export default defineConfig({
     target: "baseline-widely-available",
     sourcemap: "hidden",
     outDir: "build",
+    chunkSizeWarningLimit: 1_000,
   },
   resolve: {
     tsconfigPaths: true,

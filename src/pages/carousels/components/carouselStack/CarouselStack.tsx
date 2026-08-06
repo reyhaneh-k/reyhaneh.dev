@@ -11,6 +11,7 @@ function CarouselStack({
   description,
   data,
   className,
+  index: listIndex,
 }: CarouselStackProps) {
   const slideCount = data.length;
 
@@ -46,6 +47,9 @@ function CarouselStack({
           src={item}
           title={title}
           index={index}
+          loading={
+            listIndex && listIndex > 0 ? "lazy" : "eager"
+          }
         />
       ))}
 

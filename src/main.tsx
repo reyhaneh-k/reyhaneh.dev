@@ -14,12 +14,12 @@ import { ThemeProvider } from "./providers/theme/ThemeProvider";
 import { routeTree } from "./routeTree.gen";
 
 const router = createRouter({ routeTree });
+initSentry(router);
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }
 }
-initSentry(router);
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {

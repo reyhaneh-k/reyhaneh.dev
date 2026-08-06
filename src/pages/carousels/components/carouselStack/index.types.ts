@@ -4,6 +4,7 @@ interface CarouselStackProps {
   description: string;
   data: string[];
   className?: string;
+  index?: number;
 }
 
 export type { CarouselStackProps };

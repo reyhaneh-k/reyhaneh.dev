@@ -8,8 +8,7 @@ import {
 
 import { config } from "@/consts/config";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function initSentry(router: any) {
+function initSentry(router: unknown) {
   init({
     enabled: config.mode === "production",
     dsn: import.meta.env.VITE_SENTRY_DSN,
