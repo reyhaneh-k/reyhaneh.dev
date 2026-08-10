@@ -1,4 +1,6 @@
+import { motion } from "motion/react";
 import { Accordion as RadixAccordion } from "radix-ui";
+import { forwardRef, type ReactNode } from "react";
 
 import { cn } from "@/utils/classname";
 
@@ -17,6 +19,46 @@ type AccordionContentProps = React.ComponentProps<
 type AccordionHeaderProps = React.ComponentProps<
   typeof RadixAccordion.Header
 >;
+interface AccordionContentMotionProps {
+  className?: string;
+  children: ReactNode;
+  "data-state"?: "open" | "closed";
+}
+
+const AccordionContentMotion = forwardRef<
+  HTMLDivElement,
+  AccordionContentMotionProps
+>(
+  (
+    {
+      className,
+      children,
+      "data-state": state = "closed",
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <motion.div
+        ref={ref}
+        {...props}
+        initial={{ height: 0 }}
+        animate={{ height: state === "open" ? "auto" : 0 }}
+        transition={{
+          type: "tween",
+          duration: 0.3,
+          ease: "easeInOut",
+        }}
+        className={cn("overflow-hidden", className)}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+);
+AccordionContentMotion.displayName =
+  "AccordionContentMotion";
+
 function AccordionRoot({
   className,
   children,
@@ -39,15 +81,15 @@ function AccordionItem({
 }: AccordionItemProps) {
   return (
     <RadixAccordion.Item
+      {...props}
       className={cn(
-        "border-border rounded-3xl border p-4",
+        "border-border space-y-2 rounded-3xl border p-4",
         className
       )}
       style={{
         backgroundColor:
           "color-mix(in srgb, var(--color-accent) 20%, var(--color-surface) 40%)",
       }}
-      {...props}
     >
       {children}
     </RadixAccordion.Item>
@@ -76,10 +118,14 @@ function AccordionContent({
 }: AccordionContentProps) {
   return (
     <RadixAccordion.Content
-      className={cn(className)}
+      forceMount
+      asChild
       {...props}
+      className="border-line border-b"
     >
-      {children}
+      <AccordionContentMotion className={className}>
+        {children}
+      </AccordionContentMotion>
     </RadixAccordion.Content>
   );
 }

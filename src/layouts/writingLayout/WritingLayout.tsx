@@ -85,17 +85,18 @@ function WritingLayout({
             className={cn("xs:gap-4 gap-0")}
           >
             {LayoutLinks.map((link) => (
-              <TabsTrigger<TabValue>
+              <Link
+                to={link.href}
+                className="inline"
                 key={link.href}
-                value={link.href}
               >
-                <Link to={link.href} className="inline">
+                <TabsTrigger<TabValue> value={link.href}>
                   {link.label}
                   <span className="text-accent/50 ms-1 align-super text-[0.7rem] font-medium">
                     {link.badge}
                   </span>
-                </Link>
-              </TabsTrigger>
+                </TabsTrigger>
+              </Link>
             ))}
           </TabsList>
         </TabsRoot>

@@ -10,9 +10,9 @@ const postMockData: (PostProps & { id: string })[] = [
     id: "1",
     title: "object-fit: contain is underrated",
     description:
-      "Cover crops. Contain respects the asset. Pair it with a blurred duplicate behind the frame and letterboxing stops looking like a bug.",
+      "Cover crops. Contain respects the asset. Pair it with a blurred duplicate behind the frame and letterboxing stops looking like a bug. Cover crops. Contain respects the asset. Pair it with a blurred duplicate behind the frame and letterboxing stops looking like a bug. Cover crops. Contain respects the asset. Pair it with a blurred duplicate behind the frame and letterboxing stops looking like a bug. Cover crops. Contain respects the asset. Pair it with a blurred duplicate behind the frame and letterboxing stops looking like a bug. Cover crops. Contain respects the asset. Pair it with a blurred duplicate behind the frame and letterboxing stops looking like a bug. Cover crops. Contain respects the asset. Pair it with a blurred duplicate behind the frame and letterboxing stops looking like a bug. Cover crops. Contain respects the asset. Pair it with a blurred duplicate behind the frame and letterboxing stops looking like a bug.",
     date: "2026-01-01",
-    views: 100,
+    views: 10000,
   },
   {
     id: "2",

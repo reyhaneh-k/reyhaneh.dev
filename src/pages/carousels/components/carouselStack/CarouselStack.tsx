@@ -2,8 +2,6 @@ import { motion } from "motion/react";
 
 import { cn } from "@/utils/classname";
 
-import SlideStack from "../slideStack/SlideStack";
-
 import { CarouselStackProps } from "./index.types";
 
 function CarouselStack({
@@ -41,16 +39,59 @@ function CarouselStack({
         },
       }}
     >
+      <link
+        rel="preload"
+        href={data[0]}
+        as="image"
+        fetchPriority="high"
+      />
       {data.slice(0, 3).map((item, index) => (
-        <SlideStack
+        <motion.div
           key={`${item}-${index}`}
-          src={item}
-          title={title}
-          index={index}
-          loading={
-            listIndex && listIndex > 0 ? "lazy" : "eager"
-          }
-        />
+
+          className={cn(
+            "absolute top-0 right-6 bottom-6 left-0 overflow-hidden rounded-2xl",
+            "border-2 border-white"
+          )}
+          variants={{
+            rest: {
+              rotate: index * 4,
+              translate: `${index * 1}px ${index * 2}px`,
+            },
+            hover: {
+              rotate: 0,
+              translate: "none",
+              borderWidth: "0",
+            },
+          }}
+          style={{
+            zIndex: 2 - index,
+            backgroundImage: `url(${item})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundClip: "padding-box",
+          }}
+          transition={{
+            duration: 0.2,
+            ease: "easeInOut",
+            delay: index * 0.04,
+          }}
+        >
+          <div className="absolute inset-0 -z-10 backdrop-blur-sm" />
+          {index === 0 && (
+            <img
+              loading={
+                listIndex && listIndex > 0
+                  ? "lazy"
+                  : "eager"
+              }
+              src={item}
+              alt={title}
+              className="z-1 h-full w-full object-contain"
+            />
+          )}
+        </motion.div>
       ))}
 
       <motion.div
