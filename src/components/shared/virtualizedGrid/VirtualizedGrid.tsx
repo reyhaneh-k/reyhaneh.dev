@@ -25,7 +25,6 @@ function VirtualizedGrid<TItem>({
   getScrollElement: getScrollElementProp,
   getItemKey,
   renderItem,
-  children,
 }: VirtualizedGridProps<TItem>) {
   const listAnchorRef = useRef<HTMLDivElement>(null);
   const [gridWidth, setGridWidth] = useState<number | null>(
@@ -47,12 +46,11 @@ function VirtualizedGrid<TItem>({
     if (!listEl) return;
 
     const updateMeasurements = () => {
-      const scrollElement = getScrollElement();
       const rect = listEl.getBoundingClientRect();
 
       setGridWidth(rect.width);
       setScrollMargin(
-        getListScrollOffset(listEl, scrollElement)
+        getListScrollOffset(listEl, scrollEl)
       );
     };
 
@@ -93,25 +91,25 @@ function VirtualizedGrid<TItem>({
     scrollMargin !== null && gridWidth !== null;
 
   return (
-    <div className={cn("w-full", className)}>
-      {children}
-      <div ref={listAnchorRef} className="w-full">
-        {isReady && (
-          <VirtualizedGridBody
-            key={`${getColumnCount(gridWidth, cellWidth, gap)}-${Math.round(scrollMargin)}`}
-            items={items}
-            gridWidth={gridWidth}
-            scrollMargin={scrollMargin}
-            cellWidth={cellWidth}
-            gap={gap}
-            cellHeight={cellHeight}
-            overscan={overscan}
-            getScrollElement={getScrollElement}
-            getItemKey={getItemKey}
-            renderItem={renderItem}
-          />
-        )}
-      </div>
+    <div
+      ref={listAnchorRef}
+      className={cn("w-full", className)}
+    >
+      {isReady && (
+        <VirtualizedGridBody
+          key={`${getColumnCount(gridWidth, cellWidth, gap)}-${Math.round(scrollMargin)}`}
+          items={items}
+          gridWidth={gridWidth}
+          scrollMargin={scrollMargin}
+          cellWidth={cellWidth}
+          gap={gap}
+          cellHeight={cellHeight}
+          overscan={overscan}
+          getScrollElement={getScrollElement}
+          getItemKey={getItemKey}
+          renderItem={renderItem}
+        />
+      )}
     </div>
   );
 }

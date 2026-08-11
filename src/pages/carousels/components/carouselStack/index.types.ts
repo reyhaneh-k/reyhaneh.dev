@@ -1,8 +1,10 @@
 interface CarouselStackProps {
   id: string;
   title: string;
+  views: number;
+  publishedAt: string;
   description: string;
-  data: string[];
+  images: string[];
   className?: string;
   index?: number;
 }

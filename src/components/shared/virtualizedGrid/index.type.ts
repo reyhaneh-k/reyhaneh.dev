@@ -14,7 +14,6 @@ interface VirtualizedGridProps<TItem> {
     item: TItem,
     index: number
   ) => React.ReactNode;
-  children?: React.ReactNode;
 }
 
 export type { VirtualizedGridProps };

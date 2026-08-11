@@ -7,7 +7,7 @@ import { CarouselStackProps } from "./index.types";
 function CarouselStack({
   title,
   description,
-  data,
+  images: data,
   className,
   index: listIndex,
 }: CarouselStackProps) {
@@ -51,7 +51,8 @@ function CarouselStack({
 
           className={cn(
             "absolute top-0 right-6 bottom-6 left-0 overflow-hidden rounded-2xl",
-            "border-2 border-white"
+            "border-2 border-white",
+            "bg-cover bg-clip-padding bg-center bg-no-repeat"
           )}
           variants={{
             rest: {
@@ -67,10 +68,6 @@ function CarouselStack({
           style={{
             zIndex: 2 - index,
             backgroundImage: `url(${item})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundClip: "padding-box",
           }}
           transition={{
             duration: 0.2,

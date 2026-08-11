@@ -1,4 +1,10 @@
-import { PostProps } from "./components/post/index.type";
+interface PostProps {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  views: number;
+}
 
 const postTexts = {
   title: "Posts",

@@ -23,17 +23,22 @@ function Posts() {
       <AccordionRoot type="single" collapsible>
         {postMockData.map((item) => (
           <AccordionItem key={item.id} value={item.id}>
-            <AccordionHeader className="flex items-center gap-2">
-              <h2 className="grow text-2xl font-bold">
-                {item.title}
-              </h2>
-              <span className="text-ink-muted text-xs">
-                {new Intl.NumberFormat("en", {
-                  notation: "compact",
-                  maximumFractionDigits: 1,
-                }).format(item.views)}{" "}
-                views
-              </span>
+            <AccordionHeader
+              asChild
+              className="flex items-center gap-2"
+            >
+              <>
+                <h2 className="grow text-2xl font-bold">
+                  {item.title}
+                </h2>
+                <span className="text-ink-muted text-xs">
+                  {new Intl.NumberFormat("en", {
+                    notation: "compact",
+                    maximumFractionDigits: 1,
+                  }).format(item.views)}{" "}
+                  views
+                </span>
+              </>
             </AccordionHeader>
             <AccordionContent>
               <p className="text-ink-muted mb-4">
