@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
-import { useState } from "react";
+import { motion, useInView } from "motion/react";
+import { useRef, useState } from "react";
 
 import { cn } from "@/utils/classname";
+import { isTouchDevice } from "@/utils/device";
 
 import { extractFeaturedTheme } from "./index.helpers";
 import type {
@@ -23,22 +24,29 @@ function FeaturedCarousel({
   const [theme, setTheme] = useState<FeaturedTheme | null>(
     null
   );
-
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { amount: 1 });
   return (
     <motion.section
+      ref={ref}
       variants={{
         hover: {},
         rest: {},
       }}
       initial="rest"
       whileHover="hover"
+      animate={
+        isInView && isTouchDevice() ? "hover" : "rest"
+      }
       className={cn(
         "border-line flex overflow-hidden rounded-lg border max-sm:h-auto sm:h-96",
         "shadow-shadow-sm shadow-xl max-sm:flex-col",
+        "transition-colors duration-300 ease-in-out",
         className
       )}
       style={{
-        backgroundColor: theme?.background,
+        backgroundColor:
+          theme?.background ?? "var(--canvas)",
       }}
     >
       <div className="relative min-w-0 max-sm:w-full sm:h-full sm:w-1/3">
@@ -107,7 +115,7 @@ function FeaturedCarousel({
           </h3>
           <div className="sm:@container-size sm:min-h-0 sm:flex-1">
             <p
-              className="text-sm leading-5 max-sm:line-clamp-6 sm:line-clamp-[calc(100cqh/1.25rem)]"
+              className="cursor-default text-sm leading-5 max-sm:line-clamp-6 sm:line-clamp-[calc(100cqh/1.25rem)]"
               style={{
                 color: theme?.body,
               }}
@@ -162,7 +170,22 @@ function FeaturedCarousel({
               }}
             >
               View
-              <ArrowRight className="size-[1em]" />
+              <motion.span
+                className="inline-flex"
+                variants={{
+                  hover: {
+                    x: [0, 4, 0],
+                    transition: {
+                      repeat: Infinity,
+                      duration: 0.6,
+                      ease: "easeInOut",
+                    },
+                  },
+                  rest: { x: 0 },
+                }}
+              >
+                <ArrowRight className="size-[1em]" />
+              </motion.span>
             </motion.span>
           </Link>
         </div>
