@@ -33,31 +33,62 @@ function FeaturedCarousel({
       initial="rest"
       whileHover="hover"
       className={cn(
-        "border-line flex gap-4 overflow-hidden rounded-lg border max-sm:h-auto sm:h-96",
-        "shadow-xl max-sm:flex-col",
+        "border-line flex overflow-hidden rounded-lg border max-sm:h-auto sm:h-96",
+        "shadow-shadow-sm shadow-xl max-sm:flex-col",
         className
       )}
       style={{
         backgroundColor: theme?.background,
       }}
     >
-      <img
-        onLoad={(e) => {
-          const next = extractFeaturedTheme(
-            e.currentTarget
-          );
-          if (next) setTheme(next);
-        }}
-        src={images[0]}
-        alt={title}
-        className="h-full min-w-0 object-cover object-center max-sm:h-auto max-sm:w-full max-sm:border-b-2 sm:w-1/3 sm:border-e-2"
-        style={{
-          borderColor: theme?.title,
-        }}
-        loading="eager"
-        fetchPriority="high"
-        decoding="sync"
-      />
+      <div className="relative min-w-0 max-sm:w-full sm:h-full sm:w-1/3">
+        <img
+          onLoad={(e) => {
+            const next = extractFeaturedTheme(
+              e.currentTarget
+            );
+            if (next) setTheme(next);
+          }}
+          src={images[0]}
+          alt={title}
+          className="h-full w-full min-w-0 object-cover object-center"
+          loading="eager"
+          fetchPriority="high"
+          decoding="sync"
+        />
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute",
+            "inset-y-0 right-0 w-16",
+            "max-sm:inset-x-0 max-sm:top-auto max-sm:bottom-0 max-sm:h-16 max-sm:w-full",
+            "backdrop-blur-md",
+            "mask-[linear-gradient(to_right,transparent,black)]",
+            "max-sm:mask-[linear-gradient(to_bottom,transparent,black)]"
+          )}
+        />
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute",
+            "inset-y-0 right-0 w-28",
+            "max-sm:inset-x-0 max-sm:top-auto max-sm:bottom-0 max-sm:h-20 max-sm:w-full",
+            "hidden sm:block"
+          )}
+          style={{
+            backgroundImage: `linear-gradient(to right, transparent, ${theme?.background ?? "transparent"})`,
+          }}
+        />
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-x-0 bottom-0 h-20 sm:hidden"
+          )}
+          style={{
+            backgroundImage: `linear-gradient(to bottom, transparent, ${theme?.background ?? "transparent"})`,
+          }}
+        />
+      </div>
       <div
         className={cn(
           "flex flex-col justify-between gap-4 sm:basis-2/3",
@@ -112,7 +143,7 @@ function FeaturedCarousel({
           <span aria-hidden>·</span>
           <span>{images.length} slides</span>
           <Link
-            className="ml-auto flex text-[1.2em]"
+            className="ml-auto flex text-sm"
             to="/writing/carousels/$carousel_id"
             style={{
               color: theme?.title,
