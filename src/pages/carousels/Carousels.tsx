@@ -1,7 +1,4 @@
-import { VirtualizedGrid } from "@/components/shared/virtualizedGrid/VirtualizedGrid";
-
 import { CarouselStack } from "./components/carouselStack/CarouselStack";
-import { CarouselStackProps } from "./components/carouselStack/index.types";
 import { FeaturedCarousel } from "./components/featuredCarousel/FeaturedCarousel";
 import {
   carouselMockData,
@@ -10,7 +7,7 @@ import {
   virtualSizes,
 } from "./index.consts";
 
-function Carousles() {
+function Carousels() {
   const featured = carouselMockData[0];
 
   return (
@@ -32,17 +29,23 @@ function Carousles() {
         </h6>
         <span className="border-t-ink-muted/80 h-0 grow rounded-full border-t" />
       </div>
-      <VirtualizedGrid<CarouselStackProps>
-        items={carouselListData}
-        cellWidth={virtualSizes.CARD_WIDTH}
-        gap={virtualSizes.GAP}
-        cellHeight={(virtualSizes.CARD_WIDTH * 4) / 3}
-        getItemKey={(item) => item.id}
-        renderItem={(item) => <CarouselStack {...item} />}
-        className="space-y-2"
-      />
+      <div
+        className="grid justify-items-center"
+        style={{
+          gridTemplateColumns: `repeat(auto-fill, minmax(${virtualSizes.CARD_WIDTH}px, 1fr))`,
+          gap: virtualSizes.GAP,
+        }}
+      >
+        {carouselListData.map((item, index) => (
+          <CarouselStack
+            key={item.id}
+            {...item}
+            index={index}
+          />
+        ))}
+      </div>
     </div>
   );
 }
 
-export default Carousles;
+export default Carousels;

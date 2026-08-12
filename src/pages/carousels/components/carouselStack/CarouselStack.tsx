@@ -34,20 +34,8 @@ function CarouselStack({
           : "rest"
       }
       variants={{
-        rest: {
-          scale: 1,
-          transition: {
-            ease: "easeInOut",
-            duration: 0.1,
-          },
-        },
-        hover: {
-          scale: 1.05,
-          transition: {
-            ease: "easeInOut",
-            duration: 0.1,
-          },
-        },
+        rest: {},
+        hover: {},
       }}
     >
       <link
@@ -61,29 +49,84 @@ function CarouselStack({
           key={`${item}-${index}`}
 
           className={cn(
-            "absolute top-0 right-6 bottom-6 left-0 overflow-hidden rounded-2xl",
+            "absolute top-0 left-0 h-[calc(100%-24px)] w-[calc(100%-24px)] overflow-hidden rounded-2xl",
             "border-2 border-white",
             "bg-cover bg-clip-padding bg-center bg-no-repeat"
           )}
           variants={{
             rest: {
               rotate: index * 4,
-              translate: `${index * 1}px ${index * 2}px`,
+              x: index,
+              y: index * 2,
+              width: "calc(100% - 24px)",
+              height: "calc(100% - 24px)",
+              borderWidth: 2,
+              transition: {
+                width: { duration: 0.2, ease: "easeInOut" },
+                height: {
+                  duration: 0.2,
+                  ease: "easeInOut",
+                },
+                rotate: {
+                  duration: 0.2,
+                  ease: "easeInOut",
+                  delay: 0.2,
+                },
+                x: {
+                  duration: 0.2,
+                  ease: "easeInOut",
+                  delay: 0.2,
+                },
+                y: {
+                  duration: 0.2,
+                  ease: "easeInOut",
+                  delay: 0.2,
+                },
+              },
             },
             hover: {
               rotate: 0,
-              translate: "none",
-              borderWidth: "0",
+              x: 0,
+              y: 0,
+              width: "100%",
+              height: "100%",
+              borderWidth: 0,
+              transition: {
+                rotate: {
+                  duration: 0.2,
+                  ease: "easeInOut",
+                  delay: index * 0.04,
+                },
+                x: {
+                  duration: 0.2,
+                  ease: "easeInOut",
+                  delay: index * 0.04,
+                },
+                y: {
+                  duration: 0.2,
+                  ease: "easeInOut",
+                  delay: index * 0.04,
+                },
+                borderWidth: {
+                  duration: 0.2,
+                  delay: index * 0.04,
+                },
+                width: {
+                  duration: 0.2,
+                  ease: "easeInOut",
+                  delay: 0.2 + index * 0.04,
+                },
+                height: {
+                  duration: 0.2,
+                  ease: "easeInOut",
+                  delay: 0.2 + index * 0.04,
+                },
+              },
             },
           }}
           style={{
             zIndex: 2 - index,
             backgroundImage: `url(${item})`,
-          }}
-          transition={{
-            duration: 0.2,
-            ease: "easeInOut",
-            delay: index * 0.04,
           }}
         >
           <div className="absolute inset-0 -z-10 backdrop-blur-sm" />
@@ -105,7 +148,7 @@ function CarouselStack({
       <motion.div
         aria-hidden
         className={cn(
-          "absolute top-0 right-6 bottom-6 left-0 z-10 overflow-hidden rounded-2xl p-4",
+          "absolute inset-0 z-10 overflow-hidden rounded-2xl p-4",
           "backdrop-blur-md backdrop-saturate-150"
         )}
         style={{
@@ -116,12 +159,22 @@ function CarouselStack({
           `,
         }}
         variants={{
-          rest: { opacity: 0 },
-          hover: { opacity: 1 },
-        }}
-        transition={{
-          duration: 0.22,
-          ease: "easeOut",
+          rest: {
+            opacity: 0,
+            transition: {
+              duration: 0.2,
+              delay: 0,
+              ease: "easeOut",
+            },
+          },
+          hover: {
+            opacity: 1,
+            transition: {
+              duration: 0.2,
+              delay: 0.2 + 0.04,
+              ease: "easeOut",
+            },
+          },
         }}
       >
         <span className="text-accent absolute top-4 right-4 text-xs font-medium tracking-wider uppercase">

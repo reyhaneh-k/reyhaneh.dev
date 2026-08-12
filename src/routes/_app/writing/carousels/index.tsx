@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import Carousles from "@/pages/carousels/Carousles";
+import Carousels from "@/pages/carousels/Carousels";
 
 export const Route = createFileRoute(
   "/_app/writing/carousels/"
 )({
-  component: Carousles,
+  component: Carousels,
   staticData: {
     breadcrumb: "Carousels",
   },

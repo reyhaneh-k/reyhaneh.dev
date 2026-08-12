@@ -28,11 +28,11 @@ const RootLayout = () => {
       <TopNavbar
         compact={compact}
         scrollStatus={scrollStatus}
-        className="fixed z-3"
+        className="fixed z-100"
       />
 
       <Outlet />
-      <BottomNavBar className="fixed inset-x-0 bottom-0 z-3 md:hidden" />
+      <BottomNavBar className="fixed inset-x-0 bottom-0 z-100 md:hidden" />
     </div>
   );
 };
