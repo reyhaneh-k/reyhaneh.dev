@@ -1,6 +1,11 @@
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 
 import { cn } from "@/utils/classname";
+import {
+  isTouchDevice,
+  supportsHover,
+} from "@/utils/device";
 
 import { CarouselStackProps } from "./index.types";
 
@@ -12,16 +17,22 @@ function CarouselStack({
   index: listIndex,
 }: CarouselStackProps) {
   const slideCount = data.length;
-
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { amount: 0.8 });
   return (
     <motion.div
+      ref={ref}
       className={cn(
         "relative aspect-3/4 w-full max-w-72 cursor-pointer overflow-hidden",
         className
       )}
       initial="rest"
       whileHover="hover"
-      animate="rest"
+      animate={
+        isInView && isTouchDevice() && !supportsHover()
+          ? "hover"
+          : "rest"
+      }
       variants={{
         rest: {
           scale: 1,
