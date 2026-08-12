@@ -53,7 +53,7 @@ function WritingLayout({
   return (
     <section
       className={cn(
-        "h-full w-full space-y-8 md:space-y-12",
+        "mx-auto h-full w-full max-w-6xl space-y-8 md:space-y-12",
         "p-4 md:p-6 lg:p-8"
       )}
     >
@@ -91,9 +91,11 @@ function WritingLayout({
                 key={link.href}
               >
                 <TabsTrigger<TabValue> value={link.href}>
-                  {link.label}
-                  <span className="text-accent/50 ms-1 align-super text-[0.7rem] font-medium">
-                    {link.badge}
+                  <span>
+                    {link.label}
+                    <span className="text-accent/50 ms-1 align-super text-[0.7rem] font-medium">
+                      {link.badge}
+                    </span>
                   </span>
                 </TabsTrigger>
               </Link>

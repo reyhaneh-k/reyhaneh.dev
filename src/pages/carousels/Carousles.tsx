@@ -26,6 +26,12 @@ function Carousles() {
 
       <FeaturedCarousel {...featured} />
 
+      <div className="flex items-center gap-2">
+        <h6 className="text-ink-muted text-sm uppercase">
+          Archive
+        </h6>
+        <span className="border-t-ink-muted/80 h-0 grow rounded-full border-t" />
+      </div>
       <VirtualizedGrid<CarouselStackProps>
         items={carouselListData}
         cellWidth={virtualSizes.CARD_WIDTH}
