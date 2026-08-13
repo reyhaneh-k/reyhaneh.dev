@@ -11,16 +11,15 @@ import {
   getSlideVariants,
   overlayVariants,
 } from "./index.helpers";
-import { CarouselStackProps } from "./index.types";
+import { StackProps } from "./index.types";
 
-function CarouselStack({
+function Stack({
   id,
   title,
   description,
   images: data,
   className,
-  index: listIndex,
-}: CarouselStackProps) {
+}: StackProps) {
   const slideCount = data.length;
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { amount: 1 });
@@ -38,14 +37,6 @@ function CarouselStack({
         isInView && isTouchDevice() ? "hover" : "rest"
       }
     >
-      {listIndex === 0 && (
-        <link
-          rel="preload"
-          href={data[0]}
-          as="image"
-          fetchPriority="high"
-        />
-      )}
       {data
         .slice(0, STACK_VISIBLE_COUNT)
         .map((item, index) => (
@@ -67,6 +58,8 @@ function CarouselStack({
               <img
                 src={item}
                 alt={title}
+                loading="lazy"
+                decoding="async"
                 className="z-1 h-full w-full object-contain"
               />
             )}
@@ -128,4 +121,4 @@ function CarouselStack({
   );
 }
 
-export { CarouselStack };
+export { Stack as CarouselStack };

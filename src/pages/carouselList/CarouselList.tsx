@@ -1,5 +1,5 @@
-import { CarouselStack } from "./components/carouselStack/CarouselStack";
-import { FeaturedCarousel } from "./components/featuredCarousel/FeaturedCarousel";
+import { FeaturedCarousel } from "./components/featured/Featured";
+import { CarouselStack } from "./components/stack/Stack";
 import {
   carouselMockData,
   carouselListData,
@@ -7,7 +7,7 @@ import {
   virtualSizes,
 } from "./index.consts";
 
-function Carousels() {
+function CarouselList() {
   const featured = carouselMockData[0];
 
   return (
@@ -36,16 +36,12 @@ function Carousels() {
           gap: virtualSizes.GAP,
         }}
       >
-        {carouselListData.map((item, index) => (
-          <CarouselStack
-            key={item.id}
-            {...item}
-            index={index}
-          />
+        {carouselListData.map((item) => (
+          <CarouselStack key={item.id} {...item} />
         ))}
       </div>
     </div>
   );
 }
 
-export default Carousels;
+export default CarouselList;

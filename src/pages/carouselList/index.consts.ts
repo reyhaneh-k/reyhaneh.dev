@@ -1,10 +1,10 @@
 import img from "@/assets/images/carousel1/post_05_timings_latency_startup_carousel.avif";
 
-import { CarouselStackProps } from "./components/carouselStack/index.types";
+import { StackProps } from "./components/stack/index.types";
 
 const slides = Array.from({ length: 10 }, () => img);
 
-const carouselMockData: CarouselStackProps[] = [
+const carouselMockData: StackProps[] = [
   {
     id: "1",
     views: 100,
@@ -112,7 +112,7 @@ const virtualSizes = {
 };
 
 /** Enough rows that virtualization is obvious while scrolling. */
-const carouselListData: CarouselStackProps[] = Array.from(
+const carouselListData: StackProps[] = Array.from(
   { length: 25 },
   (_, index) => {
     const seedIndex = index % carouselMockData.length;

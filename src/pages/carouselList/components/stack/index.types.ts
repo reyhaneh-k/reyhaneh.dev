@@ -1,4 +1,4 @@
-interface CarouselStackProps {
+interface StackProps {
   id: string;
   title: string;
   views: number;
@@ -6,7 +6,6 @@ interface CarouselStackProps {
   description: string;
   images: string[];
   className?: string;
-  index?: number;
 }
 
-export type { CarouselStackProps };
+export type { StackProps };

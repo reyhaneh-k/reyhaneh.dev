@@ -1,18 +1,18 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/utils/classname";
 import { isTouchDevice } from "@/utils/device";
 
-import { extractFeaturedTheme } from "./index.helpers";
+import { scheduleThemeExtraction } from "./index.helpers";
 import type {
   FeaturedCarouselProps,
   FeaturedTheme,
 } from "./index.types";
 
-function FeaturedCarousel({
+function Featured({
   id,
   title,
   description,
@@ -25,6 +25,21 @@ function FeaturedCarousel({
     null
   );
   const ref = useRef<HTMLElement>(null);
+  const coverUrl = images[0];
+
+  useEffect(() => {
+    if (!coverUrl) return;
+
+    let cancelled = false;
+    scheduleThemeExtraction(coverUrl, (next) => {
+      if (!cancelled) setTheme(next);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [coverUrl]);
+
   return (
     <motion.section
       ref={ref}
@@ -48,13 +63,7 @@ function FeaturedCarousel({
     >
       <div className="relative min-w-0 max-sm:w-full sm:h-full sm:w-1/3">
         <img
-          onLoad={(e) => {
-            const next = extractFeaturedTheme(
-              e.currentTarget
-            );
-            if (next) setTheme(next);
-          }}
-          src={images[0]}
+          src={coverUrl}
           alt={title}
           className="h-full w-full min-w-0 object-cover object-center"
           loading="eager"
@@ -191,4 +200,4 @@ function FeaturedCarousel({
   );
 }
 
-export { FeaturedCarousel };
+export { Featured as FeaturedCarousel };
