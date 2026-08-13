@@ -43,7 +43,7 @@ function Stack({
           <motion.div
             key={`${item}-${index}`}
             className={cn(
-              "absolute top-0 left-0 overflow-hidden rounded-2xl border-2",
+              "absolute overflow-hidden rounded-2xl border-2",
               "border[color-mix(in oklab, var(--line) 40%, white 60%)]",
               "bg-cover bg-center bg-no-repeat"
             )}
