@@ -65,7 +65,7 @@ function WritingLayout({
         )}
         style={{ opacity }}
       >
-        <div className="mt-6 flex max-w-3xl flex-col gap-4 md:gap-6 lg:mt-10">
+        <div className="mt-6 flex max-w-1/2 flex-col gap-4 md:gap-6 lg:mt-10">
           <BreadCrumb className="mb-2 md:mb-4" />
           <h1 className="text-4xl leading-[0.95] font-bold tracking-tight md:text-6xl lg:text-8xl">
             {writingLayoutConsts.title.part1},
