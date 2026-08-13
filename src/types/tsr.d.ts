@@ -2,6 +2,11 @@ import "@tanstack/react-router";
 
 declare module "@tanstack/react-router" {
   interface StaticDataRouteOption {
-    breadcrumb: string;
+    breadcrumb:
+      | string
+      | ((match: {
+          params: Record<string, string>;
+          loaderData?: unknown;
+        }) => string);
   }
 }

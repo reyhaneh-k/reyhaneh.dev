@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
 import { useRef, useState } from "react";
 
 import { cn } from "@/utils/classname";
@@ -25,7 +25,6 @@ function FeaturedCarousel({
     null
   );
   const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { amount: 1 });
   return (
     <motion.section
       ref={ref}
@@ -35,9 +34,7 @@ function FeaturedCarousel({
       }}
       initial="rest"
       whileHover="hover"
-      animate={
-        isInView && isTouchDevice() ? "hover" : "rest"
-      }
+      animate={isTouchDevice() ? "hover" : "rest"}
       className={cn(
         "border-line flex overflow-hidden rounded-lg border max-sm:h-auto sm:h-96",
         "shadow-shadow-sm shadow-xl max-sm:flex-col",

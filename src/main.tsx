@@ -13,7 +13,10 @@ import { SentryProvider } from "./providers/sentry/SentryProvider";
 import { ThemeProvider } from "./providers/theme/ThemeProvider";
 import { routeTree } from "./routeTree.gen";
 
-const router = createRouter({ routeTree });
+const router = createRouter({
+  routeTree,
+  defaultPreload: "intent",
+});
 initSentry(router);
 declare module "@tanstack/react-router" {
   interface Register {

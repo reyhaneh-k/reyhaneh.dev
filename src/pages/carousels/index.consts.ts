@@ -124,9 +124,20 @@ const carouselListData: CarouselStackProps[] = Array.from(
   }
 );
 
+async function getCarouselById(id: string) {
+  await new Promise((resolve) => setTimeout(resolve, 120));
+  return (
+    carouselListData.find(
+      (carousel) => carousel.id === id
+    ) ??
+    carouselMockData.find((carousel) => carousel.id === id)
+  );
+}
+
 export {
   carouselMockData,
   carouselListData,
   carouselTexts,
+  getCarouselById,
   virtualSizes,
 };

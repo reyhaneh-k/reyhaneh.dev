@@ -120,6 +120,7 @@ function TabsTrigger<T extends string>({
       asChild={false}
     >
       {children}
+
       {active && (
         <motion.span
           layoutId="tabs-filter-indicator"

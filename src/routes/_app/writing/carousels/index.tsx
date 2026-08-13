@@ -7,6 +7,6 @@ export const Route = createFileRoute(
 )({
   component: Carousels,
   staticData: {
-    breadcrumb: "Carousels",
+    breadcrumb: "",
   },
 });

@@ -20,7 +20,7 @@ export const Crumb = ({
       <span
         className={cn(
           "align-middle",
-          "hover:text-accent active:text-accent",
+          "hover:text-accent active:text-accent truncate",
           index === 0 && "text-accent"
         )}
       >

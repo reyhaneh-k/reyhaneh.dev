@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
-import { delay, motion, useInView } from "motion/react";
+import { MoveRight } from "lucide-react";
+import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 
 import { cn } from "@/utils/classname";
@@ -14,6 +14,7 @@ import {
 import { CarouselStackProps } from "./index.types";
 
 function CarouselStack({
+  id,
   title,
   description,
   images: data,
@@ -37,12 +38,14 @@ function CarouselStack({
         isInView && isTouchDevice() ? "hover" : "rest"
       }
     >
-      <link
-        rel="preload"
-        href={data[0]}
-        as="image"
-        fetchPriority="high"
-      />
+      {listIndex === 0 && (
+        <link
+          rel="preload"
+          href={data[0]}
+          as="image"
+          fetchPriority="high"
+        />
+      )}
       {data
         .slice(0, STACK_VISIBLE_COUNT)
         .map((item, index) => (
@@ -62,11 +65,6 @@ function CarouselStack({
             <div className="absolute inset-0 -z-10 rounded-2xl backdrop-blur-sm" />
             {index === 0 && (
               <img
-                loading={
-                  listIndex && listIndex > 0
-                    ? "lazy"
-                    : "eager"
-                }
                 src={item}
                 alt={title}
                 className="z-1 h-full w-full object-contain"
@@ -93,14 +91,15 @@ function CarouselStack({
         <Link
           to="/writing/carousels/$carousel_id"
           params={{
-            carousel_id: data[0],
+            carousel_id: id,
           }}
+          className="cursor-pointer text-sm"
         >
-          <span className="text-accent absolute top-4 left-4 text-xs font-medium tracking-wider uppercase">
+          <span className="text-accent absolute top-4 left-4 font-medium tracking-wider uppercase">
             {slideCount} slides
           </span>
           <motion.span
-            className="text-accent absolute top-4 right-4 inline-flex text-xs"
+            className="text-accent absolute top-4 right-4 inline-flex"
             variants={{
               hover: {
                 x: [0, 4, 0],
@@ -113,7 +112,7 @@ function CarouselStack({
               rest: { x: 0 },
             }}
           >
-            <ArrowRight className="size-4" />
+            <MoveRight className="size-6" />
           </motion.span>
         </Link>
         <div className="absolute inset-x-4 bottom-4 flex flex-col gap-1.5">

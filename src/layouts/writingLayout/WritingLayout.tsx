@@ -103,6 +103,7 @@ function WritingLayout({
           </TabsList>
         </TabsRoot>
       </motion.header>
+
       {children}
     </section>
   );

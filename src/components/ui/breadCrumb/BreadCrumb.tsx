@@ -15,9 +15,17 @@ const BreadCrumb = ({
       s
         .filter((match) => match.staticData.breadcrumb)
         .map((match) => ({
-          title: match.staticData.breadcrumb,
+          title:
+            typeof match.staticData.breadcrumb ===
+            "function"
+              ? match.staticData.breadcrumb({
+                  params: match.params,
+                  loaderData: match.loaderData,
+                })
+              : match.staticData.breadcrumb,
           path: match.pathname,
-        })),
+        }))
+        .filter((breadcrumb) => breadcrumb.title),
   });
   return (
     <motion.div
@@ -31,6 +39,10 @@ const BreadCrumb = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.15 }}
+          className={cn(
+            index === matches.length - 1 &&
+              "overflow-hidden"
+          )}
         >
           <Crumb
             title={breadcrumb.title}
