@@ -6,6 +6,12 @@ import type {
 
 import type { FeaturedTheme } from "./index.types";
 
+export const themeCache = new Map<string, FeaturedTheme>();
+const inflight = new Map<
+  string,
+  Promise<FeaturedTheme | null>
+>();
+
 let worker: Worker | null = null;
 let nextRequestId = 0;
 
@@ -17,22 +23,44 @@ function getThemeWorker() {
 function extractFeaturedTheme(
   url: string
 ): Promise<FeaturedTheme | null> {
+  const cached = themeCache.get(url);
+  if (cached) return Promise.resolve(cached);
+
+  const pending = inflight.get(url);
+  if (pending) return pending;
+
   const id = nextRequestId++;
   const themeWorker = getThemeWorker();
 
-  return new Promise<FeaturedTheme | null>((resolve) => {
-    const onMessage = (
-      event: MessageEvent<FeaturedThemeWorkerResponse>
-    ) => {
-      if (event.data.id !== id) return;
-      themeWorker.removeEventListener("message", onMessage);
-      resolve(event.data.theme);
-    };
+  const request = new Promise<FeaturedTheme | null>(
+    (resolve) => {
+      const onMessage = (
+        event: MessageEvent<FeaturedThemeWorkerResponse>
+      ) => {
+        if (event.data.id !== id) return;
+        themeWorker.removeEventListener(
+          "message",
+          onMessage
+        );
+        resolve(event.data.theme);
+      };
 
-    themeWorker.addEventListener("message", onMessage);
+      themeWorker.addEventListener("message", onMessage);
 
-    const request: FeaturedThemeWorkerRequest = { id, url };
-    themeWorker.postMessage(request);
+      const payload: FeaturedThemeWorkerRequest = {
+        id,
+        url,
+      };
+      themeWorker.postMessage(payload);
+    }
+  ).then((theme) => {
+    if (theme) themeCache.set(url, theme);
+    return theme;
+  });
+
+  inflight.set(url, request);
+  return request.finally(() => {
+    inflight.delete(url);
   });
 }
 

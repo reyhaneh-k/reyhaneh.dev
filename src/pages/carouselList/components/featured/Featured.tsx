@@ -6,7 +6,10 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/utils/classname";
 import { isTouchDevice } from "@/utils/device";
 
-import { scheduleThemeExtraction } from "./index.helpers";
+import {
+  scheduleThemeExtraction,
+  themeCache,
+} from "./index.helpers";
 import type {
   FeaturedCarouselProps,
   FeaturedTheme,
@@ -21,11 +24,11 @@ function Featured({
   publishedAt,
   className,
 }: FeaturedCarouselProps) {
+  const coverUrl = images[0];
   const [theme, setTheme] = useState<FeaturedTheme | null>(
-    null
+    themeCache.get(coverUrl) ?? null
   );
   const ref = useRef<HTMLElement>(null);
-  const coverUrl = images[0];
 
   useEffect(() => {
     if (!coverUrl) return;
