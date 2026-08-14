@@ -1,35 +1,71 @@
+import {
+  listedArticles,
+  listedCarousels,
+  listedPosts,
+  writingCopy,
+} from "@/pages/writing/index.consts";
 import { Route as articlesRoute } from "@/routes/_app/writing/articles";
 import { Route as carouselsRoute } from "@/routes/_app/writing/carousels";
 import { Route as writingRoute } from "@/routes/_app/writing/index";
 import { Route as postsRoute } from "@/routes/_app/writing/posts";
-const writingLayoutConsts = {
-  title: { part1: "Thinking", part2: "out loud." },
-  description:
-    "Notes on building for the browser — JavaScript, interfaces, and more. Essays, carousels, and short posts.",
-  totalPosts: 28,
-};
 
-const LayoutLinks = [
+import { LayoutLinkType } from "./index.type";
+const LayoutLinks: LayoutLinkType[] = [
   {
     label: "All",
     href: writingRoute.to,
-    badge: 28,
+    badge:
+      listedPosts.length +
+      listedArticles.length +
+      listedCarousels.length,
+    title: writingCopy.all.title as unknown as string[],
+    description: writingCopy.all.description,
   },
   {
     label: "Posts",
     href: postsRoute.to,
-    badge: 14,
+    badge: listedPosts.length,
+    title: writingCopy.posts.title as unknown as string[],
+    description: writingCopy.posts.description,
   },
   {
     label: "Articles",
     href: articlesRoute.to,
-    badge: 8,
+    badge: listedArticles.length,
+    title: writingCopy.articles
+      .title as unknown as string[],
+    description: writingCopy.articles.description,
   },
   {
     label: "Carousels",
     href: carouselsRoute.to,
-    badge: 6,
+    badge: listedCarousels.length,
+    title: writingCopy.carousels
+      .title as unknown as string[],
+    description: writingCopy.carousels.description,
   },
-];
+] as const;
 
-export { writingLayoutConsts, LayoutLinks };
+const chromeTransition = {
+  duration: 0.28,
+  ease: "easeOut",
+} as const;
+
+const listChromeMotion = {
+  initial: { opacity: 0, x: -24 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -24 },
+} as const;
+
+const detailChromeMotion = {
+  initial: { opacity: 0, x: 24 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: 24 },
+} as const;
+
+export {
+  LayoutLinks,
+  chromeTransition,
+  listChromeMotion,
+  detailChromeMotion,
+};

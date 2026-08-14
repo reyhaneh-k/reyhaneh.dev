@@ -1,10 +1,10 @@
 interface StackProps {
   id: string;
   title: string;
-  views: number;
-  publishedAt: string;
   description: string;
-  images: string[];
+  cover: string;
+  slideCount: number;
+  tags: string[];
   className?: string;
 }
 

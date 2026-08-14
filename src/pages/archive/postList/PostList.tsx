@@ -11,7 +11,7 @@ import { cn } from "@/utils/classname";
 
 import { postTexts, postMockData } from "./index.consts";
 
-function Posts() {
+function PostList() {
   return (
     <div className="@container space-y-2">
       <h2 className="text-2xl font-bold">
@@ -25,20 +25,20 @@ function Posts() {
           <AccordionItem key={item.id} value={item.id}>
             <AccordionHeader
               asChild
-              className="flex items-center gap-2"
+              className="flex items-baseline gap-10"
             >
-              <>
-                <h2 className="grow text-2xl font-bold">
+              <div>
+                <h2 className="line-clamp-2 grow text-lg font-bold wrap-break-word sm:text-xl md:text-2xl">
                   {item.title}
                 </h2>
-                <span className="text-ink-muted text-xs">
+                <span className="text-ink-muted shrink-0 text-xs">
                   {new Intl.NumberFormat("en", {
                     notation: "compact",
                     maximumFractionDigits: 1,
                   }).format(item.views)}{" "}
                   views
                 </span>
-              </>
+              </div>
             </AccordionHeader>
             <AccordionContent>
               <p className="text-ink-muted mb-4">
@@ -57,11 +57,11 @@ function Posts() {
                 )}
               </span>
 
-              <AccordionTrigger className="group ml-auto inline-flex items-center gap-2">
+              <AccordionTrigger className="group ml-auto inline-flex items-center gap-2 text-xs sm:text-sm">
                 <span
                   className={cn(
                     "group-data-[state=closed]:after:content-['Read_More'] group-data-[state=open]:after:content-['Read_Less']",
-                    "text-accent text-sm transition-all duration-300"
+                    "text-accent transition-all duration-300 after:text-[1em]"
                   )}
                 />
                 <ChevronDown
@@ -77,4 +77,4 @@ function Posts() {
   );
 }
 
-export default Posts;
+export default PostList;

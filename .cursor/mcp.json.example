@@ -6,6 +6,15 @@
         "${workspaceFolder}/node_modules/chrome-devtools-mcp/build/src/bin/chrome-devtools-mcp.js",
         "--autoConnect"
       ]
+    },
+    "stitch": {
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/node_modules/@natroc/stitch-mcp/dist/index.js"
+      ],
+      "env": {
+        "STITCH_API_KEY": ""
+      }
     }
   }
 }

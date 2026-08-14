@@ -242,19 +242,6 @@
   background-blend-mode: var(--atmosphere-blend);
 }
 
-.bg-atmosphere::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: var(--grain);
-  background-repeat: repeat;
-  background-size: 140px 140px;
-  opacity: var(--grain-opacity);
-  z-index: -100;
-  transition: opacity 0.3s ease-in-out;
-}
-
 /* =============================================================================
    Base element styles
    ============================================================================= */
@@ -266,6 +253,19 @@
 
   body {
     @apply bg-canvas text-ink font-optical-auto h-full w-full font-sans transition-colors duration-300 ease-in-out;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: var(--grain);
+    background-repeat: repeat;
+    background-size: 140px 140px;
+    filter: brightness(1.2);
+    opacity: var(--grain-opacity);
+    z-index: -100;
   }
 
   main {

@@ -1,123 +1,85 @@
 import { Link } from "@tanstack/react-router";
-import { MoveRight } from "lucide-react";
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
+import { ArrowRight, Layers } from "lucide-react";
 
 import { cn } from "@/utils/classname";
-import { isTouchDevice } from "@/utils/device";
 
-import { STACK_VISIBLE_COUNT } from "./index.consts";
-import {
-  getSlideVariants,
-  overlayVariants,
-} from "./index.helpers";
-import { StackProps } from "./index.types";
+import type { StackProps } from "./index.types";
 
 function Stack({
   id,
   title,
   description,
-  images: data,
+  cover,
+  slideCount,
+  tags,
   className,
 }: StackProps) {
-  const slideCount = data.length;
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { amount: 1 });
   return (
-    <motion.div
-      ref={ref}
-      className={cn(
-        "relative aspect-3/4 w-full max-w-72 overflow-hidden rounded-2xl",
-        className
-      )}
-      initial="rest"
-      whileHover="hover"
-
-      animate={
-        isInView && isTouchDevice() ? "hover" : "rest"
-      }
+    <Link
+      to="/writing/carousels/$carousel_id"
+      params={{ carousel_id: id }}
+      className={cn("group block", className)}
     >
-      {data
-        .slice(0, STACK_VISIBLE_COUNT)
-        .map((item, index) => (
-          <motion.div
-            key={`${item}-${index}`}
-            className={cn(
-              "absolute overflow-hidden rounded-2xl border-2",
-              "border[color-mix(in oklab, var(--line) 40%, white 60%)]",
-              "bg-cover bg-center bg-no-repeat"
-            )}
-            variants={getSlideVariants(index)}
-            style={{
-              zIndex: STACK_VISIBLE_COUNT - 1 - index,
-              backgroundImage: `url(${item})`,
-            }}
-          >
-            <div className="absolute inset-0 -z-10 rounded-2xl backdrop-blur-sm" />
-            {index === 0 && (
-              <img
-                src={item}
-                alt={title}
-                loading="lazy"
-                decoding="async"
-                className="z-1 h-full w-full object-contain"
-              />
-            )}
-          </motion.div>
-        ))}
-
-      <motion.div
-        aria-hidden
+      <div
         className={cn(
-          "absolute inset-0 z-10 overflow-hidden rounded-2xl p-4",
-          "backdrop-blur-md backdrop-saturate-150"
+          "border-line/50 bg-surface relative z-10 rounded-2xl border p-4",
+          "transition-transform duration-300 ease-out group-hover:-translate-y-1",
+          "before:bg-surface-muted after:bg-canvas before:border-line after:border-line",
+          "before:absolute before:inset-0 after:absolute after:inset-0",
+          "before:-z-10 before:rounded-2xl after:-z-10 after:rounded-2xl",
+          "before:border after:border",
+          "before:origin-center after:origin-center",
+          "before:scale-[0.98] after:scale-[0.98]",
+          "before:-rotate-3 after:rotate-3",
+          "before:transition-transform before:duration-300",
+          "after:transition-transform after:duration-300",
+          "group-hover:before:-translate-y-1 group-hover:before:scale-[0.96] group-hover:before:-rotate-5",
+          "group-hover:after:-translate-y-1 group-hover:after:scale-[0.96] group-hover:after:rotate-5"
         )}
-        style={{
-          backgroundImage: `
-            radial-gradient(90% 120% at 20% 0%, color-mix(in srgb, var(--accent) 32%, transparent), transparent 60%),
-            radial-gradient(70% 90% at 80% 100%, color-mix(in srgb, var(--tertiary) 20%, transparent), transparent 60%),
-            linear-gradient(color-mix(in srgb, var(--surface) 55%, transparent), color-mix(in srgb, var(--surface) 55%, transparent))
-          `,
-        }}
-        variants={overlayVariants}
       >
-        <Link
-          to="/writing/carousels/$carousel_id"
-          params={{
-            carousel_id: id,
-          }}
-          className="cursor-pointer text-sm"
-        >
-          <span className="text-accent absolute top-4 left-4 font-medium tracking-wider uppercase">
-            {slideCount} slides
-          </span>
-          <motion.span
-            className="text-accent absolute top-4 right-4 inline-flex"
-            variants={{
-              hover: {
-                x: [0, 4, 0],
-                transition: {
-                  repeat: Infinity,
-                  duration: 0.6,
-                  ease: "easeInOut",
-                },
-              },
-              rest: { x: 0 },
-            }}
+        <div className="bg-canvas relative mb-6 aspect-4/3 overflow-hidden rounded-2xl p-[5%]">
+          <img
+            src={cover}
+            alt={title}
+            className="h-full w-full rounded-xl object-cover"
+          />
+          <span
+            className={cn(
+              "absolute top-4 left-4 z-20",
+              "bg-surface/90 text-ink inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium backdrop-blur-sm"
+            )}
           >
-            <MoveRight className="size-6" />
-          </motion.span>
-        </Link>
-        <div className="absolute inset-x-4 bottom-4 flex flex-col gap-1.5">
-          <h3 className="font-display text-ink line-clamp-2 text-lg leading-tight font-semibold">
-            {title}
-          </h3>
-          <p className="text-ink-muted line-clamp-2 text-sm leading-relaxed">
-            {description}
-          </p>
+            <Layers className="size-3.5" />
+            {slideCount} Slides
+          </span>
+          <span
+            className={cn(
+              "absolute top-4 right-4 z-20",
+              "bg-ink/50 text-canvas rounded-full p-2 backdrop-blur-md",
+              "opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            )}
+          >
+            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </span>
         </div>
-      </motion.div>
-    </motion.div>
+        <h3 className="mb-2 line-clamp-2 text-xl font-semibold">
+          {title}
+        </h3>
+        <p className="text-ink-muted mb-4 line-clamp-2 text-sm leading-relaxed md:text-base">
+          {description}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="bg-canvas text-ink-muted rounded-md px-2 py-1 text-xs font-medium"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </Link>
   );
 }
 

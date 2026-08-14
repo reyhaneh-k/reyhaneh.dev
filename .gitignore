@@ -8,6 +8,10 @@ pnpm-lock.yaml
 .env.local
 TODOS.md
 
+src/assets/stitch/
+
+.cursor/mcp.json
+.cursor/*.log
 
 *storybook.log
 storybook-static

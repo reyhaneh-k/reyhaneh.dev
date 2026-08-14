@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { cn } from "@/utils/classname";
 
 import { Crumb } from "./components/crumb/Crumb";
+import { getCrumbsFromMatches } from "./index.helpers";
 
 const BreadCrumb = ({
   className,
@@ -11,21 +12,7 @@ const BreadCrumb = ({
   className?: string;
 }) => {
   const matches = useMatches({
-    select: (s) =>
-      s
-        .filter((match) => match.staticData.breadcrumb)
-        .map((match) => ({
-          title:
-            typeof match.staticData.breadcrumb ===
-            "function"
-              ? match.staticData.breadcrumb({
-                  params: match.params,
-                  loaderData: match.loaderData,
-                })
-              : match.staticData.breadcrumb,
-          path: match.pathname,
-        }))
-        .filter((breadcrumb) => breadcrumb.title),
+    select: getCrumbsFromMatches,
   });
   return (
     <motion.div

@@ -83,13 +83,9 @@ function AccordionItem({
     <RadixAccordion.Item
       {...props}
       className={cn(
-        "border-border space-y-2 rounded-3xl border p-4",
+        "bg-surface border-line space-y-2 rounded-2xl border p-4",
         className
       )}
-      style={{
-        backgroundColor:
-          "color-mix(in srgb, var(--color-accent) 20%, var(--color-surface) 40%)",
-      }}
     >
       {children}
     </RadixAccordion.Item>

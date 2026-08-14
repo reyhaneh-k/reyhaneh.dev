@@ -1,205 +1,101 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Layers } from "lucide-react";
 
+import { KindChip } from "@/pages/writing/components/kindChip/KindChip";
 import { cn } from "@/utils/classname";
-import { isTouchDevice } from "@/utils/device";
 
-import {
-  scheduleThemeExtraction,
-  themeCache,
-} from "./index.helpers";
-import type {
-  FeaturedCarouselProps,
-  FeaturedTheme,
-} from "./index.types";
+import type { FeaturedCarouselProps } from "./index.types";
 
 function Featured({
   id,
   title,
   description,
   images,
-  views,
-  publishedAt,
+  cover,
+  tags,
+  slideCount,
   className,
 }: FeaturedCarouselProps) {
-  const coverUrl = images[0];
-  const [theme, setTheme] = useState<FeaturedTheme | null>(
-    themeCache.get(coverUrl) ?? null
-  );
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (!coverUrl) return;
-
-    let cancelled = false;
-    scheduleThemeExtraction(coverUrl, (next) => {
-      if (!cancelled) setTheme(next);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [coverUrl]);
+  const coverUrl = cover ?? images[0];
 
   return (
-    <motion.section
-      ref={ref}
-      variants={{
-        hover: {},
-        rest: {},
-      }}
-      initial="rest"
-      whileHover="hover"
-      animate={isTouchDevice() ? "hover" : "rest"}
-      className={cn(
-        "border-line flex overflow-hidden rounded-lg border max-sm:h-auto sm:h-96",
-        "shadow-shadow-sm shadow-xl max-sm:flex-col",
-        "transition-colors duration-300 ease-in-out",
-        className
-      )}
-      style={{
-        backgroundColor:
-          theme?.background ?? "var(--canvas)",
-      }}
+    <Link
+      to="/writing/carousels/$carousel_id"
+      params={{ carousel_id: id }}
+      className={cn("group block", className)}
     >
-      <div className="relative min-w-0 max-sm:w-full sm:h-full sm:w-1/3">
-        <img
-          src={coverUrl}
-          alt={title}
-          className="h-full w-full min-w-0 object-cover object-center"
-          loading="eager"
-          fetchPriority="high"
-          decoding="sync"
-        />
-        <div
-          aria-hidden
-          className={cn(
-            "pointer-events-none absolute",
-            "inset-y-0 right-0 w-16",
-            "max-sm:inset-x-0 max-sm:top-auto max-sm:bottom-0 max-sm:h-16 max-sm:w-full",
-            "backdrop-blur-md",
-            "mask-[linear-gradient(to_right,transparent,black)]",
-            "max-sm:mask-[linear-gradient(to_bottom,transparent,black)]"
-          )}
-        />
-        <div
-          aria-hidden
-          className={cn(
-            "pointer-events-none absolute",
-            "inset-y-0 right-0 w-28",
-            "max-sm:inset-x-0 max-sm:top-auto max-sm:bottom-0 max-sm:h-20 max-sm:w-full",
-            "hidden sm:block"
-          )}
-          style={{
-            backgroundImage: `linear-gradient(to right, transparent, ${theme?.background ?? "transparent"})`,
-          }}
-        />
-        <div
-          aria-hidden
-          className={cn(
-            "pointer-events-none absolute inset-x-0 bottom-0 h-20 sm:hidden"
-          )}
-          style={{
-            backgroundImage: `linear-gradient(to bottom, transparent, ${theme?.background ?? "transparent"})`,
-          }}
-        />
-      </div>
       <div
         className={cn(
-          "flex flex-col justify-between gap-4 sm:basis-2/3",
-          "p-4",
-          "md:h-3/4 md:gap-10 md:self-center"
+          "bg-surface rounded-2xl p-1",
+          "shadow-[0_32px_64px_-12px_rgb(40_49_61/0.06)]",
+          "transition-transform duration-300 ease-out group-hover:-translate-y-1"
         )}
       >
-        <div className="flex flex-col gap-4 sm:min-h-0 sm:flex-1 md:gap-6">
-          <h3
-            className="line-clamp-2 shrink-0 text-xl font-bold"
-            style={{
-              color: theme?.title,
-            }}
+        <div
+          className={cn(
+            "bg-ink relative flex overflow-hidden rounded-2xl",
+            "flex-col md:h-[500px] md:flex-row"
+          )}
+        >
+          <div className="relative p-[5%] md:h-full md:w-2/3">
+            <div className="relative h-56 md:h-full">
+              <div
+                aria-hidden
+                className={cn(
+                  "pointer-events-none absolute inset-0 z-10 rounded-2xl",
+                  "via-ink/30 to-ink bg-linear-to-b from-transparent",
+                  "md:via-ink/50 md:to-ink md:bg-linear-to-r md:from-transparent"
+                )}
+              />
+              <img
+                src={coverUrl}
+                alt={title}
+                className="h-full w-full rounded-2xl object-cover"
+                loading="eager"
+                fetchPriority="high"
+              />
+              <span
+                className={cn(
+                  "absolute top-4 left-4 z-20",
+                  "bg-surface/90 text-ink inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium backdrop-blur-sm"
+                )}
+              >
+                <Layers className="size-3.5" />
+                {slideCount} Slides
+              </span>
+            </div>
+          </div>
+
+          <div
+            className={cn(
+              "relative z-20 flex flex-col justify-center",
+              "p-8 md:w-1/3 md:p-12"
+            )}
           >
-            {title}
-          </h3>
-          <div className="sm:@container-size sm:min-h-0 sm:flex-1">
-            <p
-              className="cursor-default text-sm leading-5 max-sm:line-clamp-6 sm:line-clamp-[calc(100cqh/1.25rem)]"
-              style={{
-                color: theme?.body,
-              }}
-            >
+            <ArrowRight
+              className={cn(
+                "text-canvas absolute top-8 right-8 size-8",
+                "transition-transform duration-300 group-hover:translate-x-1"
+              )}
+            />
+            <KindChip kind="article" className="mb-6 w-max">
+              Featured
+            </KindChip>
+            <h2 className="font-display text-canvas mb-4 text-3xl leading-tight font-bold tracking-tight md:text-4xl lg:text-5xl">
+              {title}
+            </h2>
+            <p className="text-canvas/70 mb-8 text-base leading-relaxed md:text-lg">
               {description}
             </p>
+            <div className="text-canvas/50 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium tracking-wide">
+              {tags.slice(0, 2).map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
           </div>
         </div>
-        <div
-          className="font-display text-ink-muted flex flex-wrap items-center gap-x-2 gap-y-1 text-xs tracking-wide"
-          style={{
-            color: theme?.body,
-          }}
-        >
-          <time dateTime={publishedAt}>
-            {new Date(publishedAt).toLocaleDateString(
-              "en-US",
-              {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              }
-            )}
-          </time>
-          <span aria-hidden>·</span>
-          <span>
-            {new Intl.NumberFormat("en", {
-              notation: "compact",
-              maximumFractionDigits: 1,
-            }).format(views)}{" "}
-            views
-          </span>
-          <span aria-hidden>·</span>
-          <span>{images.length} slides</span>
-          <Link
-            className="ml-auto flex text-sm"
-            to="/writing/carousels/$carousel_id"
-            style={{
-              color: theme?.title,
-            }}
-            params={{ carousel_id: id }}
-          >
-            <motion.span
-              className="flex items-center gap-2"
-              variants={{
-                hover: {
-                  opacity: 1,
-                },
-                rest: {
-                  opacity: 0,
-                },
-              }}
-            >
-              View
-              <motion.span
-                className="inline-flex"
-                variants={{
-                  hover: {
-                    x: [0, 4, 0],
-                    transition: {
-                      repeat: Infinity,
-                      duration: 0.6,
-                      ease: "easeInOut",
-                    },
-                  },
-                  rest: { x: 0 },
-                }}
-              >
-                <ArrowRight className="size-[1em]" />
-              </motion.span>
-            </motion.span>
-          </Link>
-        </div>
       </div>
-    </motion.section>
+    </Link>
   );
 }
 

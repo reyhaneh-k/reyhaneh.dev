@@ -9,8 +9,9 @@ interface FeaturedCarouselProps {
   title: string;
   description: string;
   images: string[];
-  views: number;
-  publishedAt: string;
+  cover?: string;
+  tags: string[];
+  slideCount: number;
   className?: string;
 }
 
