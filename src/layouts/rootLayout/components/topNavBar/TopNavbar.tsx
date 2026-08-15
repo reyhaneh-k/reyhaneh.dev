@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { ThemeSwitch } from "@/components/ui/themeSwitch/ThemeSwitch";
 import { SCROLL_STATUS } from "@/hooks/useScroll/index.type";
 import { cn } from "@/utils/classname";
+import { isSameOrNestedPath } from "@/utils/path";
 
 import {
   NAV_LINKS,
@@ -85,7 +86,8 @@ const TopNavbar = ({
               "after:scale-x-0 after:transition-transform after:duration-100 after:ease-linear after:content-['']",
               "hover:after:scale-x-100 active:after:scale-x-100",
               "hidden transition-colors md:inline",
-              pathname === link.to && "text-accent"
+              isSameOrNestedPath(pathname, link.to) &&
+                "text-accent"
             )}
           >
             <Link to={link.to}>{link.label}</Link>
