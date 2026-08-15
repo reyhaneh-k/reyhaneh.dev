@@ -580,7 +580,7 @@ const writingCopy = {
   articles: {
     title: ["Long-form Essays"],
     description:
-      "Deep dives into design systems, editorial web patterns, and the nuanced intersection of typography and interface engineering. These articles represent the more thoroughly researched and heavily debated pieces from the archive, intended to be read slowly.",
+      "These articles represent the more thoroughly researched and heavily debated pieces from the archive, intended to be read slowly.",
   },
   carousels: {
     title: ["Carousels"],

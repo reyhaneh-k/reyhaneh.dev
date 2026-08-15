@@ -13,6 +13,17 @@ import {
 } from "./index.consts";
 import { type TopNavBarProps } from "./index.type";
 
+function navLinkClassName(isActive: boolean) {
+  return cn(
+    "relative",
+    "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
+    "after:scale-x-0 after:transition-transform after:duration-100 after:ease-linear after:content-['']",
+    "hover:after:scale-x-100 active:after:scale-x-100",
+    "transition-colors",
+    isActive && "text-accent"
+  );
+}
+
 const TopNavbar = ({
   className,
   compact,
@@ -41,12 +52,13 @@ const TopNavbar = ({
       }}
       transition={SPRING}
     >
-      <motion.ol
+      <motion.div
         className={cn(
-          "relative flex gap-6 text-center md:gap-4 lg:gap-6",
+          "relative grid items-center text-center",
+          "grid-cols-1 md:grid-cols-[repeat(3,minmax(0,1fr))_auto_repeat(3,minmax(0,1fr))]",
+          "gap-x-4 md:gap-x-6",
           "md:bg-surface/30 bg-transparent",
           "md:backdrop-blur-lg md:backdrop-saturate-50",
-          "items-start justify-between md:items-center md:justify-center",
           "w-full text-sm md:mx-auto md:w-fit md:rounded-full",
           "md:border-border border-transparent md:border",
           "[--padding-custom:calc(3px*4)] md:[--padding-custom:calc(32px*4)] lg:[--padding-custom:calc(40px*4)]",
@@ -77,32 +89,35 @@ const TopNavbar = ({
             "block md:hidden"
           )}
         />
-        {NAV_LINKS.slice(0, 3).map((link) => (
-          <li
-            key={link.to}
-            className={cn(
-              "relative",
-              "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
-              "after:scale-x-0 after:transition-transform after:duration-100 after:ease-linear after:content-['']",
-              "hover:after:scale-x-100 active:after:scale-x-100",
-              "hidden transition-colors md:inline",
-              isSameOrNestedPath(pathname, link.to) &&
-                "text-accent"
-            )}
-          >
-            <Link to={link.to}>{link.label}</Link>
-          </li>
-        ))}
-        <li
+        <section
+          aria-label="Primary"
+          className="col-span-3 hidden grid-cols-subgrid items-center justify-items-end md:grid"
+        >
+          <ol className="contents">
+            {NAV_LINKS.slice(0, 3).map((link) => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  className={navLinkClassName(
+                    isSameOrNestedPath(pathname, link.to)
+                  )}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </section>
+        <div
           className={cn(
-            "font-display text-xl leading-normal font-bold md:mx-3",
+            "font-display col-span-full justify-self-start text-xl leading-normal font-bold md:col-span-1 md:justify-self-center md:px-3",
             "transition-transform duration-100 ease-linear md:hover:-translate-y-0.5",
             "hover:scale-105 active:scale-105"
           )}
         >
           <Link
             to={ROOT_LINK.to}
-            className={cn("flex items-center gap-2")}
+            className="flex items-center gap-2"
           >
             <span>
               <span>{ROOT_LINK.label[0]}</span>
@@ -111,25 +126,29 @@ const TopNavbar = ({
               </span>
             </span>
           </Link>
-        </li>
-        {NAV_LINKS.slice(3).map((link) => (
-          <li
-            key={link.to}
-            className={cn(
-              "relative",
-              "after:bg-accent after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full",
-              "after:scale-x-0 after:transition-transform after:duration-100 after:ease-linear after:content-['']",
-              "hover:after:scale-x-100 active:after:scale-x-100",
-              "hidden transition-colors md:inline",
-              pathname === link.to && "text-accent"
-            )}
-          >
-            <Link to={link.to}>{link.label}</Link>
-          </li>
-        ))}
-        <motion.li
+        </div>
+        <section
+          aria-label="Secondary"
+          className="col-span-3 hidden grid-cols-subgrid items-center justify-items-center md:grid"
+        >
+          <ol className="contents">
+            {NAV_LINKS.slice(3).map((link) => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  className={navLinkClassName(
+                    pathname === link.to
+                  )}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </section>
+        <motion.div
           className={cn(
-            "absolute right-3 md:top-1/2 md:right-4 md:-translate-y-1/2",
+            "absolute max-md:top-3 max-md:right-3 md:top-1/2 md:right-4 md:-translate-y-1/2",
             "[--x-translate:150%] md:[--x-translate:0%]"
           )}
           initial={{
@@ -144,8 +163,8 @@ const TopNavbar = ({
           transition={SPRING}
         >
           <ThemeSwitch />
-        </motion.li>
-      </motion.ol>
+        </motion.div>
+      </motion.div>
     </motion.nav>
   );
 };

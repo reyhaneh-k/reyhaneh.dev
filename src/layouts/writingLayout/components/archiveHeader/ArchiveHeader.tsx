@@ -79,7 +79,7 @@ function ArchiveHeader({
                 </span>
               ))}
             </h1>
-            <p className="text-ink-muted line-clamp-5 max-w-md text-sm leading-relaxed md:text-base">
+            <p className="text-ink-muted line-clamp-4 max-w-md text-sm leading-relaxed md:text-base">
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -100,18 +100,20 @@ function ArchiveHeader({
         >
           <TabsList
             aria-label="Writing formats"
-            className={cn("xs:gap-4 gap-0")}
+            className={cn(
+              "xs:gap-4 xs:text-base gap-2 text-sm"
+            )}
           >
             {LayoutLinks.map((link) => (
               <Link
                 to={link.href}
-                className="inline"
+                className="inline text-[1em]"
                 key={link.href}
               >
                 <TabsTrigger<TabValue> value={link.href}>
                   <span>
                     {link.label}
-                    <span className="text-accent/50 ms-1 align-super text-[0.7rem] font-medium">
+                    <span className="text-accent/50 ms-1 align-super text-[0.7em] font-medium">
                       {link.badge}
                     </span>
                   </span>

@@ -79,7 +79,7 @@ function TabsList({
       className={cn(
         "group",
         "relative flex outline-none",
-        "flex-row gap-1 sm:gap-2",
+        "flex-row gap-1 sm:gap-4",
         "data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-end data-[orientation=vertical]:gap-1",
         "border-line/60 border-b data-[orientation=vertical]:border-r data-[orientation=vertical]:border-b-0",
         "pb-px data-[orientation=vertical]:pr-px data-[orientation=vertical]:pb-0",
@@ -110,6 +110,7 @@ function TabsTrigger<T extends string>({
         "cursor-pointer outline-none",
         "focus-visible:ring-accent/40 focus-visible:ring-offset-canvas focus-visible:ring-2 focus-visible:ring-offset-2",
         "disabled:pointer-events-none disabled:opacity-40",
+
         active
           ? "text-ink"
           : "text-ink-subtle hover:text-ink-muted",
@@ -117,7 +118,6 @@ function TabsTrigger<T extends string>({
       )}
       value={value}
       {...props}
-      asChild={false}
     >
       {children}
 
@@ -127,7 +127,7 @@ function TabsTrigger<T extends string>({
           aria-hidden
           className={cn(
             "bg-accent absolute rounded-full",
-            "group-data-[orientation=horizontal]:inset-x-2 group-data-[orientation=horizontal]:-bottom-0.75 group-data-[orientation=horizontal]:h-0.75",
+            "group-data-[orientation=horizontal]:right-2 group-data-[orientation=horizontal]:-bottom-0.75 group-data-[orientation=horizontal]:left-0 group-data-[orientation=horizontal]:h-0.75",
             "group-data-[orientation=vertical]:inset-y-1 group-data-[orientation=vertical]:right-[-2.5px] group-data-[orientation=vertical]:w-0.75"
           )}
           transition={INDICATOR_SPRING}
