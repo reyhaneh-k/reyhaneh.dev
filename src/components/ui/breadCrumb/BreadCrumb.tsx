@@ -2,9 +2,9 @@ import { useMatches } from "@tanstack/react-router";
 import { motion } from "motion/react";
 
 import { cn } from "@/utils/classname";
+import { getCrumbsFromMatches } from "@/utils/path";
 
 import { Crumb } from "./components/crumb/Crumb";
-import { getCrumbsFromMatches } from "./index.helpers";
 
 const BreadCrumb = ({
   className,

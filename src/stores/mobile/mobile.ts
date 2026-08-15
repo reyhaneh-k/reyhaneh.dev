@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-const MEDIA_QUERY = "(max-width: 768px)";
+const MEDIA_QUERY = "(max-width: 767px)";
 const listeners = new Set<() => void>();
 const emit = () => {
   for (const listener of listeners) listener();

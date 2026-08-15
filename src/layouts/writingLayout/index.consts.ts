@@ -46,26 +46,4 @@ const LayoutLinks: LayoutLinkType[] = [
   },
 ] as const;
 
-const chromeTransition = {
-  duration: 0.28,
-  ease: "easeOut",
-} as const;
-
-const listChromeMotion = {
-  initial: { opacity: 0, x: -24 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -24 },
-} as const;
-
-const detailChromeMotion = {
-  initial: { opacity: 0, x: 24 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: 24 },
-} as const;
-
-export {
-  LayoutLinks,
-  chromeTransition,
-  listChromeMotion,
-  detailChromeMotion,
-};
+export { LayoutLinks };

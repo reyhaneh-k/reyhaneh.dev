@@ -1,4 +1,24 @@
-function getCrumbsFromMatches(
+/**
+ * Checks if a path is the same as or nested within another path.
+ * @param pathname - The path to check.
+ * @param base - The base path to compare against.
+ * @returns True if the path is the same as or nested within the base path, false otherwise.
+ */
+export function isSameOrNestedPath(
+  pathname: string,
+  base: string
+) {
+  const path = pathname.replace(/\/$/, "");
+  const prefix = base.replace(/\/$/, "");
+  return path === prefix || path.startsWith(`${prefix}/`);
+}
+
+/**
+ * Extracts breadcrumbs from a list of matches.
+ * @param matches - The list of matches to extract breadcrumbs from.
+ * @returns A list of breadcrumbs.
+ */
+export function getCrumbsFromMatches(
   matches: {
     staticData: {
       breadcrumb:
@@ -27,5 +47,3 @@ function getCrumbsFromMatches(
     }))
     .filter((crumb) => crumb.title);
 }
-
-export { getCrumbsFromMatches };

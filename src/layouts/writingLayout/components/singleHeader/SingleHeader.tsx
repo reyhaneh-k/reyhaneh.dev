@@ -1,9 +1,14 @@
 import { Link, useMatches } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
-import { getCrumbsFromMatches } from "@/components/ui/breadCrumb/index.helpers";
+import { cn } from "@/utils/classname";
+import { getCrumbsFromMatches } from "@/utils/path";
 
-function DetailBack() {
+function SingleHeader({
+  className,
+}: {
+  className?: string;
+}) {
   const parent = useMatches({
     select: (matches) =>
       getCrumbsFromMatches(matches).at(-2),
@@ -12,7 +17,7 @@ function DetailBack() {
   if (!parent) return null;
 
   return (
-    <header className="mt-6 lg:mt-10">
+    <header className={cn(className)}>
       <Link
         to={parent.path}
         className="text-ink-muted hover:text-ink inline-flex items-center gap-2 text-sm transition-colors"
@@ -24,4 +29,4 @@ function DetailBack() {
   );
 }
 
-export { DetailBack };
+export { SingleHeader };

@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import {
   AnimatePresence,
   motion,
@@ -7,23 +7,26 @@ import {
 } from "motion/react";
 import { useRef } from "react";
 
-import { BreadCrumb } from "@/components/ui/breadCrumb/BreadCrumb";
 import {
   TabsList,
   TabsRoot,
   TabsTrigger,
 } from "@/components/ui/tabs/Tabs";
 import { useBoundingClientRect } from "@/hooks/useBoundingClientRect/useBoundingClientRect";
+import { LayoutLinks } from "@/layouts/writingLayout/index.consts";
+import { getActiveTab } from "@/layouts/writingLayout/index.helpers";
 import { useIsMobile } from "@/stores/mobile/mobile";
 import { cn } from "@/utils/classname";
 
-import { LayoutLinks } from "../../index.consts";
-import { useActiveWritingTab } from "../../index.helpers";
-
 type TabValue = (typeof LayoutLinks)[number]["href"];
 
-function ArchiveHeader() {
-  const activeTab = useActiveWritingTab();
+function ArchiveHeader({
+  className,
+}: {
+  className?: string;
+}) {
+  const { pathname } = useLocation();
+  const activeTab = getActiveTab(pathname);
   const targetRef = useRef<HTMLElement>(null);
   const [rect] = useBoundingClientRect(targetRef);
   const isMobile = useIsMobile();
@@ -43,13 +46,12 @@ function ArchiveHeader() {
     <motion.header
       ref={targetRef}
       className={cn(
-        "mt-6 flex h-64 flex-col gap-4 md:gap-6 lg:mt-10 lg:h-72",
+        className,
         !isMobile && "border-border border-b"
       )}
       style={{ opacity }}
     >
-      <BreadCrumb />
-      <div className="flex flex-col items-start gap-10 md:flex-row md:justify-between md:gap-16">
+      <div className="flex h-full flex-col flex-nowrap items-start justify-between md:flex-row md:gap-16">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={activeTab.label}
@@ -60,14 +62,12 @@ function ArchiveHeader() {
               duration: 0.22,
               ease: "easeOut",
             }}
-            className="flex flex-col gap-4 md:gap-6"
+            className="flex flex-col justify-between gap-4 md:gap-6"
           >
             <h1
               className={cn(
-                "leading-[0.95] font-bold tracking-tight",
-                activeTab.title.length > 1
-                  ? "text-4xl md:text-6xl lg:text-7xl"
-                  : "text-4xl md:text-6xl lg:text-8xl"
+                "line-clamp-2 font-bold tracking-tight",
+                "text-4xl md:text-5xl"
               )}
             >
               {activeTab.title.map((line, index) => (
@@ -79,8 +79,18 @@ function ArchiveHeader() {
                 </span>
               ))}
             </h1>
-            <p className="text-ink-muted max-w-md text-sm leading-relaxed md:text-base">
-              {activeTab.description}
+            <p className="text-ink-muted line-clamp-5 max-w-md text-sm leading-relaxed md:text-base">
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: 0.22,
+                  ease: "easeOut",
+                }}
+              >
+                {activeTab.description}
+              </motion.span>
             </p>
           </motion.div>
         </AnimatePresence>

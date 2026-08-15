@@ -1,38 +1,36 @@
-import {
-  useMatches,
-  useMatchRoute,
-} from "@tanstack/react-router";
+import { useMatches } from "@tanstack/react-router";
+
+import { Route as articlesRoute } from "@/routes/_app/writing/articles/$article_id";
+import { Route as carouselsRoute } from "@/routes/_app/writing/carousels/$carousel_id";
+import { Route as postsRoute } from "@/routes/_app/writing/posts/$post_id";
+import { isSameOrNestedPath } from "@/utils/path";
 
 import { LayoutLinks } from "./index.consts";
 
-const writingDetailRouteIds = [
-  "/_app/writing/posts/$post_id",
-  "/_app/writing/articles/$article_id",
-  "/_app/writing/carousels/$carousel_id",
+const detailRoutesIds = [
+  postsRoute.id,
+  articlesRoute.id,
+  carouselsRoute.id,
 ] as const;
 
-function useIsWritingDetail() {
+function useIsSingle() {
   return useMatches({
     select: (matches) =>
       matches.some((match) =>
-        writingDetailRouteIds.includes(
-          match.routeId as (typeof writingDetailRouteIds)[number]
+        detailRoutesIds.includes(
+          match.routeId as (typeof detailRoutesIds)[number]
         )
       ),
   });
 }
 
-function useActiveWritingTab() {
-  const matchRoute = useMatchRoute();
-
+function getActiveTab(pathname: string) {
   return (
     LayoutLinks.find((link) => {
       if (link.label === "All") return false;
-      return Boolean(
-        matchRoute({ to: link.href, fuzzy: true })
-      );
+      return isSameOrNestedPath(pathname, link.href);
     }) ?? LayoutLinks[0]
   );
 }
 
-export { useIsWritingDetail, useActiveWritingTab };
+export { useIsSingle, getActiveTab };
